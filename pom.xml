@@ -87,7 +87,7 @@
 				<artifactId>okhttp</artifactId>
 				<version>${okhttp.version}</version>
 			</dependency>
-			<!--okhttp-->
+			<!--elasticsearch-->
 			<dependency>
 				<groupId>org.elasticsearch</groupId>
 				<artifactId>elasticsearch</artifactId>

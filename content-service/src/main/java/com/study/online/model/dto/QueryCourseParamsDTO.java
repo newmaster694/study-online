@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 
 /**
  * <p>课程查询参数DTO</p>
@@ -15,6 +16,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Accessors(chain = true)
 public class QueryCourseParamsDTO {
 	/*审核状态*/
 	private String auditStatus;
