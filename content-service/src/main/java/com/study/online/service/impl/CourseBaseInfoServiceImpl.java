@@ -13,26 +13,26 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, CourseBase>
-		implements ICourseBaseInfoService {
+	implements ICourseBaseInfoService {
 	@Override
 	public Page<CourseBase> queryCourseBaseList(PageParams pageParams, QueryCourseParamsDTO queryCourseParamsDTO) {
 		LambdaQueryWrapper<CourseBase> queryWrapper = new LambdaQueryWrapper<>();
-		
+
 		//模糊匹配课程名字
 		queryWrapper.like(StringUtils.isNotEmpty(queryCourseParamsDTO.getCourseName()),
-				CourseBase::getName,
-				queryCourseParamsDTO.getCourseName());
-		
+			CourseBase::getName,
+			queryCourseParamsDTO.getCourseName());
+
 		//匹配课程审核状态
 		queryWrapper.eq(StringUtils.isNotEmpty(queryCourseParamsDTO.getAuditStatus()),
-				CourseBase::getAuditStatus,
-				queryCourseParamsDTO.getAuditStatus());
-		
+			CourseBase::getAuditStatus,
+			queryCourseParamsDTO.getAuditStatus());
+
 		//匹配课程发布状态
 		queryWrapper.eq(StringUtils.isNotEmpty(queryCourseParamsDTO.getPublishStatus()),
-				CourseBase::getStatus,
-				queryCourseParamsDTO.getPublishStatus());
-		
+			CourseBase::getStatus,
+			queryCourseParamsDTO.getPublishStatus());
+
 		return this.page(new Page<>(pageParams.getPageNo(), pageParams.getPageNo()), queryWrapper);
 	}
 }

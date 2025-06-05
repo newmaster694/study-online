@@ -10,9 +10,10 @@ import com.study.online.model.po.CourseBase;
  * <p>课程基本信息管理业务接口</p>
  *
  * @since 2025/6/4
+ * @author newmaster
  */
 public interface ICourseBaseInfoService extends IService<CourseBase> {
-	
+
 	/**
 	 * <p>课程查询接口</p>
 	 *
@@ -20,7 +21,6 @@ public interface ICourseBaseInfoService extends IService<CourseBase> {
 	 * @param queryCourseParamsDTO 分页条件
 	 * @return Page(CourseBase)
 	 * @since 2025/6/4
-	 * @author newmaster
 	 */
 	Page<CourseBase> queryCourseBaseList(PageParams pageParams, QueryCourseParamsDTO queryCourseParamsDTO);
 }

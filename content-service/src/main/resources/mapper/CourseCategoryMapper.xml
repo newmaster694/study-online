@@ -2,4 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.study.online.mapper.CourseCategoryMapper">
 
+	<select id="selectTreeNodes" resultType="com.study.online.model.dto.CourseCategoryTreeDTO" parameterType="string">
+		with recursive result as (
+			select * from course_category root where id = #{id}
+			union all
+			select son.* from course_category son inner join result on result.id = son.parentid
+		)
+		select * from result order by result.id, result.orderby
+	</select>
 </mapper>
