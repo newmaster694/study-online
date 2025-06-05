@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
+
 	<groupId>com.study.online</groupId>
 	<artifactId>study-online</artifactId>
 	<version>1.0-RC</version>
@@ -12,13 +12,13 @@
 		<module>study-online-base</module>
 		<module>content-service</module>
 	</modules>
-	
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.2.0</version>
 	</parent>
-	
+
 	<properties>
 		<maven.compiler.source>21</maven.compiler.source>
 		<maven.compiler.target>21</maven.compiler.target>
@@ -34,7 +34,7 @@
 		<okhttp.version>4.12.0</okhttp.version>
 		<elasticsearch.version>8.17.5</elasticsearch.version>
 	</properties>
-	
+
 	<dependencyManagement>
 		<dependencies>
 			<!--spring-cloud-dependencies-->
@@ -50,6 +50,8 @@
 				<groupId>com.alibaba.cloud</groupId>
 				<artifactId>spring-cloud-alibaba-dependencies</artifactId>
 				<version>${spring-cloud-alibaba.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
 			</dependency>
 			<!--fastjson2-->
 			<dependency>
@@ -95,7 +97,7 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-	
+
 	<dependencies>
 		<!--lombok-->
 		<dependency>
@@ -110,7 +112,7 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<pluginManagement>
 			<plugins>
