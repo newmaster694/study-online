@@ -2,6 +2,8 @@ package com.study.online.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.study.online.model.PageParams;
+import com.study.online.model.dto.AddCourseDTO;
+import com.study.online.model.dto.CourseBaseInfoDTO;
 import com.study.online.model.dto.CourseCategoryTreeDTO;
 import com.study.online.model.dto.QueryCourseParamsDTO;
 import com.study.online.model.po.CourseBase;
@@ -33,5 +35,12 @@ public class CourseBaseInfoController {
 	@GetMapping("/course-category/tree-nodes")
 	public List<CourseCategoryTreeDTO> queryTreeNodes() {
 		return courseCategoryService.queryTreeNodes("1");
+	}
+
+	@PostMapping("/course")
+	public CourseBaseInfoDTO createCourseBase(@RequestBody AddCourseDTO addCourseDTO) {
+		//机构ID，由于认证系统还未上线，先硬编码
+		Long companyId = 1232141425L;
+		return courseBaseInfoService.createCourseBase(companyId, addCourseDTO);
 	}
 }

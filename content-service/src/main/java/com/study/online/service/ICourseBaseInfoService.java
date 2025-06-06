@@ -3,6 +3,8 @@ package com.study.online.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.study.online.model.PageParams;
+import com.study.online.model.dto.AddCourseDTO;
+import com.study.online.model.dto.CourseBaseInfoDTO;
 import com.study.online.model.dto.QueryCourseParamsDTO;
 import com.study.online.model.po.CourseBase;
 
@@ -23,4 +25,15 @@ public interface ICourseBaseInfoService extends IService<CourseBase> {
 	 * @since 2025/6/4
 	 */
 	Page<CourseBase> queryCourseBaseList(PageParams pageParams, QueryCourseParamsDTO queryCourseParamsDTO);
+
+	/**
+	 * <p>添加课程基本信息</p>
+	 *
+	 * @param companyId 教学机构id
+	 * @param addCourseDTO 课程基本信息
+	 * @return CourseBaseInfoDTO
+	 *
+	 * @since 2025/6/6
+	 */
+	CourseBaseInfoDTO createCourseBase(Long companyId, AddCourseDTO addCourseDTO);
 }
