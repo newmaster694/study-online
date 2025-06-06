@@ -1,11 +1,11 @@
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.study.online.ContentApplication;
-import com.study.online.mapper.CourseBaseMapper;
-import com.study.online.model.PageParams;
-import com.study.online.model.dto.QueryCourseParamsDTO;
-import com.study.online.model.po.CourseBase;
-import com.study.online.service.ICourseBaseInfoService;
+import com.study.online.content.ContentApplication;
+import com.study.online.content.mapper.CourseBaseMapper;
+import com.study.online.base.content.model.PageParams;
+import com.study.online.content.model.dto.QueryCourseParamsDTO;
+import com.study.online.content.model.po.CourseBase;
+import com.study.online.content.service.ICourseBaseInfoService;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

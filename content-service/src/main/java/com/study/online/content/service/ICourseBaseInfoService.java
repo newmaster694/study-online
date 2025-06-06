@@ -1,0 +1,39 @@
+package com.study.online.content.service;
+
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.study.online.base.content.model.PageParams;
+import com.study.online.content.model.dto.AddCourseDTO;
+import com.study.online.content.model.dto.CourseBaseInfoDTO;
+import com.study.online.content.model.dto.QueryCourseParamsDTO;
+import com.study.online.content.model.po.CourseBase;
+
+/**
+ * <p>课程基本信息管理业务接口</p>
+ *
+ * @since 2025/6/4
+ * @author newmaster
+ */
+public interface ICourseBaseInfoService extends IService<CourseBase> {
+
+	/**
+	 * <p>课程查询接口</p>
+	 *
+	 * @param pageParams           分页参数
+	 * @param queryCourseParamsDTO 分页条件
+	 * @return Page(CourseBase)
+	 * @since 2025/6/4
+	 */
+	Page<CourseBase> queryCourseBaseList(PageParams pageParams, QueryCourseParamsDTO queryCourseParamsDTO);
+
+	/**
+	 * <p>添加课程基本信息</p>
+	 *
+	 * @param companyId 教学机构id
+	 * @param addCourseDTO 课程基本信息
+	 * @return CourseBaseInfoDTO
+	 *
+	 * @since 2025/6/6
+	 */
+	CourseBaseInfoDTO createCourseBase(Long companyId, AddCourseDTO addCourseDTO);
+}
