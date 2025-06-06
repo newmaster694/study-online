@@ -8,23 +8,50 @@
 		<artifactId>study-online</artifactId>
 		<version>1.0-RC</version>
 	</parent>
-	
+
 	<artifactId>study-online-base</artifactId>
-	
+
 	<properties>
 		<maven.compiler.source>21</maven.compiler.source>
 		<maven.compiler.target>21</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-	
+
 	<dependencies>
+		<!--fastjson2-->
 		<dependency>
 			<groupId>com.alibaba.fastjson2</groupId>
 			<artifactId>fastjson2</artifactId>
 		</dependency>
+		<!--hutool-all-->
 		<dependency>
 			<groupId>cn.hutool</groupId>
 			<artifactId>hutool-all</artifactId>
+		</dependency>
+		<!--springmvc自动装配-->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+		<!--日志-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-logging</artifactId>
+		</dependency>
+		<!--mybatis-plus依赖-->
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+		</dependency>
+		<!--自动配置依赖-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-autoconfigure</artifactId>
+		</dependency>
+		<!--jackson消息转换配置-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-json</artifactId>
 		</dependency>
 	</dependencies>
 

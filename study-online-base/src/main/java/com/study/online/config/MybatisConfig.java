@@ -10,14 +10,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @Slf4j
 public class MybatisConfig {
-	
 	@Bean
 	public MybatisPlusInterceptor mybatisPlusInterceptor() {
 		log.info("初始化Mybatis-Plus分页插件");
-		
+
 		//初始化核心插件
 		MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-		
+
 		//添加分页插件
 		interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
 		return interceptor;
