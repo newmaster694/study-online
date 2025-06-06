@@ -15,7 +15,7 @@ spring:
 
 mybatis-plus:
     configuration:
-        map-underscore-to-camel-case: true
+        map-underscore-to-camel-case: true # mybatis驼峰转换配置
 
 logging:
     level:
