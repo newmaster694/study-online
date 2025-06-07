@@ -2,6 +2,7 @@ package com.study.online.content.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.study.online.base.content.model.PageParams;
+import com.study.online.base.execption.ValidationGroup;
 import com.study.online.content.model.dto.AddCourseDTO;
 import com.study.online.content.model.dto.CourseBaseInfoDTO;
 import com.study.online.content.model.dto.CourseCategoryTreeDTO;
@@ -39,7 +40,8 @@ public class CourseBaseInfoController {
 	}
 
 	@PostMapping("/course")
-	public CourseBaseInfoDTO createCourseBase(@RequestBody @Validated AddCourseDTO addCourseDTO) {
+	public CourseBaseInfoDTO createCourseBase(
+		@RequestBody @Validated({ValidationGroup.Inster.class}) AddCourseDTO addCourseDTO) {
 		//机构ID，由于认证系统还未上线，先硬编码
 		Long companyId = 1232141425L;
 		return courseBaseInfoService.createCourseBase(companyId, addCourseDTO);

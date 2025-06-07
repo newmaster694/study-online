@@ -1,5 +1,6 @@
 package com.study.online.content.model.dto;
 
+import com.study.online.base.execption.ValidationGroup;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -14,7 +15,8 @@ import lombok.Data;
 public class AddCourseDTO {
 
 	/*课程名称*/
-	@NotEmpty(message = "课程名不能为空哦")
+	@NotEmpty(message = "课程名不能为空哦", groups = {ValidationGroup.Inster.class})
+	@NotEmpty(message = "课程名不能为空哦", groups = {ValidationGroup.Update.class})
 	private String name;
 
 	/*适用人群*/
