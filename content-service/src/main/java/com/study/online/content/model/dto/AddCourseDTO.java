@@ -21,7 +21,7 @@ public class AddCourseDTO {
 
 	/*适用人群*/
 	@NotEmpty(message = "适用人群不能为空哦")
-	@Size(message = "适用人群内容太少啦", min = 10)
+	@Size(message = "适用人群内容太少啦", min = 4)
 	private String users;
 
 	/*课程标签*/
