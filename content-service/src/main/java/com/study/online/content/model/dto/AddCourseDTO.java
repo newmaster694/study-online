@@ -1,5 +1,7 @@
 package com.study.online.content.model.dto;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 /**
@@ -12,24 +14,31 @@ import lombok.Data;
 public class AddCourseDTO {
 
 	/*课程名称*/
+	@NotEmpty(message = "课程名不能为空哦")
 	private String name;
 
 	/*适用人群*/
+	@NotEmpty(message = "适用人群不能为空哦")
+	@Size(message = "适用人群内容太少啦", min = 10)
 	private String users;
 
 	/*课程标签*/
 	private String tags;
 
 	/*大分类*/
+	@NotEmpty(message = "课程大分类不能为空哦")
 	private String mt;
 
 	/*小分类*/
+	@NotEmpty(message = "课程小分类不能为空哦")
 	private String st;
 
 	/*课程等级*/
+	@NotEmpty(message = "课程等级不能为空哦")
 	private String grade;
 
 	/*教学模式（普通，录播，直播等）*/
+	@NotEmpty(message = "教学模式不能为空哦")
 	private String teachmode;
 
 	/*课程介绍*/
@@ -39,6 +48,7 @@ public class AddCourseDTO {
 	private String pic;
 
 	/*收费规则，对应数据字典*/
+	@NotEmpty(message = "收费规则不能为空哦")
 	private String charge;
 
 	/*价格*/

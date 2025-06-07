@@ -61,31 +61,6 @@ public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, Cou
 	@Override
 	@Transactional
 	public CourseBaseInfoDTO createCourseBase(Long companyId, AddCourseDTO addCourseDTO) {
-		//合法性校验
-		if (StrUtil.isBlank(addCourseDTO.getName())) {
-			throw new BaseException("课程名称不能为空");
-		}
-
-		if (StrUtil.isBlank(addCourseDTO.getMt()) || StrUtil.isBlank(addCourseDTO.getSt())) {
-			throw new BaseException("课程分类不能为空，大分类与小分类都要填哦");
-		}
-
-		if (StrUtil.isBlank(addCourseDTO.getGrade())) {
-			throw new BaseException("课程等级不能为空");
-		}
-
-		if (StrUtil.isBlank(addCourseDTO.getTeachmode())) {
-			throw new BaseException("教育模式不能为空");
-		}
-
-		if (StrUtil.isBlank(addCourseDTO.getUsers())) {
-			throw new BaseException("适应人群不能为空");
-		}
-
-		if (StrUtil.isBlank(addCourseDTO.getCharge())) {
-			throw new BaseException("收费规则不能为空");
-		}
-
 		//保存课程基本信息
 		CourseBase courseBase = new CourseBase();
 		BeanUtil.copyProperties(addCourseDTO, courseBase, true);

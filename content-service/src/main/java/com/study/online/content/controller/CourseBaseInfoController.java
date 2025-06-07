@@ -11,6 +11,7 @@ import com.study.online.content.service.ICourseBaseInfoService;
 import com.study.online.content.service.ICourseCategoryService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,7 +39,7 @@ public class CourseBaseInfoController {
 	}
 
 	@PostMapping("/course")
-	public CourseBaseInfoDTO createCourseBase(@RequestBody AddCourseDTO addCourseDTO) {
+	public CourseBaseInfoDTO createCourseBase(@RequestBody @Validated AddCourseDTO addCourseDTO) {
 		//机构ID，由于认证系统还未上线，先硬编码
 		Long companyId = 1232141425L;
 		return courseBaseInfoService.createCourseBase(companyId, addCourseDTO);
