@@ -3,11 +3,11 @@
 <mapper namespace="com.study.online.content.mapper.CourseCategoryMapper">
 
 	<select id="selectTreeNodes" resultType="com.study.online.content.model.dto.CourseCategoryTreeDTO" parameterType="string">
-		with recursive result as (
+		with recursive errorResponse as (
 			select * from course_category root where id = #{id}
 			union all
-			select son.* from course_category son inner join result on result.id = son.parentid
+			select son.* from course_category son inner join errorResponse on errorResponse.id = son.parentid
 		)
-		select * from result order by result.id, result.orderby
+		select * from errorResponse order by errorResponse.id, errorResponse.orderby
 	</select>
 </mapper>
