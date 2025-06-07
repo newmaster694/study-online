@@ -38,7 +38,7 @@ public class CourseBaseInfoController {
 	@PostMapping("/course/list")
 	public Page<CourseBase> list(
 			PageParams pageParams,
-			@RequestBody(required = false) QueryCourseParamsDTO queryCourseParamsDTO) {
+			@RequestBody QueryCourseParamsDTO queryCourseParamsDTO) {
 		return courseBaseInfoService.queryCourseBaseList(pageParams, queryCourseParamsDTO);
 	}
 

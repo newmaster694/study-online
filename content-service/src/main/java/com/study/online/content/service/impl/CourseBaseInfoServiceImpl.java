@@ -22,11 +22,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Service
 public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, CourseBase>
-	implements ICourseBaseInfoService {
+		implements ICourseBaseInfoService {
 
 	@Resource
 	private ICourseMarketService courseMarketService;
@@ -38,22 +37,20 @@ public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, Cou
 	public Page<CourseBase> queryCourseBaseList(PageParams pageParams, QueryCourseParamsDTO queryCourseParamsDTO) {
 		LambdaQueryWrapper<CourseBase> queryWrapper = new LambdaQueryWrapper<>();
 
-		if (queryCourseParamsDTO != null) {
-			//模糊匹配课程名字
-			queryWrapper.like(!Objects.isNull(queryCourseParamsDTO.getCourseName()),
+		//模糊匹配课程名字
+		queryWrapper.like(StrUtil.isNotBlank(queryCourseParamsDTO.getCourseName()),
 				CourseBase::getName,
 				queryCourseParamsDTO.getCourseName());
 
-			//匹配课程审核状态
-			queryWrapper.eq(!Objects.isNull(queryCourseParamsDTO.getAuditStatus()),
+		//匹配课程审核状态
+		queryWrapper.eq(StrUtil.isNotBlank(queryCourseParamsDTO.getAuditStatus()),
 				CourseBase::getAuditStatus,
 				queryCourseParamsDTO.getAuditStatus());
 
-			//匹配课程发布状态
-			queryWrapper.eq(!Objects.isNull(queryCourseParamsDTO.getAuditStatus()),
+		//匹配课程发布状态
+		queryWrapper.eq(StrUtil.isNotBlank(queryCourseParamsDTO.getAuditStatus()),
 				CourseBase::getStatus,
 				queryCourseParamsDTO.getPublishStatus());
-		}
 
 		return this.page(new Page<>(pageParams.getPageNo(), pageParams.getPageSize()), queryWrapper);
 	}
@@ -66,10 +63,10 @@ public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, Cou
 		BeanUtil.copyProperties(addCourseDTO, courseBase, true);
 
 		courseBase
-			.setAuditStatus("202002")//设置审核状态
-			.setStatus("203001")//设置发布状态
-			.setCompanyId(companyId)//设置机构id
-			.setCreateDate(LocalDateTime.now());//设置添加时间
+				.setAuditStatus("202002")//设置审核状态
+				.setStatus("203001")//设置发布状态
+				.setCompanyId(companyId)//设置机构id
+				.setCreateDate(LocalDateTime.now());//设置添加时间
 
 		boolean flagOfSaveCourseBase = this.save(courseBase);
 
@@ -128,7 +125,7 @@ public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, Cou
 	private CourseBaseInfoDTO getCourseBaseInfo(long courseId) {
 		CourseBase courseBase = this.getById(courseId);
 
-		if (courseBase==null) {
+		if (courseBase == null) {
 			return null;
 		}
 
@@ -146,8 +143,8 @@ public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, Cou
 		CourseCategory categoryByMt = courseCategoryService.getById(courseBase.getMt());
 
 		courseBaseInfoDTO
-			.setStName(categoryBySt.getName())
-			.setMtName(categoryByMt.getName());
+				.setStName(categoryBySt.getName())
+				.setMtName(categoryByMt.getName());
 
 		return courseBaseInfoDTO;
 	}
