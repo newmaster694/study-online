@@ -31,14 +31,14 @@ public class BaseExceptionAdvice {
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	public ErrorResponse bussinessExceptionHandler(BaseException exception) {
 		log.error("异常信息：{}", exception.getMessage());
-		return new ErrorResponse(exception.getMessage());
+		return new ErrorResponse(List.of(exception.getMessage()));
 	}
 
 	@ExceptionHandler(Exception.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	public ErrorResponse execption(Exception exception) {
 		log.error("异常信息：{}", exception.getMessage());
-		return new ErrorResponse(CommonErrror.UNKNOW_ERROR.getErrMessage());
+		return new ErrorResponse(List.of(CommonErrror.UNKNOW_ERROR.getErrMessage()));
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
@@ -52,9 +52,8 @@ public class BaseExceptionAdvice {
 
 		//拼接错误信息
 		String msg = String.join(";", msgList);
-
 		log.error("异常信息：{}", msg);
 
-		return new ErrorResponse(msg);
+		return new ErrorResponse(msgList);
 	}
 }

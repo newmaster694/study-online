@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 后端统一返回错误结果
@@ -13,6 +14,6 @@ import java.io.Serializable;
 public class ErrorResponse implements Serializable {
 
 	/*错误信息*/
-    private String msg;
+    private List<String> msgs;
 
 }

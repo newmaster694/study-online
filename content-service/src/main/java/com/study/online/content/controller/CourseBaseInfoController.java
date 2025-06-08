@@ -81,7 +81,8 @@ public class CourseBaseInfoController {
 	 * @return 课程基础信息&课程营销信息
 	 */
 	@PutMapping("/course")
-	public CourseBaseInfoDTO modifyCourseBase(@RequestBody @Validated EditCourseDTO editCourseDTO) {
+	public CourseBaseInfoDTO modifyCourseBase(
+			@RequestBody @Validated(ValidationGroup.Update.class) EditCourseDTO editCourseDTO) {
 		//机构id，由于认证系统没有上线暂时硬编码
 		Long companyId = 1232141425L;
 		return courseBaseInfoService.updateCourseBase(companyId, editCourseDTO);

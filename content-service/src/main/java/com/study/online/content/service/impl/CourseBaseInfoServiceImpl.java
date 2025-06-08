@@ -119,6 +119,7 @@ public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, Cou
 	}
 
 	@Override
+	@Transactional
 	public CourseBaseInfoDTO updateCourseBase(Long companyId, EditCourseDTO editCourseDTO) {
 		Long courseId = editCourseDTO.getId();
 		CourseBase courseBase = this.getById(courseId);
