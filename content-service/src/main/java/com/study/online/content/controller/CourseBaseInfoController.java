@@ -3,10 +3,7 @@ package com.study.online.content.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.study.online.base.content.model.PageParams;
 import com.study.online.base.execption.ValidationGroup;
-import com.study.online.content.model.dto.AddCourseDTO;
-import com.study.online.content.model.dto.CourseBaseInfoDTO;
-import com.study.online.content.model.dto.CourseCategoryTreeDTO;
-import com.study.online.content.model.dto.QueryCourseParamsDTO;
+import com.study.online.content.model.dto.*;
 import com.study.online.content.model.po.CourseBase;
 import com.study.online.content.service.ICourseBaseInfoService;
 import com.study.online.content.service.ICourseCategoryService;
@@ -67,13 +64,24 @@ public class CourseBaseInfoController {
 	}
 
 	/**
-	 * <p>根据id查询课程信息</p>
+	 * <p>根据id查询课程信息接口</p>
 	 *
 	 * @param courseId 课程id
 	 * @return 课程基础信息&课程营销信息
 	 */
 	@GetMapping("/course/{courseId}")
 	public CourseBaseInfoDTO getCourseBaseById(@PathVariable Long courseId) {
+		return null;
+	}
+
+	/**
+	 * <p>修改课程基础信息接口</p>
+	 *
+	 * @param editCourseDTO 要修改的课程记录
+	 * @return 课程基础信息&课程营销信息
+	 */
+	@PutMapping("/course")
+	public CourseBaseInfoDTO modifyCourseBase(@RequestBody @Validated EditCourseDTO editCourseDTO) {
 		return null;
 	}
 }
