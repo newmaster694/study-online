@@ -71,7 +71,7 @@ public class CourseBaseInfoController {
 	 */
 	@GetMapping("/course/{courseId}")
 	public CourseBaseInfoDTO getCourseBaseById(@PathVariable Long courseId) {
-		return null;
+		return courseBaseInfoService.getCourseBaseInfo(courseId);
 	}
 
 	/**
@@ -82,6 +82,8 @@ public class CourseBaseInfoController {
 	 */
 	@PutMapping("/course")
 	public CourseBaseInfoDTO modifyCourseBase(@RequestBody @Validated EditCourseDTO editCourseDTO) {
-		return null;
+		//机构id，由于认证系统没有上线暂时硬编码
+		Long companyId = 1232141425L;
+		return courseBaseInfoService.updateCourseBase(companyId, editCourseDTO);
 	}
 }
