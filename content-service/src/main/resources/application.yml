@@ -19,7 +19,7 @@ mybatis-plus:
 
 logging:
     level:
-        com.study.online.content:
+        study.online.content:
             mapper: debug
             service: info
             controller: info

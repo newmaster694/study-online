@@ -1,0 +1,177 @@
+package study.online.content.service.impl;
+
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import study.online.base.content.model.PageParams;
+import study.online.base.execption.BaseException;
+import study.online.content.mapper.CourseBaseMapper;
+import study.online.content.model.dto.AddCourseDTO;
+import study.online.content.model.dto.CourseBaseInfoDTO;
+import study.online.content.model.dto.EditCourseDTO;
+import study.online.content.model.dto.QueryCourseParamsDTO;
+import study.online.content.model.po.CourseBase;
+import study.online.content.model.po.CourseCategory;
+import study.online.content.model.po.CourseMarket;
+import study.online.content.service.ICourseBaseInfoService;
+import study.online.content.service.ICourseCategoryService;
+import study.online.content.service.ICourseMarketService;
+import jakarta.annotation.Resource;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+
+@Service
+public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, CourseBase>
+		implements ICourseBaseInfoService {
+
+	@Resource
+	private ICourseMarketService courseMarketService;
+
+	@Resource
+	private ICourseCategoryService courseCategoryService;
+
+	@Override
+	public Page<CourseBase> queryCourseBaseList(PageParams pageParams, QueryCourseParamsDTO queryCourseParamsDTO) {
+		LambdaQueryWrapper<CourseBase> queryWrapper = new LambdaQueryWrapper<>();
+
+		//模糊匹配课程名字
+		queryWrapper.like(StrUtil.isNotBlank(queryCourseParamsDTO.getCourseName()),
+				CourseBase::getName,
+				queryCourseParamsDTO.getCourseName());
+
+		//匹配课程审核状态
+		queryWrapper.eq(StrUtil.isNotBlank(queryCourseParamsDTO.getAuditStatus()),
+				CourseBase::getAuditStatus,
+				queryCourseParamsDTO.getAuditStatus());
+
+		//匹配课程发布状态
+		queryWrapper.eq(StrUtil.isNotBlank(queryCourseParamsDTO.getAuditStatus()),
+				CourseBase::getStatus,
+				queryCourseParamsDTO.getPublishStatus());
+
+		return this.page(new Page<>(pageParams.getPageNo(), pageParams.getPageSize()), queryWrapper);
+	}
+
+	@Override
+	@Transactional
+	public CourseBaseInfoDTO createCourseBase(Long companyId, AddCourseDTO addCourseDTO) {
+		//保存课程基本信息
+		CourseBase courseBase = new CourseBase();
+		BeanUtil.copyProperties(addCourseDTO, courseBase, true);
+
+		courseBase
+				.setAuditStatus("202002")//设置审核状态
+				.setStatus("203001")//设置发布状态
+				.setCompanyId(companyId)//设置机构id
+				.setCreateDate(LocalDateTime.now());//设置添加时间
+
+		boolean flagOfSaveCourseBase = this.save(courseBase);
+
+		if (!flagOfSaveCourseBase) {
+			throw new BaseException("新增课程基本信息失败");
+		}
+
+		//向课程营销表保存课程营销信息
+		CourseMarket courseMarket = new CourseMarket();
+		BeanUtil.copyProperties(addCourseDTO, courseMarket, true);
+		courseMarket.setId(courseBase.getId());
+
+		boolean flagOfSaveCourseMarket = this.saveCourseMarket(courseMarket);
+
+		if (!flagOfSaveCourseMarket) {
+			throw new BaseException("新增课营销信息失败");
+		}
+
+		//查询课程基本信息及营销信息并返回
+		return this.getCourseBaseInfo(courseBase.getId());
+	}
+
+	@Override
+	public CourseBaseInfoDTO getCourseBaseInfo(long courseId) {
+		CourseBase courseBase = this.getById(courseId);
+
+		if (courseBase == null) {
+			return null;
+		}
+
+		CourseMarket courseMarket = courseMarketService.getById(courseId);
+
+		CourseBaseInfoDTO courseBaseInfoDTO = new CourseBaseInfoDTO();
+
+		BeanUtil.copyProperties(courseBase, courseBaseInfoDTO, true);
+		if (courseMarket != null) {
+			BeanUtil.copyProperties(courseMarket, courseBaseInfoDTO, true);
+		}
+
+		//查询分类名称
+		CourseCategory categoryBySt = courseCategoryService.getById(courseBase.getSt());
+		CourseCategory categoryByMt = courseCategoryService.getById(courseBase.getMt());
+
+		courseBaseInfoDTO
+				.setStName(categoryBySt.getName())
+				.setMtName(categoryByMt.getName());
+
+		return courseBaseInfoDTO;
+	}
+
+	@Override
+	@Transactional
+	public CourseBaseInfoDTO updateCourseBase(Long companyId, EditCourseDTO editCourseDTO) {
+		Long courseId = editCourseDTO.getId();
+		CourseBase courseBase = this.getById(courseId);
+		if (courseBase == null) {
+			BaseException.cast("课程不存在");
+		}
+
+		//校验->机构只能修改自己机构的课程
+		if (!courseBase.getCompanyId().equals(companyId)) {
+			BaseException.cast("无权限，本机构只能修改本机构的课程");
+		}
+
+		//封装基本信息数据
+		BeanUtil.copyProperties(editCourseDTO, courseBase, true);
+		courseBase.setChangeDate(LocalDateTime.now());
+
+		this.updateById(courseBase);
+
+		//封装营销数据基本信息
+		CourseMarket courseMarket = new CourseMarket();
+		BeanUtil.copyProperties(editCourseDTO, courseMarket, true);
+
+		this.saveCourseMarket(courseMarket);
+
+		//查询课程信息
+		return this.getCourseBaseInfo(courseId);
+	}
+
+	/**
+	 * <p>保存课程营销信息方法</p>
+	 *
+	 * @param courseMarket 要保存的课程营销记录
+	 * @return boolean-是否保存成功标志
+	 */
+	private boolean saveCourseMarket(CourseMarket courseMarket) {
+		//收费规则
+		if (StrUtil.isBlank(courseMarket.getCharge())) {
+			throw new BaseException("收费规则没有选择");
+		}
+
+		if (courseMarket.getCharge().equals("201001")) {
+			if (courseMarket.getPrice() == null || courseMarket.getPrice() <= 0) {
+				throw new BaseException("收费课程的收费金额必须要大于0！");
+			}
+		}
+
+		CourseMarket selectCourseMarket = courseMarketService.getById(courseMarket.getId());
+		//判断数据库中是否已经存在这个营销数据：不存在=>新增；存在=>更新
+		if (selectCourseMarket == null) {
+			return courseMarketService.save(courseMarket);
+		} else {
+			return courseMarketService.updateById(courseMarket);
+		}
+	}
+}

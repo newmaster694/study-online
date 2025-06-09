@@ -32,6 +32,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
+			<scope>provided</scope>
 		</dependency>
 		<!--日志-->
 		<dependency>
@@ -42,6 +43,7 @@
 		<dependency>
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+			<scope>provided</scope>
 		</dependency>
 		<!--自动配置依赖-->
 		<dependency>
@@ -52,6 +54,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-json</artifactId>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 

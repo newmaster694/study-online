@@ -1,0 +1,15 @@
+server:
+    port: 8080
+
+spring:
+    application:
+        name: gateway-service
+    cloud:
+        nacos:
+            server-addr: 127.0.0.1:8848
+        gateway:
+            routes:
+                - id: "content"
+                  uri: "lb://content-service"
+                  predicates:
+                    - Path=/content/**

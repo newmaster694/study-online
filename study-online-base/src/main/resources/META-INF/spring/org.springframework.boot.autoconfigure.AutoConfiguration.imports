@@ -1,4 +1,4 @@
-com.study.online.base.config.MybatisConfig
-com.study.online.base.config.MvcConfig
-com.study.online.base.config.JsonConfig
-com.study.online.base.advice.BaseExceptionAdvice
+study.online.base.config.MybatisConfig
+study.online.base.config.MvcConfig
+study.online.base.config.JsonConfig
+study.online.base.advice.BaseExceptionAdvice
