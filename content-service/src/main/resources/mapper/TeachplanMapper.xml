@@ -2,4 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.study.online.content.mapper.TeachplanMapper">
 
+	<select id="selectTreeNodes" resultType="com.study.online.content.model.dto.TeachplanDTO">
+		select
+			one.id, one.pname, one.parentid, one.grade, one.media_type, one.start_time, one.end_time, one.orderby, one.course_id, one.course_pub_id,
+			tow.id, tow.pname, tow.parentid, tow.grade, tow.media_type, tow.start_time, tow.end_time, tow.orderby, tow.course_id, tow.course_pub_id,
+			media.media_fileName, media.id, media.media_id
+		from teachplan one
+		inner join teachplan tow on one.id=tow.parentid
+		left join teachplan_media media on media.teachplan_id=tow.id
+		where one.parentid=0 and one.course_id=#{courseId}
+		order by one.orderby, tow.orderby
+	</select>
 </mapper>
