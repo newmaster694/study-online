@@ -1,11 +1,11 @@
 package study.online.content.controller;
 
+import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import study.online.content.model.dto.SaveTeachplanDTO;
 import study.online.content.model.dto.TeachplanDTO;
 import study.online.content.service.ITeachplanService;
-import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
@@ -46,5 +46,16 @@ public class TeachplanController {
 	@DeleteMapping("/{teachplanId}")
 	public void deleteTeachplan(@PathVariable Long teachplanId) {
 		teachplanService.deleteTeachplan(teachplanId);
+	}
+
+	/**
+	 * 章节的上移与下移操作接口
+	 *
+	 * @param moveType    动作，上移还是下移
+	 * @param teachplanId 课程计划id
+	 */
+	@PostMapping("/{moveType}/{teachplanId}")
+	public void move(@PathVariable String moveType, @PathVariable Long teachplanId) {
+		teachplanService.move(moveType, teachplanId);
 	}
 }

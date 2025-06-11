@@ -73,6 +73,55 @@ public class TeachplanServiceImpl extends ServiceImpl<TeachplanMapper, Teachplan
 		}
 	}
 
+	@Override
+	@Transactional
+	public void move(String moveType, Long teachplanId) {
+		Teachplan teachplan = this.getById(teachplanId);
+		if (teachplan == null) {
+			throw new BaseException("课程计划不存在");
+		}
+
+		switch (moveType) {
+			case "moveup":
+				this.moveNode(teachplan, -1);
+				break;
+			case "movedown":
+				this.moveNode(teachplan, 1);
+				break;
+			default:
+				throw new BaseException("操作异常，请联系管理员！");
+		}
+	}
+
+	/**
+	 * 移动章节节点
+	 *
+	 * @param teachplan 要移动的章节
+	 * @param index     移动的节点索引
+	 */
+	private void moveNode(Teachplan teachplan, int index) {
+		Teachplan preNode = lambdaQuery()
+			.eq(Teachplan::getParentid, teachplan.getParentid())
+			.eq(Teachplan::getCourseId, teachplan.getCourseId())
+			.eq(Teachplan::getOrderby, teachplan.getOrderby() + index)
+			.one();
+
+		if (preNode == null) {
+			if (index == 1) {
+				throw new BaseException("当前节点已是最后！");
+			} else if (index == -1) {
+				throw new BaseException("当前节点已是最前！");
+			} else {
+				throw new BaseException("操作异常，请联系管理员！");
+			}
+		}
+
+		preNode.setOrderby(teachplan.getOrderby());
+		teachplan.setOrderby(teachplan.getOrderby() + index);
+		this.updateById(teachplan);
+		this.updateById(preNode);
+	}
+
 	/**
 	 * 获取最新的排序号
 	 *

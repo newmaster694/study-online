@@ -36,4 +36,12 @@ public interface ITeachplanService extends IService<Teachplan> {
 	 * @param teachplanId 课程计划id
 	 */
 	void deleteTeachplan(Long teachplanId);
+
+	/**
+	 * 章节的上移与下移操作接口
+	 *
+	 * @param moveType    动作，上移还是下移
+	 * @param teachplanId 课程计划id
+	 */
+	void move(String moveType, Long teachplanId);
 }
