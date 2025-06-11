@@ -1,6 +1,7 @@
 package study.online.content.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import study.online.content.model.dto.SaveTeachplanDTO;
 import study.online.content.model.dto.TeachplanDTO;
 import study.online.content.model.po.Teachplan;
 
@@ -21,4 +22,6 @@ public interface ITeachplanService extends IService<Teachplan> {
 	 * @return TeachplanDTO-列表
 	 */
 	List<TeachplanDTO> findTeachplanTree(long courseId);
+
+	void saveTeachplan(SaveTeachplanDTO saveTeachplanDTO);
 }
