@@ -8,7 +8,7 @@
 			tow.id, tow.pname, tow.parentid, tow.grade, tow.media_type, tow.start_time, tow.end_time, tow.orderby, tow.course_id, tow.course_pub_id,
 			media.media_fileName, media.id, media.media_id
 		from teachplan one
-		inner join teachplan tow on one.id=tow.parentid
+		left join teachplan tow on tow.parentid=one.id
 		left join teachplan_media media on media.teachplan_id=tow.id
 		where one.parentid=0 and one.course_id=#{courseId}
 		order by one.orderby, tow.orderby

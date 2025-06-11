@@ -10,8 +10,8 @@ import java.util.List;
 /**
  * <p>课程计划信息接口</p>
  *
- * @since 2025/6/9
  * @author newmaster
+ * @since 2025/6/9
  */
 public interface ITeachplanService extends IService<Teachplan> {
 
@@ -23,5 +23,17 @@ public interface ITeachplanService extends IService<Teachplan> {
 	 */
 	List<TeachplanDTO> findTeachplanTree(long courseId);
 
+	/**
+	 * 新增/修改课程计划
+	 *
+	 * @param saveTeachplanDTO 课程计划记录
+	 */
 	void saveTeachplan(SaveTeachplanDTO saveTeachplanDTO);
+
+	/**
+	 * 删除课程计划
+	 *
+	 * @param teachplanId 课程计划id
+	 */
+	void deleteTeachplan(Long teachplanId);
 }

@@ -1,4 +1,4 @@
-package study.online.base.content.model;
+package study.online.base.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -11,7 +11,7 @@ import java.util.List;
  */
 @Data
 @AllArgsConstructor
-public class ErrorResponse implements Serializable {
+public class ResultError implements Serializable {
 
 	/*错误信息*/
     private List<String> msgs;

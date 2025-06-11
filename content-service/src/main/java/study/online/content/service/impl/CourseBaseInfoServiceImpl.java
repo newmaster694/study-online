@@ -5,7 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import study.online.base.content.model.PageParams;
+import study.online.base.model.PageParams;
 import study.online.base.execption.BaseException;
 import study.online.content.mapper.CourseBaseMapper;
 import study.online.content.model.dto.AddCourseDTO;

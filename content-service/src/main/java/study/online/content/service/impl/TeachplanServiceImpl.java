@@ -5,10 +5,14 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import study.online.base.execption.BaseException;
 import study.online.content.mapper.TeachplanMapper;
+import study.online.content.mapper.TeachplanMediaMapper;
 import study.online.content.model.dto.SaveTeachplanDTO;
 import study.online.content.model.dto.TeachplanDTO;
 import study.online.content.model.po.Teachplan;
+import study.online.content.model.po.TeachplanMedia;
 import study.online.content.service.ITeachplanService;
 
 import java.util.List;
@@ -18,6 +22,9 @@ public class TeachplanServiceImpl extends ServiceImpl<TeachplanMapper, Teachplan
 
 	@Resource
 	private TeachplanMapper teachplanMapper;
+
+	@Resource
+	private TeachplanMediaMapper teachplanMediaMapper;
 
 	@Override
 	public List<TeachplanDTO> findTeachplanTree(long courseId) {
@@ -38,6 +45,31 @@ public class TeachplanServiceImpl extends ServiceImpl<TeachplanMapper, Teachplan
 			BeanUtil.copyProperties(saveTeachplanDTO, teachplan, true);
 
 			this.save(teachplan);
+		}
+	}
+
+	@Override
+	@Transactional
+	public void deleteTeachplan(Long teachplanId) {
+		Long parentid = this.getById(teachplanId).getParentid();
+		if (parentid == 0) {//大章节，必须保证下面没有小章节了才能删
+			//查找小章节
+			LambdaQueryWrapper<Teachplan> teachplanQueryWrapper = new LambdaQueryWrapper<>();
+			teachplanQueryWrapper.eq(Teachplan::getParentid, teachplanId);//这里比较的是找有没有其他记录的parentid等于这个大章节的id
+			long count = this.count(teachplanQueryWrapper);
+			if (count > 0) {
+				throw new BaseException("课程计划还有子级信息，无法操作");
+			} else {
+				this.removeById(teachplanId);
+				LambdaQueryWrapper<TeachplanMedia> teachplanMediaQueryWrapper = new LambdaQueryWrapper<>();
+				teachplanMediaQueryWrapper.eq(TeachplanMedia::getTeachplanId, teachplanId);
+				teachplanMediaMapper.delete(teachplanMediaQueryWrapper);
+			}
+		} else { //小章节，直接删
+			this.removeById(teachplanId);
+			LambdaQueryWrapper<TeachplanMedia> teachplanMediaQueryWrapper = new LambdaQueryWrapper<>();
+			teachplanMediaQueryWrapper.eq(TeachplanMedia::getTeachplanId, teachplanId);
+			teachplanMediaMapper.delete(teachplanMediaQueryWrapper);
 		}
 	}
 

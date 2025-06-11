@@ -17,13 +17,34 @@ public class TeachplanController {
 	@Resource
 	private ITeachplanService teachplanService;
 
+	/**
+	 * 查询课程计划树结构
+	 *
+	 * @param courseId 课程id
+	 * @return List(TeachplanDTO)
+	 */
 	@GetMapping("/teachplan/{courseId}/tree-nodes")
 	public List<TeachplanDTO> getTreeNodes(@PathVariable Long courseId) {
 		return teachplanService.findTeachplanTree(courseId);
 	}
 
+	/**
+	 * 新增/修改课程计划
+	 *
+	 * @param saveTeachplanDTO 课程计划信息
+	 */
 	@PostMapping("/teachplan")
 	public void saveTeachplan(@RequestBody SaveTeachplanDTO saveTeachplanDTO) {
 		teachplanService.saveTeachplan(saveTeachplanDTO);
+	}
+
+	/**
+	 * 删除课程计划
+	 *
+	 * @param teachplanId 课程计划id
+	 */
+	@DeleteMapping("/teachplan/{teachplanId}")
+	public void deleteTeachplan(@PathVariable Long teachplanId) {
+		teachplanService.deleteTeachplan(teachplanId);
 	}
 }

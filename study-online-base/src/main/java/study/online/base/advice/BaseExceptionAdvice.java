@@ -2,7 +2,7 @@ package study.online.base.advice;
 
 import study.online.base.enums.CommonErrror;
 import study.online.base.execption.BaseException;
-import study.online.base.result.ErrorResponse;
+import study.online.base.result.ResultError;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -29,21 +29,21 @@ public class BaseExceptionAdvice {
 	 */
 	@ExceptionHandler(BaseException.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	public ErrorResponse bussinessExceptionHandler(BaseException exception) {
+	public ResultError bussinessExceptionHandler(BaseException exception) {
 		log.error("异常信息：{}", exception.getMessage());
-		return new ErrorResponse(List.of(exception.getMessage()));
+		return new ResultError(List.of(exception.getMessage()));
 	}
 
 	@ExceptionHandler(Exception.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	public ErrorResponse execption(Exception exception) {
+	public ResultError execption(Exception exception) {
 		log.error("异常信息：{}", exception.getMessage());
-		return new ErrorResponse(List.of(CommonErrror.UNKNOW_ERROR.getErrMessage()));
+		return new ResultError(List.of(CommonErrror.UNKNOW_ERROR.getErrMessage()));
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	public ErrorResponse methodArgumentNotValidException(MethodArgumentNotValidException exception) {
+	public ResultError methodArgumentNotValidException(MethodArgumentNotValidException exception) {
 		BindingResult bindingResult = exception.getBindingResult();
 		List<String> msgList = new ArrayList<>();
 
@@ -54,6 +54,6 @@ public class BaseExceptionAdvice {
 		String msg = String.join(";", msgList);
 		log.error("异常信息：{}", msg);
 
-		return new ErrorResponse(msgList);
+		return new ResultError(msgList);
 	}
 }
