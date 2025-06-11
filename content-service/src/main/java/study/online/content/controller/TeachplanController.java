@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@RequestMapping("/content")
+@RequestMapping("/teachplan")
 public class TeachplanController {
 
 	@Resource
@@ -23,7 +23,7 @@ public class TeachplanController {
 	 * @param courseId 课程id
 	 * @return List(TeachplanDTO)
 	 */
-	@GetMapping("/teachplan/{courseId}/tree-nodes")
+	@GetMapping("/{courseId}/tree-nodes")
 	public List<TeachplanDTO> getTreeNodes(@PathVariable Long courseId) {
 		return teachplanService.findTeachplanTree(courseId);
 	}
@@ -33,7 +33,7 @@ public class TeachplanController {
 	 *
 	 * @param saveTeachplanDTO 课程计划信息
 	 */
-	@PostMapping("/teachplan")
+	@PostMapping
 	public void saveTeachplan(@RequestBody SaveTeachplanDTO saveTeachplanDTO) {
 		teachplanService.saveTeachplan(saveTeachplanDTO);
 	}
@@ -43,7 +43,7 @@ public class TeachplanController {
 	 *
 	 * @param teachplanId 课程计划id
 	 */
-	@DeleteMapping("/teachplan/{teachplanId}")
+	@DeleteMapping("/{teachplanId}")
 	public void deleteTeachplan(@PathVariable Long teachplanId) {
 		teachplanService.deleteTeachplan(teachplanId);
 	}
