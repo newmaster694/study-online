@@ -12,8 +12,8 @@ import study.online.content.model.po.CourseBase;
 /**
  * <p>课程基本信息管理业务接口</p>
  *
- * @since 2025/6/4
  * @author newmaster
+ * @since 2025/6/4
  */
 public interface ICourseBaseInfoService extends IService<CourseBase> {
 
@@ -30,10 +30,9 @@ public interface ICourseBaseInfoService extends IService<CourseBase> {
 	/**
 	 * <p>添加课程基本信息</p>
 	 *
-	 * @param companyId 教学机构id
+	 * @param companyId    教学机构id
 	 * @param addCourseDTO 课程基本信息
 	 * @return CourseBaseInfoDTO
-	 *
 	 * @since 2025/6/6
 	 */
 	CourseBaseInfoDTO createCourseBase(Long companyId, AddCourseDTO addCourseDTO);
@@ -48,9 +47,18 @@ public interface ICourseBaseInfoService extends IService<CourseBase> {
 
 	/**
 	 * <p>修改课程信息</p>
-	 * @param companyId 机构id
+	 *
+	 * @param companyId     机构id
 	 * @param editCourseDTO 课程信息
 	 * @return CourseBaseInfoDTO
 	 */
 	CourseBaseInfoDTO updateCourseBase(Long companyId, EditCourseDTO editCourseDTO);
+
+	/**
+	 * 删除课程及相关信息
+	 *
+	 * @param courseId  课程id
+	 * @param companyId 机构id
+	 */
+	void deleteItem(Long courseId, Long companyId);
 }

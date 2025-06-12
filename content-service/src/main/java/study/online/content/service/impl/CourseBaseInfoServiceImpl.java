@@ -5,24 +5,22 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import study.online.base.model.PageParams;
-import study.online.base.execption.BaseException;
-import study.online.content.mapper.CourseBaseMapper;
-import study.online.content.model.dto.AddCourseDTO;
-import study.online.content.model.dto.CourseBaseInfoDTO;
-import study.online.content.model.dto.EditCourseDTO;
-import study.online.content.model.dto.QueryCourseParamsDTO;
-import study.online.content.model.po.CourseBase;
-import study.online.content.model.po.CourseCategory;
-import study.online.content.model.po.CourseMarket;
-import study.online.content.service.ICourseBaseInfoService;
-import study.online.content.service.ICourseCategoryService;
-import study.online.content.service.ICourseMarketService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import study.online.base.contant.CommonErrror;
+import study.online.base.execption.BaseException;
+import study.online.base.model.PageParams;
+import study.online.content.mapper.CourseBaseMapper;
+import study.online.content.model.dto.*;
+import study.online.content.model.po.CourseBase;
+import study.online.content.model.po.CourseCategory;
+import study.online.content.model.po.CourseMarket;
+import study.online.content.model.po.CourseTeacher;
+import study.online.content.service.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, CourseBase>
@@ -33,6 +31,12 @@ public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, Cou
 
 	@Resource
 	private ICourseCategoryService courseCategoryService;
+
+	@Resource
+	private ITeachplanService teachplanService;
+
+	@Resource
+	private ICourseTeacherService courseTeacherService;
 
 	@Override
 	public Page<CourseBase> queryCourseBaseList(PageParams pageParams, QueryCourseParamsDTO queryCourseParamsDTO) {
@@ -146,6 +150,42 @@ public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, Cou
 
 		//查询课程信息
 		return this.getCourseBaseInfo(courseId);
+	}
+
+	@Override
+	@Transactional
+	public void deleteItem(Long courseId, Long companyId) {
+		if (courseId == null) {
+			BaseException.cast(CommonErrror.REQUEST_NULL);
+		}
+
+		CourseBase courseBase = this.getById(courseId);
+		if (!companyId.equals(courseBase.getCompanyId())) {
+			BaseException.cast("无权限，本机构只能修改本机构的课程");
+		}
+
+		if (!courseBase.getAuditStatus().equals("202002")) {
+			BaseException.cast("审核状态不符，请确保课程未提交，删除失败");
+		}
+
+		this.removeById(courseId);
+		courseMarketService.removeById(courseId);
+
+		//删除课程计划
+		List<TeachplanDTO> teachplanTree = teachplanService.findTeachplanTree(courseId);
+		for (TeachplanDTO teachplanDTO : teachplanTree) {
+			for (TeachplanDTO teachplanTreeNode : teachplanDTO.getTeachplanTreeNodes()) {
+				teachplanService.deleteTeachplan(teachplanTreeNode.getId());
+			}
+			teachplanService.deleteTeachplan(teachplanDTO.getId());
+		}
+
+		//删除课程教师信息
+		List<CourseTeacher> teacherList = courseTeacherService.getTeacherList(courseId);
+		List<Long> teacherIds = teacherList.stream()
+			.map(CourseTeacher::getId)
+			.toList();
+		courseTeacherService.removeBatchByIds(teacherIds);
 	}
 
 	/**
