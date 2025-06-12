@@ -1,4 +1,4 @@
-package study.online.base.enums;
+package study.online.base.contant;
 
 import lombok.Getter;
 
@@ -6,7 +6,7 @@ import lombok.Getter;
 public enum CommonErrror {
 	UNKNOW_ERROR("执行过程异常，请重试！"),
 	PARAMS_ERROR("非法参数"),
-	object_null("对象为空"),
+	OBJECT_NULL("对象为空"),
 	QUERY_NULL("查询结果为空"),
 	REQUEST_NULL("请求参数为空");
 

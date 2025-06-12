@@ -1,6 +1,6 @@
 package study.online.base.advice;
 
-import study.online.base.enums.CommonErrror;
+import study.online.base.contant.CommonErrror;
 import study.online.base.execption.BaseException;
 import study.online.base.result.ResultError;
 import lombok.extern.slf4j.Slf4j;

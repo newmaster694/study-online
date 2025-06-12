@@ -1,6 +1,6 @@
 package study.online.base.execption;
 
-import study.online.base.enums.CommonErrror;
+import study.online.base.contant.CommonErrror;
 import lombok.Getter;
 
 @Getter
