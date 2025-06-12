@@ -12,6 +12,7 @@
 		<module>study-online-base</module>
 		<module>content-service</module>
 		<module>gateway-service</module>
+		<module>media-service</module>
 	</modules>
 
 	<parent>
