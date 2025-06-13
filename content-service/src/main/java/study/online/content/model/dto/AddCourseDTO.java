@@ -1,6 +1,6 @@
 package study.online.content.model.dto;
 
-import study.online.base.execption.ValidationGroup;
+import study.online.base.exception.ValidationGroup;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;

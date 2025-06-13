@@ -4,7 +4,7 @@ import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import study.online.base.execption.ValidationGroup;
+import study.online.base.exception.ValidationGroup;
 import study.online.content.model.dto.SaveCourseTeacherDTO;
 import study.online.content.model.po.CourseTeacher;
 import study.online.content.service.ICourseTeacherService;

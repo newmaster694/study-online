@@ -1,6 +1,6 @@
 package study.online.content.model.dto;
 
-import study.online.base.execption.ValidationGroup;
+import study.online.base.exception.ValidationGroup;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

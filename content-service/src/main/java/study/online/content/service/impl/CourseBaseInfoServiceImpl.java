@@ -8,8 +8,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import study.online.base.contant.CommonErrror;
-import study.online.base.execption.BaseException;
+import study.online.base.exception.BaseException;
 import study.online.base.model.PageParams;
 import study.online.content.mapper.CourseBaseMapper;
 import study.online.content.model.dto.*;
@@ -37,6 +36,9 @@ public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, Cou
 
 	@Resource
 	private ICourseTeacherService courseTeacherService;
+
+	@Resource
+	private ICourseCommonService courseCommonService;
 
 	@Override
 	public Page<CourseBase> queryCourseBaseList(PageParams pageParams, QueryCourseParamsDTO queryCourseParamsDTO) {
@@ -127,14 +129,8 @@ public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, Cou
 	public CourseBaseInfoDTO updateCourseBase(Long companyId, EditCourseDTO editCourseDTO) {
 		Long courseId = editCourseDTO.getId();
 		CourseBase courseBase = this.getById(courseId);
-		if (courseBase == null) {
-			BaseException.cast("课程不存在");
-		}
 
-		//校验->机构只能修改自己机构的课程
-		if (!courseBase.getCompanyId().equals(companyId)) {
-			BaseException.cast("无权限，本机构只能修改本机构的课程");
-		}
+		courseCommonService.checkCoursePermission(courseId, companyId);
 
 		//封装基本信息数据
 		BeanUtil.copyProperties(editCourseDTO, courseBase, true);
@@ -155,14 +151,8 @@ public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, Cou
 	@Override
 	@Transactional
 	public void deleteItem(Long courseId, Long companyId) {
-		if (courseId == null) {
-			BaseException.cast(CommonErrror.REQUEST_NULL);
-		}
-
+		courseCommonService.checkCoursePermission(courseId, companyId);
 		CourseBase courseBase = this.getById(courseId);
-		if (!companyId.equals(courseBase.getCompanyId())) {
-			BaseException.cast("无权限，本机构只能修改本机构的课程");
-		}
 
 		if (!courseBase.getAuditStatus().equals("202002")) {
 			BaseException.cast("审核状态不符，请确保课程未提交，删除失败");

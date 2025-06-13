@@ -1,0 +1,13 @@
+server:
+    port: 8083
+spring:
+    application:
+        name: "system-service"
+    datasource:
+        driver-class-name: com.mysql.jdbc.Driver
+        url: "jdbc:mysql://localhost:3306/so_system?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai"
+        username: "root"
+        password: "000016"
+    cloud:
+        nacos:
+            server-addr: 127.0.0.1:8848

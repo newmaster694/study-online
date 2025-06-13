@@ -1,4 +1,4 @@
-package study.online.base.execption;
+package study.online.base.exception;
 
 /**
  * <p>校验分组</p>

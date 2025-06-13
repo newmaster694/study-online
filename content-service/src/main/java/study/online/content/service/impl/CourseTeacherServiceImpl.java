@@ -5,12 +5,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import study.online.base.contant.CommonErrror;
-import study.online.base.execption.BaseException;
+import study.online.base.exception.BaseException;
 import study.online.content.mapper.CourseTeacherMapper;
 import study.online.content.model.dto.SaveCourseTeacherDTO;
-import study.online.content.model.po.CourseBase;
 import study.online.content.model.po.CourseTeacher;
-import study.online.content.service.ICourseBaseInfoService;
+import study.online.content.service.ICourseCommonService;
 import study.online.content.service.ICourseTeacherService;
 
 import java.time.LocalDateTime;
@@ -22,7 +21,7 @@ public class CourseTeacherServiceImpl extends ServiceImpl<CourseTeacherMapper, C
 	implements ICourseTeacherService {
 
 	@Resource
-	private ICourseBaseInfoService courseBaseInfoService;
+	private ICourseCommonService courseCommonService;
 
 	@Override
 	public List<CourseTeacher> getTeacherList(Long courseId) {
@@ -35,18 +34,7 @@ public class CourseTeacherServiceImpl extends ServiceImpl<CourseTeacherMapper, C
 			BaseException.cast(CommonErrror.REQUEST_NULL);
 		}
 
-		if (companyId == null) {
-			BaseException.cast("机构id不能为空");
-		}
-
-		CourseBase courseBase = courseBaseInfoService.getById(courseTeacherDTO.getCourseId());
-		if (courseBase == null) {
-			BaseException.cast("课程不存在");
-		}
-
-		if (!companyId.equals(courseBase.getCompanyId())) {
-			BaseException.cast("无权限，本机构只能修改本机构的课程");
-		}
+		courseCommonService.checkCoursePermission(courseTeacherDTO.getCourseId(), companyId);
 
 		CourseTeacher courseTeacher = lambdaQuery()
 			.eq(!Objects.isNull(courseTeacherDTO.getId()), CourseTeacher::getId, courseTeacherDTO.getId())
@@ -66,6 +54,7 @@ public class CourseTeacherServiceImpl extends ServiceImpl<CourseTeacherMapper, C
 			return courseTeacher;
 		}
 
+		//更新逻辑
 		BeanUtil.copyProperties(courseTeacherDTO, courseTeacher, true);
 
 		boolean flag = this.updateById(courseTeacher);
@@ -78,13 +67,8 @@ public class CourseTeacherServiceImpl extends ServiceImpl<CourseTeacherMapper, C
 
 	@Override
 	public void deleteItem(Long courseId, Long courseTeacherId, Long companyId) {
-		if (courseId == null || courseTeacherId == null || companyId == null) {
-			BaseException.cast(CommonErrror.REQUEST_NULL);
-		}
 
-		if (courseBaseInfoService.getById(courseId).getCompanyId().equals(companyId)) {
-			BaseException.cast("无权限，本机构只能修改本机构的课程");
-		}
+		courseCommonService.checkCoursePermission(courseId, companyId);
 
 		CourseTeacher courseTeacher = this.getById(courseTeacherId);
 		if (courseTeacher == null) {

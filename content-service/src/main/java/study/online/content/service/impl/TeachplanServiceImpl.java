@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import study.online.base.execption.BaseException;
+import study.online.base.exception.BaseException;
 import study.online.content.mapper.TeachplanMapper;
 import study.online.content.mapper.TeachplanMediaMapper;
 import study.online.content.model.dto.SaveTeachplanDTO;

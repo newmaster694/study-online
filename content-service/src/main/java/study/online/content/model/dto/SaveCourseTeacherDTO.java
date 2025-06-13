@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.ToString;
-import study.online.base.execption.ValidationGroup;
+import study.online.base.exception.ValidationGroup;
 
 @Data
 @ToString

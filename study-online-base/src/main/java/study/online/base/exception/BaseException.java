@@ -1,4 +1,4 @@
-package study.online.base.execption;
+package study.online.base.exception;
 
 import study.online.base.contant.CommonErrror;
 import lombok.Getter;
