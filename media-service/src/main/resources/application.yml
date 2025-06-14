@@ -9,3 +9,9 @@ logging:
             mapper: debug
             service: info
             controller: info
+
+minio:
+    endpoint: http://127.0.0.1:9000
+    accessKey: minioadmin
+    secretKey: minioadmin
+    bucketName: study-online-mediafiles

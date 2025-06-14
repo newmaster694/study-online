@@ -36,6 +36,7 @@
 		<hutool-all.version>5.8.25</hutool-all.version>
 		<okhttp.version>4.12.0</okhttp.version>
 		<elasticsearch.version>8.17.5</elasticsearch.version>
+		<minio.version>8.5.12</minio.version>
 	</properties>
 
 	<dependencyManagement>
@@ -97,6 +98,12 @@
 				<groupId>org.elasticsearch</groupId>
 				<artifactId>elasticsearch</artifactId>
 				<version>${elasticsearch.version}</version>
+			</dependency>
+			<!-- minio -->
+			<dependency>
+				<groupId>io.minio</groupId>
+				<artifactId>minio</artifactId>
+				<version>${minio.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
