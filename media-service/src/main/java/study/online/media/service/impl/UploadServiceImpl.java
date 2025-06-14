@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.springframework.aop.framework.AopContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import study.online.base.exception.BaseException;
@@ -31,9 +32,6 @@ public class UploadServiceImpl implements IUploadService {
 	@Resource
 	private MediaFilesMapper mediaFilesMapper;
 
-	@Resource
-	private IUploadService proxy;//代理对象
-
 	@Override
 	public UploadFileResultDTO uploadFile(Long companyId, UploadFileParamsDTO uploadFileParamsDTO, String absolutePath) throws FileNotFoundException {
 		File file = new File(absolutePath);
@@ -57,6 +55,10 @@ public class UploadServiceImpl implements IUploadService {
 			new FileInputStream(file));
 
 		uploadFileParamsDTO.setFileSize(file.length());
+
+		//代理对象
+		IUploadService proxy = (IUploadService) AopContext.currentProxy();
+
 		MediaFiles mediaFiles = proxy.addMediaFilesToDB(companyId, md5, uploadFileParamsDTO, objectname);
 
 		UploadFileResultDTO result = new UploadFileResultDTO();

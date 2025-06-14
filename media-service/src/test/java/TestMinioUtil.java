@@ -18,9 +18,4 @@ public class TestMinioUtil {
 		FileInputStream fis = new FileInputStream("C:\\Users\\newmaster\\Desktop\\新建 Markdown File.md");
 		minioUtil.uploadFile("test-bucket", "aaa.md", fis);
 	}
-
-	@Test
-	public void getmimeType() {
-		System.out.println(minioUtil.getFileStatusInfo("test-bucket", "aaa.md"));
-	}
 }
