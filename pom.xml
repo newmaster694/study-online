@@ -30,7 +30,7 @@
 		<spring-cloud-alibaba.version>2023.0.1.0</spring-cloud-alibaba.version>
 		<org.projectlombok.version>1.18.30</org.projectlombok.version>
 		<fastjson2.version>2.0.53</fastjson2.version>
-		<druid-spring-boot-starter.version>1.2.19</druid-spring-boot-starter.version>
+		<druid-spring-boot-starter.version>1.2.23</druid-spring-boot-starter.version>
 		<mysql-connector-j.version>8.3.0</mysql-connector-j.version>
 		<mybatis-plus-spring-boot3-starter.version>3.5.5</mybatis-plus-spring-boot3-starter.version>
 		<hutool-all.version>5.8.25</hutool-all.version>
@@ -66,7 +66,7 @@
 			<!--druid-spring-boot-starter-->
 			<dependency>
 				<groupId>com.alibaba</groupId>
-				<artifactId>druid-spring-boot-starter</artifactId>
+				<artifactId>druid-spring-boot-3-starter</artifactId>
 				<version>${druid-spring-boot-starter.version}</version>
 			</dependency>
 			<!--mysql数据库驱动-->
