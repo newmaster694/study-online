@@ -5,8 +5,11 @@ import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.aop.framework.AopContext;
+import org.springframework.http.MediaType;
+import org.springframework.http.MediaTypeFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import study.online.base.exception.BaseException;
 import study.online.media.mapper.MediaFilesMapper;
 import study.online.media.model.dto.UploadFileParamsDTO;
@@ -15,12 +18,11 @@ import study.online.media.model.po.MediaFiles;
 import study.online.media.service.IUploadService;
 import study.online.media.utils.MinioUtil;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -33,10 +35,9 @@ public class UploadServiceImpl implements IUploadService {
 	private MediaFilesMapper mediaFilesMapper;
 
 	@Override
-	public UploadFileResultDTO uploadFile(Long companyId, UploadFileParamsDTO uploadFileParamsDTO, String absolutePath) throws FileNotFoundException {
-		File file = new File(absolutePath);
-		if (file.exists()) {
-			BaseException.cast("文件不存在！");
+	public UploadFileResultDTO uploadFile(Long companyId, UploadFileParamsDTO uploadFileParamsDTO, MultipartFile file) {
+		if (file.isEmpty()) {
+			BaseException.cast("文件不存在");
 		}
 
 		String filename = uploadFileParamsDTO.getFilename();
@@ -48,13 +49,10 @@ public class UploadServiceImpl implements IUploadService {
 		//拼接objectname
 		String objectname = defaultFolderPath + md5 + extension;
 
-		//文件上传
-		minioUtil.uploadFile(
-			"study-online-mediafiles",
-			objectname,
-			new FileInputStream(file));
+		String contentType = this.getContentType(filename);
 
-		uploadFileParamsDTO.setFileSize(file.length());
+		//文件上传
+		minioUtil.uploadFile("study-online-mediafiles", file, objectname, contentType);
 
 		//代理对象
 		IUploadService proxy = (IUploadService) AopContext.currentProxy();
@@ -99,9 +97,9 @@ public class UploadServiceImpl implements IUploadService {
 	}
 
 	/*获取文件的md5*/
-	private String getFileMd5(File file) {
-		try (FileInputStream fileInputStream = new FileInputStream(file)) {
-			return DigestUtils.md5Hex(fileInputStream);
+	private String getFileMd5(MultipartFile file) {
+		try (InputStream inputStream = file.getInputStream()) {
+			return DigestUtils.md5Hex(inputStream);
 		} catch (Exception e) {
 			log.error("获取文件md5值失败:{}", e.getMessage());
 			return null;
@@ -114,4 +112,9 @@ public class UploadServiceImpl implements IUploadService {
 		return sdf.format(new Date()).replace("-", "/") + "/";
 	}
 
+	/*根据文件名，设置HttpServletResponse的ContentType*/
+	private String getContentType(String fileName) {
+		Optional<MediaType> mediaType = MediaTypeFactory.getMediaType(fileName);
+		return String.valueOf(mediaType.orElse(MediaType.APPLICATION_OCTET_STREAM));
+	}
 }
