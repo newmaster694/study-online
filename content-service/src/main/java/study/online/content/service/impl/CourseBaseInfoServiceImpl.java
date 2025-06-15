@@ -21,6 +21,8 @@ import study.online.content.service.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static study.online.base.constant.ErrorMessageConstant.*;
+
 @Service
 public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, CourseBase>
 		implements ICourseBaseInfoService {
@@ -36,9 +38,6 @@ public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, Cou
 
 	@Resource
 	private ICourseTeacherService courseTeacherService;
-
-	@Resource
-	private ICourseCommonService courseCommonService;
 
 	@Override
 	public Page<CourseBase> queryCourseBaseList(PageParams pageParams, QueryCourseParamsDTO queryCourseParamsDTO) {
@@ -78,7 +77,7 @@ public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, Cou
 		boolean flagOfSaveCourseBase = this.save(courseBase);
 
 		if (!flagOfSaveCourseBase) {
-			throw new BaseException("新增课程基本信息失败");
+			throw new BaseException(FAIL_CREATE_COURSE_INFO);
 		}
 
 		//向课程营销表保存课程营销信息
@@ -89,7 +88,7 @@ public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, Cou
 		boolean flagOfSaveCourseMarket = this.saveCourseMarket(courseMarket);
 
 		if (!flagOfSaveCourseMarket) {
-			throw new BaseException("新增课营销信息失败");
+			throw new BaseException(FAIL_CREATE_COURSE_MARKET);
 		}
 
 		//查询课程基本信息及营销信息并返回
@@ -127,10 +126,15 @@ public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, Cou
 	@Override
 	@Transactional
 	public CourseBaseInfoDTO updateCourseBase(Long companyId, EditCourseDTO editCourseDTO) {
-		Long courseId = editCourseDTO.getId();
-		CourseBase courseBase = this.getById(courseId);
+		CourseBase courseBase = this.getById(editCourseDTO.getId());
 
-		courseCommonService.checkCoursePermission(courseId, companyId);
+		if (courseBase == null) {
+			BaseException.cast(UN_FIND_COURSE);
+		}
+
+		if (!companyId.equals(courseBase.getCompanyId())) {
+			BaseException.cast(COMPANY_INFORMATION_MISMATCH);
+		}
 
 		//封装基本信息数据
 		BeanUtil.copyProperties(editCourseDTO, courseBase, true);
@@ -145,17 +149,24 @@ public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, Cou
 		this.saveCourseMarket(courseMarket);
 
 		//查询课程信息
-		return this.getCourseBaseInfo(courseId);
+		return this.getCourseBaseInfo(editCourseDTO.getId());
 	}
 
 	@Override
 	@Transactional
 	public void deleteItem(Long courseId, Long companyId) {
-		courseCommonService.checkCoursePermission(courseId, companyId);
 		CourseBase courseBase = this.getById(courseId);
 
+		if (courseBase == null) {
+			BaseException.cast(UN_FIND_COURSE);
+		}
+
+		if (!companyId.equals(courseBase.getCompanyId())) {
+			BaseException.cast(COMPANY_INFORMATION_MISMATCH);
+		}
+
 		if (!courseBase.getAuditStatus().equals("202002")) {
-			BaseException.cast("审核状态不符，请确保课程未提交，删除失败");
+			BaseException.cast(AUDIT_STATUS_MISMATCH);
 		}
 
 		this.removeById(courseId);
@@ -187,12 +198,12 @@ public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, Cou
 	private boolean saveCourseMarket(CourseMarket courseMarket) {
 		//收费规则
 		if (StrUtil.isBlank(courseMarket.getCharge())) {
-			throw new BaseException("收费规则没有选择");
+			throw new BaseException(CHARGING_RULES_NOT_SELECTED);
 		}
 
 		if (courseMarket.getCharge().equals("201001")) {
 			if (courseMarket.getPrice() == null || courseMarket.getPrice() <= 0) {
-				throw new BaseException("收费课程的收费金额必须要大于0！");
+				throw new BaseException(ILLEGAL_CHARGES);
 			}
 		}
 

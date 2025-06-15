@@ -1,6 +1,6 @@
 package study.online.base.advice;
 
-import study.online.base.contant.CommonErrror;
+import study.online.base.constant.CommonErrrorEnum;
 import study.online.base.exception.BaseException;
 import study.online.base.result.ResultError;
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +38,7 @@ public class BaseExceptionAdvice {
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	public ResultError execption(Exception exception) {
 		log.error("异常信息：{}", exception.getMessage());
-		return new ResultError(List.of(CommonErrror.UNKNOW_ERROR.getErrMessage()));
+		return new ResultError(List.of(CommonErrrorEnum.UNKNOW_ERROR.getErrMessage()));
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)

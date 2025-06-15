@@ -1,9 +1,9 @@
-package study.online.base.contant;
+package study.online.base.constant;
 
 import lombok.Getter;
 
 @Getter
-public enum CommonErrror {
+public enum CommonErrrorEnum {
 	UNKNOW_ERROR("执行过程异常，请重试！"),
 	PARAMS_ERROR("非法参数"),
 	OBJECT_NULL("对象为空"),
@@ -12,7 +12,7 @@ public enum CommonErrror {
 
 	private final String errMessage;
 
-	CommonErrror(String errMessage) {
+	CommonErrrorEnum(String errMessage) {
 		this.errMessage = errMessage;
 	}
 }

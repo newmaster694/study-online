@@ -1,6 +1,6 @@
 package study.online.base.exception;
 
-import study.online.base.contant.CommonErrror;
+import study.online.base.constant.CommonErrrorEnum;
 import lombok.Getter;
 
 @Getter
@@ -12,8 +12,8 @@ public class BaseException extends RuntimeException {
 		this.errMessage = message;
 	}
 
-	public static void cast(CommonErrror commonErrror) {
-		throw new BaseException(commonErrror.getErrMessage());
+	public static void cast(CommonErrrorEnum commonErrrorEnum) {
+		throw new BaseException(commonErrrorEnum.getErrMessage());
 	}
 
 	public static void cast(String errMessage) {

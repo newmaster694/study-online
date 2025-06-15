@@ -4,24 +4,26 @@ import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
-import study.online.base.contant.CommonErrror;
+import study.online.base.constant.CommonErrrorEnum;
 import study.online.base.exception.BaseException;
+import study.online.content.mapper.CourseBaseMapper;
 import study.online.content.mapper.CourseTeacherMapper;
 import study.online.content.model.dto.SaveCourseTeacherDTO;
 import study.online.content.model.po.CourseTeacher;
-import study.online.content.service.ICourseCommonService;
 import study.online.content.service.ICourseTeacherService;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
+import static study.online.base.constant.ErrorMessageConstant.*;
+
 @Service
 public class CourseTeacherServiceImpl extends ServiceImpl<CourseTeacherMapper, CourseTeacher>
 	implements ICourseTeacherService {
 
 	@Resource
-	private ICourseCommonService courseCommonService;
+	private CourseBaseMapper courseBaseMapper;
 
 	@Override
 	public List<CourseTeacher> getTeacherList(Long courseId) {
@@ -31,10 +33,16 @@ public class CourseTeacherServiceImpl extends ServiceImpl<CourseTeacherMapper, C
 	@Override
 	public CourseTeacher addTeacherInfo(SaveCourseTeacherDTO courseTeacherDTO, Long companyId) {
 		if (courseTeacherDTO == null) {
-			BaseException.cast(CommonErrror.REQUEST_NULL);
+			BaseException.cast(CommonErrrorEnum.REQUEST_NULL);
 		}
 
-		courseCommonService.checkCoursePermission(courseTeacherDTO.getCourseId(), companyId);
+		if (courseBaseMapper.selectById(courseTeacherDTO.getCourseId()) == null) {
+			BaseException.cast(UN_FIND_COURSE);
+		}
+
+		if (!companyId.equals(courseBaseMapper.selectById(courseTeacherDTO.getCourseId()).getCompanyId())) {
+			BaseException.cast(COMPANY_INFORMATION_MISMATCH);
+		}
 
 		CourseTeacher courseTeacher = lambdaQuery()
 			.eq(!Objects.isNull(courseTeacherDTO.getId()), CourseTeacher::getId, courseTeacherDTO.getId())
@@ -48,7 +56,7 @@ public class CourseTeacherServiceImpl extends ServiceImpl<CourseTeacherMapper, C
 			courseTeacher.setCreateDate(LocalDateTime.now());
 			boolean flag = this.save(courseTeacher);
 			if (!flag) {
-				BaseException.cast("新增教师资料失败，请联系管理员");
+				BaseException.cast(FAIL_ADD_TEACHER_INFO);
 			}
 
 			return courseTeacher;
@@ -59,7 +67,7 @@ public class CourseTeacherServiceImpl extends ServiceImpl<CourseTeacherMapper, C
 
 		boolean flag = this.updateById(courseTeacher);
 		if (!flag) {
-			BaseException.cast("更新失败，请联系管理员");
+			BaseException.cast(FAIL_UPDATE_TEACHER_INFO);
 		}
 
 		return courseTeacher;
@@ -67,12 +75,17 @@ public class CourseTeacherServiceImpl extends ServiceImpl<CourseTeacherMapper, C
 
 	@Override
 	public void deleteItem(Long courseId, Long courseTeacherId, Long companyId) {
+		if (courseBaseMapper.selectById(courseId) == null) {
+			BaseException.cast(UN_FIND_COURSE);
+		}
 
-		courseCommonService.checkCoursePermission(courseId, companyId);
+		if (!companyId.equals(courseBaseMapper.selectById(courseId).getCompanyId())) {
+			BaseException.cast(COMPANY_INFORMATION_MISMATCH);
+		}
 
 		CourseTeacher courseTeacher = this.getById(courseTeacherId);
 		if (courseTeacher == null) {
-			BaseException.cast(CommonErrror.OBJECT_NULL);
+			BaseException.cast(CommonErrrorEnum.OBJECT_NULL);
 		}
 
 		this.removeById(courseTeacherId);
