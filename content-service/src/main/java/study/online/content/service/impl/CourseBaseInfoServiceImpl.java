@@ -5,7 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import jakarta.annotation.Resource;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import study.online.base.exception.BaseException;
@@ -24,20 +24,14 @@ import java.util.List;
 import static study.online.base.constant.ErrorMessageConstant.*;
 
 @Service
+@RequiredArgsConstructor
 public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, CourseBase>
 		implements ICourseBaseInfoService {
 
-	@Resource
-	private ICourseMarketService courseMarketService;
-
-	@Resource
-	private ICourseCategoryService courseCategoryService;
-
-	@Resource
-	private ITeachplanService teachplanService;
-
-	@Resource
-	private ICourseTeacherService courseTeacherService;
+	private final ICourseMarketService courseMarketService;
+	private final ICourseCategoryService courseCategoryService;
+	private final ITeachplanService teachplanService;
+	private final ICourseTeacherService courseTeacherService;
 
 	@Override
 	public Page<CourseBase> queryCourseBaseList(PageParams pageParams, QueryCourseParamsDTO queryCourseParamsDTO) {
