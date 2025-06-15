@@ -25,10 +25,6 @@ public class MinioConfig {
 	@Value("${minio.secretKey}")
 	private String secretKey;
 
-	/*默认存储桶*/
-	@Value("${minio.bucketName}")
-	private String bucketName;
-
 	@Bean
 	public MinioClient minioClient() {
 		return MinioClient.builder()

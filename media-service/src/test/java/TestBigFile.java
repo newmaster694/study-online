@@ -1,3 +1,6 @@
+import io.minio.MinioClient;
+import io.minio.UploadObjectArgs;
+import jakarta.annotation.Resource;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -14,6 +17,9 @@ import java.util.List;
 
 @SpringBootTest(classes = MediaApplication.class)
 public class TestBigFile {
+
+	@Resource
+	private MinioClient minioClient;
 
 	/*测试文件分块*/
 	@Test
@@ -112,5 +118,36 @@ public class TestBigFile {
 				System.out.println("文件合并失败");
 			}
 		}
+	}
+
+	@Test
+	public void uploadChunk() {
+		String chunkFolderPath = "C:\\Users\\newmaster\\Desktop\\bigfile_test\\chunk\\";
+
+		File chunkFolder = new File(chunkFolderPath);
+
+		/*分块文件*/
+		File[] files = chunkFolder.listFiles();
+
+		//这里转成集合，易于排序
+		Assertions.assertNotNull(files);//这里利用JUnit5的方法断言files不为空
+		List<File> fileList = Arrays.asList(files);
+
+		fileList.sort(Comparator.comparingInt(o -> Integer.parseInt(o.getName())));
+		for (File file : fileList) {
+			try {
+				UploadObjectArgs uploadObjectArgs = UploadObjectArgs.builder()
+					.bucket("study-online-mediafiles")
+					.object("chunk/" + file.getName())
+					.filename(file.getAbsolutePath())
+					.build();
+
+				minioClient.uploadObject(uploadObjectArgs);
+			} catch (Exception e) {
+				System.out.println("上传失败");
+			}
+		}
+
+		System.out.println("上传成功");
 	}
 }
