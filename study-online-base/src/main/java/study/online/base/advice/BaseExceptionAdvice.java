@@ -1,8 +1,5 @@
 package study.online.base.advice;
 
-import study.online.base.constant.CommonErrrorEnum;
-import study.online.base.exception.BaseException;
-import study.online.base.result.ResultError;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -10,9 +7,13 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import study.online.base.exception.BaseException;
+import study.online.base.result.ResultError;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static study.online.base.constant.ErrorMessageConstant.UNKNOW_ERROR;
 
 /**
  * 全局异常处理（必须要保证这个类被其他的Spring Boot微服务的运行主类被扫描到才能够正确使用！！）
@@ -38,7 +39,7 @@ public class BaseExceptionAdvice {
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	public ResultError execption(Exception exception) {
 		log.error("异常信息：{}", exception.getMessage());
-		return new ResultError(List.of(CommonErrrorEnum.UNKNOW_ERROR.getErrMessage()));
+		return new ResultError(List.of(UNKNOW_ERROR));
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)

@@ -1,6 +1,12 @@
 package study.online.base.constant;
 
 public class ErrorMessageConstant {
+	public static final String UNKNOW_ERROR = "执行过程异常，请重试！";
+	public static final String PARAMS_ERROR = "非法参数";
+	public static final String OBJECT_NULL = "空对象异常";
+	public static final String QUERY_NULL = "查询结果为空";
+	public static final String REQUEST_NULL = "必要请求参数为空";
+
 	public static final String UN_FIND_COURSE = "找不到课程";
 	public static final String COMPANY_INFORMATION_MISMATCH = "机构信息不匹配";
 	public static final String FAIL_CREATE_COURSE_MARKET = "课程营销信息添加失败";

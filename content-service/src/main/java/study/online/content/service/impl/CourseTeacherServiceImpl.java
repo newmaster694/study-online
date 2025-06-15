@@ -4,7 +4,6 @@ import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
-import study.online.base.constant.CommonErrrorEnum;
 import study.online.base.exception.BaseException;
 import study.online.content.mapper.CourseBaseMapper;
 import study.online.content.mapper.CourseTeacherMapper;
@@ -33,7 +32,7 @@ public class CourseTeacherServiceImpl extends ServiceImpl<CourseTeacherMapper, C
 	@Override
 	public CourseTeacher addTeacherInfo(SaveCourseTeacherDTO courseTeacherDTO, Long companyId) {
 		if (courseTeacherDTO == null) {
-			BaseException.cast(CommonErrrorEnum.REQUEST_NULL);
+			BaseException.cast(REQUEST_NULL);
 		}
 
 		if (courseBaseMapper.selectById(courseTeacherDTO.getCourseId()) == null) {
@@ -85,7 +84,7 @@ public class CourseTeacherServiceImpl extends ServiceImpl<CourseTeacherMapper, C
 
 		CourseTeacher courseTeacher = this.getById(courseTeacherId);
 		if (courseTeacher == null) {
-			BaseException.cast(CommonErrrorEnum.OBJECT_NULL);
+			BaseException.cast(OBJECT_NULL);
 		}
 
 		this.removeById(courseTeacherId);
