@@ -1,6 +1,7 @@
 import io.minio.MinioClient;
 import io.minio.UploadObjectArgs;
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,7 @@ import java.util.Comparator;
 import java.util.List;
 
 @SpringBootTest(classes = MediaApplication.class)
+@Slf4j
 public class TestBigFile {
 
 	@Resource
@@ -129,12 +131,8 @@ public class TestBigFile {
 		/*分块文件*/
 		File[] files = chunkFolder.listFiles();
 
-		//这里转成集合，易于排序
-		Assertions.assertNotNull(files);//这里利用JUnit5的方法断言files不为空
-		List<File> fileList = Arrays.asList(files);
-
-		fileList.sort(Comparator.comparingInt(o -> Integer.parseInt(o.getName())));
-		for (File file : fileList) {
+		Assertions.assertNotNull(files);
+		for (File file : files) {
 			try {
 				UploadObjectArgs uploadObjectArgs = UploadObjectArgs.builder()
 					.bucket("study-online-mediafiles")
@@ -143,9 +141,11 @@ public class TestBigFile {
 					.build();
 
 				minioClient.uploadObject(uploadObjectArgs);
-			} catch (Exception e) {
-				System.out.println("上传失败");
+			} catch (Exception exception) {
+				log.error("上传失败");
 			}
+
+			log.info("上传成功");
 		}
 
 		System.out.println("上传成功");
