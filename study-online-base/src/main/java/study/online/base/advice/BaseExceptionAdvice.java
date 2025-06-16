@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import study.online.base.exception.BaseException;
-import study.online.base.result.ResultError;
+import study.online.base.model.RestResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,21 +30,21 @@ public class BaseExceptionAdvice {
 	 */
 	@ExceptionHandler(BaseException.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	public ResultError bussinessExceptionHandler(BaseException exception) {
+	public RestResponse<Object> bussinessExceptionHandler(BaseException exception) {
 		log.error("异常信息：{}", exception.getMessage());
-		return new ResultError(List.of(exception.getMessage()));
+		return RestResponse.validFail(exception.getMessage());
 	}
 
 	@ExceptionHandler(Exception.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	public ResultError execption(Exception exception) {
+	public RestResponse<Object> execption(Exception exception) {
 		log.error("异常信息：{}", exception.getMessage());
-		return new ResultError(List.of(UNKNOW_ERROR));
+		return RestResponse.validFail(UNKNOW_ERROR);
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	public ResultError methodArgumentNotValidException(MethodArgumentNotValidException exception) {
+	public RestResponse<Object> methodArgumentNotValidException(MethodArgumentNotValidException exception) {
 		BindingResult bindingResult = exception.getBindingResult();
 		List<String> msgList = new ArrayList<>();
 
@@ -55,6 +55,6 @@ public class BaseExceptionAdvice {
 		String msg = String.join(";", msgList);
 		log.error("异常信息：{}", msg);
 
-		return new ResultError(msgList);
+		return RestResponse.validFail(msg);
 	}
 }
