@@ -4,7 +4,9 @@ import cn.hutool.core.codec.Base64;
 import com.alibaba.cloud.commons.lang.StringUtils;
 import io.minio.*;
 import io.minio.http.Method;
+import io.minio.messages.DeleteError;
 import io.minio.messages.DeleteObject;
+import io.minio.messages.Item;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -16,8 +18,8 @@ import java.io.InputStream;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @Slf4j
@@ -105,9 +107,9 @@ public class MinioUtil {
 	/**
 	 * 图片上传
 	 *
-	 * @param bucketName 存储桶名称
+	 * @param bucketName  存储桶名称
 	 * @param imageBase64 Base64编码的文件
-	 * @param imageName 文件名
+	 * @param imageName   文件名
 	 * @return ObjectWriteResponse
 	 */
 	public ObjectWriteResponse uploadImage(String bucketName, String imageBase64, String imageName) {
@@ -207,19 +209,39 @@ public class MinioUtil {
 	/**
 	 * 批量删除文件
 	 *
-	 * @param bucketName 存储桶
-	 * @param keys       需要删除的文件列表
+	 * @param bucketName  存储桶名称
+	 * @param objectNames 需要删除的文件对象名列表
 	 */
-	public void removeFiles(String bucketName, List<String> keys) {
-		List<DeleteObject> objects = new LinkedList<>();
-		keys.forEach(s -> {
-			objects.add(new DeleteObject(s));
-			try {
-				removeFile(bucketName, s);
-			} catch (Exception e) {
-				log.error("[Minio工具类]>>>> 批量删除文件，异常：", e);
+	public void removeFiles(String bucketName, List<String> objectNames) {
+		if (objectNames == null || objectNames.isEmpty()) {
+			return;
+		}
+
+		// 构建待删除对象列表
+		List<DeleteObject> deleteObjects = objectNames.stream()
+			.map(DeleteObject::new)
+			.collect(Collectors.toList());
+
+		// 构造删除请求
+		RemoveObjectsArgs args = RemoveObjectsArgs.builder()
+			.bucket(bucketName)
+			.objects(deleteObjects)
+			.build();
+
+		try {
+			// 执行批量删除
+			Iterable<Result<DeleteError>> results = minioClient.removeObjects(args);
+
+			// 处理结果（记录失败项）
+			for (Result<DeleteError> result : results) {
+				DeleteError error = result.get();
+				if (error != null) {
+					log.warn("删除失败: {}，错误信息: {}", error.objectName(), error.message());
+				}
 			}
-		});
+		} catch (Exception e) {
+			log.error("[Minio工具类] 批量删除文件时发生异常", e);
+		}
 	}
 
 	/**
@@ -234,6 +256,23 @@ public class MinioUtil {
 	public String getPresignedObjectUrl(String bucketName, String objectName, Integer expires) {
 		GetPresignedObjectUrlArgs args = GetPresignedObjectUrlArgs.builder().expiry(expires).bucket(bucketName).object(objectName).build();
 		return minioClient.getPresignedObjectUrl(args);
+	}
+
+	/**
+	 * 获取路径下文件列表
+	 *
+	 * @param bucketName 存储桶
+	 * @param prefix     文件名称
+	 * @param recursive  是否递归查找，false：模拟文件夹结构查找
+	 * @return 二进制流
+	 */
+	public Iterable<Result<Item>> listObjects(String bucketName, String prefix, boolean recursive) {
+		return minioClient.listObjects(
+			ListObjectsArgs.builder()
+				.bucket(bucketName)
+				.prefix(prefix)
+				.recursive(recursive)
+				.build());
 	}
 
 	/**

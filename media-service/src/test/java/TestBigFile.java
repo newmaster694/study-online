@@ -1,5 +1,5 @@
-import io.minio.MinioClient;
-import io.minio.UploadObjectArgs;
+import io.minio.*;
+import io.minio.messages.Item;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -7,11 +7,13 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import study.online.media.MediaApplication;
+import study.online.media.utils.MinioUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -22,6 +24,9 @@ public class TestBigFile {
 
 	@Resource
 	private MinioClient minioClient;
+
+	@Resource
+	private MinioUtil minioUtil;
 
 	/*测试文件分块*/
 	@Test
@@ -149,5 +154,77 @@ public class TestBigFile {
 		}
 
 		System.out.println("上传成功");
+	}
+
+
+	/*合并文件，要求分块文件最小5M*/
+	@Test
+	public void test_merge() throws Exception {
+		String bucketName = "study-online-mediafiles";
+		String chunkPrefix = "chunk/";
+
+		try {
+			List<String> sortedChunkFiles = this.getSortedChunkFiles(bucketName, chunkPrefix);
+
+			if (sortedChunkFiles.isEmpty()) {
+				log.debug("未找到有效的分块文件");
+			}
+
+			/*构建composeSource列表*/
+			List<ComposeSource> sources = sortedChunkFiles.stream()
+				.map(objectName -> ComposeSource.builder()
+					.bucket(bucketName)
+					.object(objectName)
+					.build())
+				.toList();
+
+			ComposeObjectArgs composeObjectArgs = ComposeObjectArgs.builder()
+				.bucket("study-online-mediafiles")
+				.object("merge01.mp4")
+				.sources(sources)
+				.build();
+			minioClient.composeObject(composeObjectArgs);
+		} catch (Exception exception) {
+			log.error("合并文件失败");
+		}
+	}
+
+	/*清除分块文件*/
+	@Test
+	public void test_removeObjects() throws Exception {
+		String bucketName = "study-online-mediafiles";
+		String chunkPrefix = "chunk/";
+
+		List<String> sortedChunkFiles = this.getSortedChunkFiles(bucketName, chunkPrefix);
+
+		minioUtil.removeFiles(bucketName, sortedChunkFiles);
+	}
+
+	/*获取指定路径下的所有分块文件，并按文件名数字升序排序*/
+	private List<String> getSortedChunkFiles(String bucketName, String prefix) throws Exception {
+		List<String> files = new ArrayList<>();
+
+		// 调用封装好的 listObjects 方法
+		Iterable<Result<Item>> results = minioUtil.listObjects(bucketName, prefix, false);
+
+		for (Result<Item> result : results) {
+			Item item = result.get();
+			if (!item.isDir()) {
+				String objectName = item.objectName();
+				String fileName = objectName.substring(prefix.length());
+				if (fileName.matches("\\d+")) { // 只保留纯数字命名的文件
+					files.add(objectName);
+				}
+			}
+		}
+
+		// 按文件名数字升序排序
+		files.sort((a, b) -> {
+			int numA = Integer.parseInt(a.substring(prefix.length()));
+			int numB = Integer.parseInt(b.substring(prefix.length()));
+			return Integer.compare(numA, numB);
+		});
+
+		return files;
 	}
 }
