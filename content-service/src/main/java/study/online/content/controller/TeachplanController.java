@@ -21,7 +21,7 @@ public class TeachplanController {
 	 * 查询课程计划树结构
 	 *
 	 * @param courseId 课程id
-	 * @return List(TeachplanDTO)
+	 * @return {@code List<TeachplanDTO>}
 	 */
 	@GetMapping("/{courseId}/tree-nodes")
 	public List<TeachplanDTO> getTreeNodes(@PathVariable Long courseId) {

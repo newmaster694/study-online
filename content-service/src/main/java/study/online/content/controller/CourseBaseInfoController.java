@@ -27,7 +27,7 @@ public class CourseBaseInfoController {
 	 *
 	 * @param pageParams           基础分页查询参数
 	 * @param queryCourseParamsDTO 课程分页查询参数
-	 * @return Mybatis-Plus->Page(CourseBase)
+	 * @return {@code Page<CourseBase>}
 	 */
 	@PostMapping("/list")
 	public Page<CourseBase> list(

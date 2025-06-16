@@ -26,7 +26,7 @@ public class BaseExceptionAdvice {
 	 * <p>捕获业务异常</p>
 	 *
 	 * @param exception 捕获的异常
-	 * @return 返回错误响应
+	 * @return {@code RestResponse<Object>}
 	 */
 	@ExceptionHandler(BaseException.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

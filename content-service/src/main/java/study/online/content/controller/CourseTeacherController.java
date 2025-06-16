@@ -23,7 +23,7 @@ public class CourseTeacherController {
 	 * 师资信息列表查询接口
 	 *
 	 * @param courseId 课程id
-	 * @return List(CourseTeacher)
+	 * @return {@code List<CourseTeacher>}
 	 */
 	@GetMapping("/list/{courseId}")
 	public List<CourseTeacher> getList(@PathVariable Long courseId) {

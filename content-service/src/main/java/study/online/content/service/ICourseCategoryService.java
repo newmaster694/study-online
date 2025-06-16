@@ -11,7 +11,7 @@ public interface ICourseCategoryService extends IService<CourseCategory> {
 	 * <p>课程分类树形结构查询</p>
 	 *
 	 * @param id 父节点id
-	 * @return List(CourseCategoryTreeDTO)
+	 * @return {@code List<CourseCategoryTreeDTO>}
 	 */
 	List<CourseCategoryTreeDTO> queryTreeNodes(String id);
 }

@@ -22,7 +22,7 @@ public interface ICourseBaseInfoService extends IService<CourseBase> {
 	 *
 	 * @param pageParams           分页参数
 	 * @param queryCourseParamsDTO 分页条件
-	 * @return Page(CourseBase)
+	 * @return {@code Page<CourseBase>}
 	 * @since 2025/6/4
 	 */
 	Page<CourseBase> queryCourseBaseList(PageParams pageParams, QueryCourseParamsDTO queryCourseParamsDTO);

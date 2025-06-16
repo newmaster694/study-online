@@ -21,7 +21,7 @@ public class CourseCategoryController {
 	/**
 	 * 查询课程分类树节点接口
 	 *
-	 * @return List(CourseCategoryTreeDTO)
+	 * @return {@code List<CourseCategoryTreeDTO>}
 	 */
 	@GetMapping("/tree-nodes")
 	public List<CourseCategoryTreeDTO> queryTreeNodes() {

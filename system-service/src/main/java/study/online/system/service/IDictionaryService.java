@@ -16,7 +16,7 @@ public interface IDictionaryService extends IService<Dictionary> {
 	/**
 	 * 查询所有数据字典内容
 	 *
-	 * @return List<Dictionary>
+	 * @return {@code List<Dictionary>}
 	 */
 	List<Dictionary> queryAll();
 

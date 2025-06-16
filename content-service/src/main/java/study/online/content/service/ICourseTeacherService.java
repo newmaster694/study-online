@@ -18,7 +18,7 @@ public interface ICourseTeacherService extends IService<CourseTeacher> {
 	 * 师资信息列表查询
 	 *
 	 * @param courseId 课程id
-	 * @return List(CourseTeacher)
+	 * @return {@code List<CourseTeacher>}
 	 */
 	List<CourseTeacher> getTeacherList(Long courseId);
 
