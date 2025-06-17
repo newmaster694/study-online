@@ -74,6 +74,7 @@ public class TestBigFile {
 		rafRead.close();
 	}
 
+	/*测试本地文件合并*/
 	@Test
 	public void testMerge() throws IOException {
 		File chunkFolder = new File("C:\\Users\\newmaster\\Desktop\\bigfile_test\\chunk\\");
@@ -127,6 +128,7 @@ public class TestBigFile {
 		}
 	}
 
+	/*测试上传分块文件*/
 	@Test
 	public void uploadChunk() {
 		String chunkFolderPath = "C:\\Users\\newmaster\\Desktop\\bigfile_test\\chunk\\";
@@ -157,7 +159,7 @@ public class TestBigFile {
 	}
 
 
-	/*合并文件，要求分块文件最小5M*/
+	/*测试合并minio的分块文件*/
 	@Test
 	public void test_merge() throws Exception {
 		String bucketName = "study-online-mediafiles";
@@ -189,7 +191,7 @@ public class TestBigFile {
 		}
 	}
 
-	/*清除分块文件*/
+	/*清除minio分块文件*/
 	@Test
 	public void test_removeObjects() throws Exception {
 		String bucketName = "study-online-mediafiles";

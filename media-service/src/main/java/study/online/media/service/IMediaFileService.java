@@ -44,4 +44,14 @@ public interface IMediaFileService {
 	 * @return {@code RestResponse<Boolean>}
 	 */
 	RestResponse<Boolean> checkChunk(String fileMD5, Integer chunkIndex);
+
+	/**
+	 * 上传分块文件
+	 *
+	 * @param fileMD5            文件MD5值
+	 * @param chunk              分块文件序号
+	 * @param localChunkFilePath 分块文件本地路径
+	 * @return {@code RestResponse<Boolean>}
+	 */
+	RestResponse<Boolean> uploadChunk(String fileMD5, int chunk, String localChunkFilePath);
 }

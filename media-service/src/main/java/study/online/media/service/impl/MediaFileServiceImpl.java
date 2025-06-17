@@ -1,6 +1,7 @@
 package study.online.media.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import io.minio.ObjectWriteResponse;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -124,6 +125,20 @@ public class MediaFileServiceImpl implements IMediaFileService {
 		}
 
 		return RestResponse.success(false);
+	}
+
+	@Override
+	public RestResponse<Boolean> uploadChunk(String fileMD5, int chunk, String localChunkFilePath) {
+		String chunkFileFolderPath = this.getChunkFileFolderPath(fileMD5);
+		String chunkFilePath = chunkFileFolderPath + chunk;
+
+		ObjectWriteResponse response = minioUtil.uploadFile(MEDIA_CHUNK_PATH_BUCKET, chunkFilePath, localChunkFilePath);
+		if (response == null) {
+			log.debug("上传分块文件失败:{}", chunkFilePath);
+			return RestResponse.validFail(false, "上传分块失败");
+		}
+
+		return RestResponse.success(true);
 	}
 
 	/*得到分块文件目录*/
