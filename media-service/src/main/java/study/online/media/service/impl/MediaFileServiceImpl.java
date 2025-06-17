@@ -11,11 +11,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import study.online.base.exception.BaseException;
+import study.online.base.model.RestResponse;
 import study.online.media.mapper.MediaFilesMapper;
 import study.online.media.model.dto.UploadFileParamsDTO;
 import study.online.media.model.dto.UploadFileResultDTO;
 import study.online.media.model.po.MediaFiles;
-import study.online.media.service.IUploadService;
+import study.online.media.service.IMediaFileService;
 import study.online.media.utils.MinioUtil;
 
 import java.io.InputStream;
@@ -24,9 +25,12 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Optional;
 
+import static study.online.base.constant.MediaFilePathConstant.MEDIA_CHUNK_PATH_BUCKET;
+import static study.online.base.constant.MediaFilePathConstant.MEDIA_FILE_PATH_BUCKET;
+
 @Service
 @Slf4j
-public class UploadServiceImpl implements IUploadService {
+public class MediaFileServiceImpl implements IMediaFileService {
 
 	@Resource
 	private MinioUtil minioUtil;
@@ -52,10 +56,10 @@ public class UploadServiceImpl implements IUploadService {
 		String contentType = this.getContentType(filename);
 
 		//文件上传
-		minioUtil.uploadFile("study-online-mediafiles", file, objectname, contentType);
+		minioUtil.uploadFile(MEDIA_FILE_PATH_BUCKET, file, objectname, contentType);
 
 		//代理对象
-		IUploadService proxy = (IUploadService) AopContext.currentProxy();
+		IMediaFileService proxy = (IMediaFileService) AopContext.currentProxy();
 
 		MediaFiles mediaFiles = proxy.addMediaFilesToDB(companyId, md5, uploadFileParamsDTO, objectname);
 
@@ -77,8 +81,8 @@ public class UploadServiceImpl implements IUploadService {
 				.setId(fileHash)
 				.setFileId(fileHash)
 				.setCompanyId(companyId)
-				.setUrl("/" + "study-online-mediafiles" + "/" + objectName)
-				.setBucket("study-online-mediafiles")
+				.setUrl("/" + MEDIA_FILE_PATH_BUCKET + "/" + objectName)
+				.setBucket(MEDIA_FILE_PATH_BUCKET)
 				.setFilePath(objectName)
 				.setCreateDate(LocalDateTime.now())
 				.setAuditStatus("002003")
@@ -94,6 +98,37 @@ public class UploadServiceImpl implements IUploadService {
 		}
 
 		return mediaFiles;
+	}
+
+	@Override
+	public RestResponse<Boolean> checkFile(String fileMD5) {
+		MediaFiles mediaFiles = mediaFilesMapper.selectById(fileMD5);
+		if (mediaFiles != null) {
+			String bucket = mediaFiles.getBucket();
+			String filePath = mediaFiles.getFilePath();
+			if (minioUtil.getObject(bucket, filePath) != null) {
+				return RestResponse.success(true);
+			}
+		}
+
+		return RestResponse.success(false);
+	}
+
+	@Override
+	public RestResponse<Boolean> checkChunk(String fileMD5, Integer chunkIndex) {
+		String chunkFileFolderPath = this.getChunkFileFolderPath(fileMD5);
+		String chunkFilePath = chunkFileFolderPath + chunkIndex;
+
+		if (minioUtil.getObject(MEDIA_CHUNK_PATH_BUCKET, chunkFilePath) != null) {
+			return RestResponse.success(true);
+		}
+
+		return RestResponse.success(false);
+	}
+
+	/*得到分块文件目录*/
+	private String getChunkFileFolderPath(String fileMd5) {
+		return fileMd5.charAt(0) + "/" + fileMd5.charAt(1) + "/" + fileMd5 + "/" + "chunk" + "/";
 	}
 
 	/*获取文件的md5*/

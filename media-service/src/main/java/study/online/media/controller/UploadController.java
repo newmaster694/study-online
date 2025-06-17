@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import study.online.base.model.RestResponse;
 import study.online.media.model.dto.UploadFileParamsDTO;
 import study.online.media.model.dto.UploadFileResultDTO;
-import study.online.media.service.IUploadService;
+import study.online.media.service.IMediaFileService;
 
 @RestController
 @Slf4j
@@ -16,7 +16,7 @@ import study.online.media.service.IUploadService;
 public class UploadController {
 
 	@Resource
-	private IUploadService uploadService;
+	private IMediaFileService mediaFileService;
 
 	/**
 	 * 上传课程相关（图片）文件接口
@@ -35,7 +35,7 @@ public class UploadController {
 			.setFileType("001001")
 			.setFilename(file.getOriginalFilename());
 
-		return uploadService.uploadFile(companyId, uploadFileParamsDTO, file);
+		return mediaFileService.uploadFile(companyId, uploadFileParamsDTO, file);
 	}
 
 	/**
@@ -46,7 +46,7 @@ public class UploadController {
 	 */
 	@PostMapping("/checkfile")
 	public RestResponse<Boolean> checkFile(@RequestParam("fileMd5") String fileMD5) {
-		return null;
+		return mediaFileService.checkFile(fileMD5);
 	}
 
 	/**
@@ -61,7 +61,7 @@ public class UploadController {
 		@RequestParam("fileMd5") String fileMD5,
 		@RequestParam("chunk") int chunk
 	) {
-		return null;
+		return mediaFileService.checkChunk(fileMD5, chunk);
 	}
 
 	/**
