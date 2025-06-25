@@ -9,4 +9,4 @@ spring:
             config:
                 file-extension: "yaml"
                 shared-configs:
-                - data-id: "database-config.yml"
+                    -   data-id: "database-config.yml"

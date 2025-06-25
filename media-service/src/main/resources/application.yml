@@ -3,6 +3,12 @@ server:
     servlet:
         context-path: "/media"
 
+spring:
+    servlet:
+        multipart:
+            max-file-size: 50MB
+            max-request-size: 50MB
+
 logging:
     level:
         study.online.media:
