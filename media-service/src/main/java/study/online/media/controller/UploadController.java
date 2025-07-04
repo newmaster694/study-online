@@ -85,4 +85,29 @@ public class UploadController {
 		file.transferTo(tempFile);
 		return mediaFileService.uploadChunk(fileMD5, chunk, tempFile.getAbsolutePath());
 	}
+
+	/**
+	 * 合并文件分块接口
+	 *
+	 * @param fileMd5    文件Hash值
+	 * @param fileName   文件名称
+	 * @param chunkTotal 分块总数
+	 * @return {@code RestResponse<Boolean>}
+	 */
+	@PostMapping("/mergechunks")
+	public RestResponse<Boolean> mergechunks(
+		@RequestParam("fileMd5") String fileMd5,
+		@RequestParam("fileName") String fileName,
+		@RequestParam("chunkTotal") int chunkTotal
+	) throws Exception {
+		Long companyId = 1232141425L;
+
+		UploadFileParamsDTO uploadFileParamsDTO = new UploadFileParamsDTO();
+		uploadFileParamsDTO.setFileType("001002")
+			.setTags("课程视频")
+			.setRemark("")
+			.setFilename(fileName);
+
+		return mediaFileService.mergechunks(companyId, fileMd5, chunkTotal, uploadFileParamsDTO);
+	}
 }

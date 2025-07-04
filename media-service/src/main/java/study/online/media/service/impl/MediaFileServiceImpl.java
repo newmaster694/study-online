@@ -1,8 +1,9 @@
 package study.online.media.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import io.minio.ObjectWriteResponse;
-import jakarta.annotation.Resource;
+import io.minio.*;
+import io.minio.messages.Item;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.aop.framework.AopContext;
@@ -20,10 +21,15 @@ import study.online.media.model.po.MediaFiles;
 import study.online.media.service.IMediaFileService;
 import study.online.media.utils.MinioUtil;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import static study.online.base.constant.MediaFilePathConstant.MEDIA_CHUNK_PATH_BUCKET;
@@ -31,13 +37,13 @@ import static study.online.base.constant.MediaFilePathConstant.MEDIA_FILE_PATH_B
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class MediaFileServiceImpl implements IMediaFileService {
 
-	@Resource
-	private MinioUtil minioUtil;
-
-	@Resource
-	private MediaFilesMapper mediaFilesMapper;
+	private final MinioClient minioClient;
+	private final MinioUtil minioUtil;
+	private final MediaFilesMapper mediaFilesMapper;
+	private IMediaFileService proxy;
 
 	@Override
 	public UploadFileResultDTO uploadFile(Long companyId, UploadFileParamsDTO uploadFileParamsDTO, MultipartFile file) {
@@ -60,7 +66,7 @@ public class MediaFileServiceImpl implements IMediaFileService {
 		minioUtil.uploadFile(MEDIA_FILE_PATH_BUCKET, file, objectname, contentType);
 
 		//代理对象
-		IMediaFileService proxy = (IMediaFileService) AopContext.currentProxy();
+		proxy = (IMediaFileService) AopContext.currentProxy();
 
 		MediaFiles mediaFiles = proxy.addMediaFilesToDB(companyId, md5, uploadFileParamsDTO, objectname);
 
@@ -139,6 +145,117 @@ public class MediaFileServiceImpl implements IMediaFileService {
 		}
 
 		return RestResponse.success(true);
+	}
+
+	@Override
+	public RestResponse<Boolean> mergechunks(Long companyId, String fileMd5, int chunkTotal, UploadFileParamsDTO uploadFileParamsDTO) throws Exception {
+		/*获取分块文件路径*/
+		String chunkFileFolderPath = getChunkFileFolderPath(fileMd5);
+
+		/*将分块文件路径组成List<ComposeSource>*/
+
+		List<String> sortedChunkFiles = this.getSortedChunkFiles(chunkFileFolderPath);
+		if (sortedChunkFiles.isEmpty()) {
+			return RestResponse.validFail(false, "未找到有效的分块文件");
+		}
+
+		/*构建composeSource列表*/
+		List<ComposeSource> sources = sortedChunkFiles.stream()
+			.map(objectName -> ComposeSource.builder()
+				.bucket(MEDIA_CHUNK_PATH_BUCKET)
+				.object(objectName)
+				.build())
+			.toList();
+
+		String filename = uploadFileParamsDTO.getFilename();
+		String extName = filename.substring(filename.lastIndexOf("."));
+		String mergeFilePath = this.getFilePathByMd5(fileMd5, extName);
+
+		try {
+			ObjectWriteResponse response = minioClient.composeObject(ComposeObjectArgs.builder()
+				.bucket(MEDIA_FILE_PATH_BUCKET)
+				.object(mergeFilePath)
+				.sources(sources)
+				.build());
+
+			log.info("合并文件成功:{}", mergeFilePath);
+			log.info("返回状态:{}", response);
+		} catch (Exception exception) {
+			log.error("文件合并失败：{}", exception.getMessage());
+			return RestResponse.validFail(false, "合并文件失败");
+		}
+
+		/*验证MD5*/
+		File file = minioUtil.getFile(MEDIA_FILE_PATH_BUCKET, mergeFilePath);
+		if (file == null) {
+			log.error("文件下载失败:{}", mergeFilePath);
+			return RestResponse.validFail(false, "文件下载失败");
+		}
+
+		try (InputStream inputStream = new FileInputStream(file)) {
+			String md5Hex = DigestUtils.md5Hex(inputStream);
+			if (!fileMd5.equals(md5Hex)) {
+				return RestResponse.validFail(false, "文件合并校验失败，最终上传失败。");
+			}
+
+			uploadFileParamsDTO.setFileSize(file.length());
+		} catch (IOException e) {
+			log.debug("校验文件失败,fileMd5:{},异常:{}", fileMd5, e.getMessage(), e);
+			return RestResponse.validFail(false, "文件合并校验失败，最终上传失败。");
+		} finally {
+			file.delete();
+		}
+
+		proxy.addMediaFilesToDB(companyId, fileMd5, uploadFileParamsDTO, mergeFilePath);
+
+		/*清除分块文件*/
+		this.clearChunkFiles(chunkFileFolderPath);
+		return RestResponse.success(true);
+	}
+
+	/*清除分块文件*/
+	private void clearChunkFiles(String chunkFileFolderPath) {
+
+		try {
+			List<String> sortedChunkFiles = this.getSortedChunkFiles(chunkFileFolderPath);
+			minioUtil.removeFiles(MEDIA_CHUNK_PATH_BUCKET, sortedChunkFiles);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			log.error("清除分块文件失败,chunkFileFolderPath:{}", chunkFileFolderPath, e);
+		}
+	}
+
+	/*得到合并后的文件的地址*/
+	private String getFilePathByMd5(String fileMd5, String fileExt) {
+		return fileMd5.charAt(0) + "/" + fileMd5.charAt(1) + "/" + fileMd5 + "/" + fileMd5 + fileExt;
+	}
+
+	/*获取指定路径下的所有分块文件，并按文件名数字升序排序*/
+	private List<String> getSortedChunkFiles(String prefix) throws Exception {
+		List<String> files = new ArrayList<>();
+
+		// 调用封装好的 listObjects 方法
+		Iterable<Result<Item>> results = minioUtil.listObjects(MEDIA_CHUNK_PATH_BUCKET, prefix, false);
+
+		for (Result<Item> result : results) {
+			Item item = result.get();
+			if (!item.isDir()) {
+				String objectName = item.objectName();
+				String fileName = objectName.substring(prefix.length());
+				if (fileName.matches("\\d+")) { // 只保留纯数字命名的文件
+					files.add(objectName);
+				}
+			}
+		}
+
+		// 按文件名数字升序排序
+		files.sort((a, b) -> {
+			int numA = Integer.parseInt(a.substring(prefix.length()));
+			int numB = Integer.parseInt(b.substring(prefix.length()));
+			return Integer.compare(numA, numB);
+		});
+
+		return files;
 	}
 
 	/*得到分块文件目录*/

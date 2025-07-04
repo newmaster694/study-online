@@ -54,4 +54,15 @@ public interface IMediaFileService {
 	 * @return {@code RestResponse<Boolean>}
 	 */
 	RestResponse<Boolean> uploadChunk(String fileMD5, int chunk, String localChunkFilePath);
+
+	/**
+	 * 合并分块
+	 *
+	 * @param companyId           机构id
+	 * @param fileMd5             文件Hash值
+	 * @param chunkTotal          分块总和
+	 * @param uploadFileParamsDTO 文件信息
+	 * @return {@code RestResponse<Boolean>}
+	 */
+	RestResponse<Boolean> mergechunks(Long companyId, String fileMd5, int chunkTotal, UploadFileParamsDTO uploadFileParamsDTO) throws Exception;
 }

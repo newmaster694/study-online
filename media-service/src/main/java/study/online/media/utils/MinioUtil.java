@@ -10,11 +10,11 @@ import io.minio.messages.Item;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.compress.utils.IOUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
@@ -300,5 +300,40 @@ public class MinioUtil {
 	public String getUtf8ByURLDecoder(String str) {
 		String url = str.replaceAll("%(?![0-9a-fA-F]{2})", "%25");
 		return URLDecoder.decode(url, StandardCharsets.UTF_8);
+	}
+
+	/**
+	 * 从minio下载文件
+	 *
+	 * @param bucket     桶
+	 * @param objectName 对象名称
+	 * @return 下载后的文件
+	 */
+	public File getFile(String bucket, String objectName) {
+		//临时文件
+		File minioFile = null;
+		FileOutputStream outputStream = null;
+		try {
+			InputStream stream = minioClient.getObject(GetObjectArgs.builder()
+				.bucket(bucket)
+				.object(objectName)
+				.build());
+			//创建临时文件
+			minioFile = File.createTempFile("minio", ".merge");
+			outputStream = new FileOutputStream(minioFile);
+			IOUtils.copy(stream, outputStream);
+			return minioFile;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (outputStream != null) {
+				try {
+					outputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return null;
 	}
 }
