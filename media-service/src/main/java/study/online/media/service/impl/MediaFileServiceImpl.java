@@ -1,7 +1,8 @@
 package study.online.media.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import io.minio.*;
+import io.minio.ComposeSource;
+import io.minio.ObjectWriteResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -19,15 +20,13 @@ import study.online.media.service.IMediaFileService;
 import study.online.media.utils.FileUtil;
 import study.online.media.utils.MinioUtil;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static study.online.base.constant.MediaFilePathConstant.MEDIA_CHUNK_PATH_BUCKET;
-import static study.online.base.constant.MediaFilePathConstant.MEDIA_FILE_PATH_BUCKET;
+import static study.online.base.constent.MediaFilePathConstent.MEDIA_CHUNK_PATH_BUCKET;
+import static study.online.base.constent.MediaFilePathConstent.MEDIA_FILE_PATH_BUCKET;
 
 @Service
 @Slf4j
@@ -147,7 +146,6 @@ public class MediaFileServiceImpl implements IMediaFileService {
 		String chunkFileFolderPath = fileUtil.getChunkFileFolderPath(fileMd5);
 
 		/*将分块文件路径组成List<ComposeSource>*/
-
 		List<String> sortedChunkFiles = fileUtil.getSortedChunkFiles(chunkFileFolderPath);
 		if (sortedChunkFiles.isEmpty()) {
 			return RestResponse.validFail(false, "未找到有效的分块文件");
@@ -175,24 +173,16 @@ public class MediaFileServiceImpl implements IMediaFileService {
 		}
 
 		/*验证MD5*/
-		File file = minioUtil.getFile(MEDIA_FILE_PATH_BUCKET, mergeFilePath);
-		if (file == null) {
-			log.error("文件下载失败:{}", mergeFilePath);
-			return RestResponse.validFail(false, "文件下载失败");
-		}
-
-		try (InputStream inputStream = new FileInputStream(file)) {
+		try (InputStream inputStream = minioUtil.getObject(MEDIA_FILE_PATH_BUCKET, mergeFilePath)) {
 			String md5Hex = DigestUtils.md5Hex(inputStream);
 			if (!fileMd5.equals(md5Hex)) {
-				return RestResponse.validFail(false, "文件合并校验失败，最终上传失败。");
+				return RestResponse.validFail(false, "文件合并校验失败，最终上传失败");
 			}
 
-			uploadFileParamsDTO.setFileSize(file.length());
+			uploadFileParamsDTO.setFileSize(minioUtil.getObjectInfo(MEDIA_FILE_PATH_BUCKET, mergeFilePath).size());
 		} catch (IOException e) {
 			log.debug("校验文件失败,fileMd5:{},异常:{}", fileMd5, e.getMessage(), e);
 			return RestResponse.validFail(false, "文件合并校验失败，最终上传失败。");
-		} finally {
-			file.delete();
 		}
 
 		proxy.addMediaFilesToDB(companyId, fileMd5, uploadFileParamsDTO, mergeFilePath);
