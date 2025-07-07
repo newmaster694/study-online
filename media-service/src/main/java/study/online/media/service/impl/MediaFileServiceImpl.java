@@ -25,8 +25,8 @@ import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static study.online.base.constent.MediaFilePathConstent.MEDIA_CHUNK_PATH_BUCKET;
-import static study.online.base.constent.MediaFilePathConstent.MEDIA_FILE_PATH_BUCKET;
+import static study.online.base.constant.MediaFilePathConstant.MEDIA_CHUNK_PATH_BUCKET;
+import static study.online.base.constant.MediaFilePathConstant.MEDIA_FILE_PATH_BUCKET;
 
 @Service
 @Slf4j
