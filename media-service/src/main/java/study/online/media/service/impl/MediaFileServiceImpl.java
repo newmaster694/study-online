@@ -40,7 +40,6 @@ import static study.online.base.constant.MediaFilePathConstant.MEDIA_FILE_PATH_B
 @RequiredArgsConstructor
 public class MediaFileServiceImpl implements IMediaFileService {
 
-	private final MinioClient minioClient;
 	private final MinioUtil minioUtil;
 	private final MediaFilesMapper mediaFilesMapper;
 	private IMediaFileService proxy;
@@ -160,7 +159,7 @@ public class MediaFileServiceImpl implements IMediaFileService {
 		}
 
 		/*构建composeSource列表*/
-		List<ComposeSource> sources = sortedChunkFiles.stream()
+		List<ComposeSource> sourceList = sortedChunkFiles.stream()
 			.map(objectName -> ComposeSource.builder()
 				.bucket(MEDIA_CHUNK_PATH_BUCKET)
 				.object(objectName)
@@ -172,14 +171,9 @@ public class MediaFileServiceImpl implements IMediaFileService {
 		String mergeFilePath = this.getFilePathByMd5(fileMd5, extName);
 
 		try {
-			ObjectWriteResponse response = minioClient.composeObject(ComposeObjectArgs.builder()
-				.bucket(MEDIA_FILE_PATH_BUCKET)
-				.object(mergeFilePath)
-				.sources(sources)
-				.build());
+			ObjectWriteResponse response = minioUtil.mergeFile(MEDIA_FILE_PATH_BUCKET, mergeFilePath, sourceList);
 
-			log.info("合并文件成功:{}", mergeFilePath);
-			log.info("返回状态:{}", response);
+			log.info("合并文件成功:{}-{}", mergeFilePath, response.toString());
 		} catch (Exception exception) {
 			log.error("文件合并失败：{}", exception.getMessage());
 			return RestResponse.validFail(false, "合并文件失败");
