@@ -36,6 +36,7 @@ public class MediaFileServiceImpl implements IMediaFileService {
 	private final MinioUtil minioUtil;
 	private final MediaFilesMapper mediaFilesMapper;
 	private final FileUtil fileUtil;
+
 	private IMediaFileService proxy;
 
 	@Override

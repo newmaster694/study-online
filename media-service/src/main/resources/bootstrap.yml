@@ -10,3 +10,4 @@ spring:
                 file-extension: "yaml"
                 shared-configs:
                     -   data-id: "database-config.yml"
+                    -   data-id: "xxl-job-media-config.yml"
