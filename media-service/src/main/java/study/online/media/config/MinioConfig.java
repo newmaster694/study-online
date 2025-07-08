@@ -1,4 +1,4 @@
-package study.online.media.properties;
+package study.online.media.config;
 
 import io.minio.MinioClient;
 import lombok.Data;

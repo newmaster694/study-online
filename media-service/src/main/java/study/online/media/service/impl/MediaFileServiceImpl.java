@@ -13,9 +13,11 @@ import org.springframework.web.multipart.MultipartFile;
 import study.online.base.exception.BaseException;
 import study.online.base.model.RestResponse;
 import study.online.media.mapper.MediaFilesMapper;
+import study.online.media.mapper.MediaProcessMapper;
 import study.online.media.model.dto.UploadFileParamsDTO;
 import study.online.media.model.dto.UploadFileResultDTO;
 import study.online.media.model.po.MediaFiles;
+import study.online.media.model.po.MediaProcess;
 import study.online.media.service.IMediaFileService;
 import study.online.media.utils.FileUtil;
 import study.online.media.utils.MinioUtil;
@@ -34,8 +36,9 @@ import static study.online.base.constant.MediaFilePathConstant.MEDIA_FILE_PATH_B
 public class MediaFileServiceImpl implements IMediaFileService {
 
 	private final MinioUtil minioUtil;
-	private final MediaFilesMapper mediaFilesMapper;
 	private final FileUtil fileUtil;
+	private final MediaFilesMapper mediaFilesMapper;
+	private final MediaProcessMapper mediaProcessMapper;
 
 	private IMediaFileService proxy;
 
@@ -97,6 +100,12 @@ public class MediaFileServiceImpl implements IMediaFileService {
 
 			log.info("保存文件信息到数据库成功,{}", mediaFiles);
 		}
+
+		/*记录待处理任务
+		 *   判断如果是avi视频则写入待处理任务
+		 *   向MediaProcess写入记录
+		 */
+		this.addWaitingTask(mediaFiles);
 
 		return mediaFiles;
 	}
@@ -186,10 +195,34 @@ public class MediaFileServiceImpl implements IMediaFileService {
 			return RestResponse.validFail(false, "文件合并校验失败，最终上传失败。");
 		}
 
+		//代理对象
+		proxy = (IMediaFileService) AopContext.currentProxy();
+
 		proxy.addMediaFilesToDB(companyId, fileMd5, uploadFileParamsDTO, mergeFilePath);
 
 		/*清除分块文件*/
 		fileUtil.clearChunkFiles(chunkFileFolderPath);
 		return RestResponse.success(true);
+	}
+
+	/**
+	 * 添加待处理任务
+	 *
+	 * @param mediaFiles 媒资文件信息
+	 */
+	private void addWaitingTask(MediaFiles mediaFiles) {
+		String mimeType = fileUtil.getContentType(mediaFiles.getFilename());
+		if (mimeType.equals("video/x-msvideo")) {
+			MediaProcess mediaProcess = new MediaProcess();
+
+			BeanUtil.copyProperties(mediaFiles, mediaProcess, true);
+
+			mediaProcess
+				.setStatus("1")
+				.setCreateDate(LocalDateTime.now())
+				.setFailCount(0);
+
+			mediaProcessMapper.insert(mediaProcess);
+		}
 	}
 }
