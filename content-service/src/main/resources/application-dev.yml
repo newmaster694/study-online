@@ -1,6 +1,0 @@
-study:
-    online:
-        database: "so_content"
-        host: "127.0.0.1"
-        username: "root"
-        password: "000016"

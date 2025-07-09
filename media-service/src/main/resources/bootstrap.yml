@@ -1,8 +1,6 @@
 spring:
     application:
         name: "media-service"
-    profiles:
-        active: "dev"
     cloud:
         nacos:
             server-addr: 127.0.0.1:8848
@@ -10,4 +8,14 @@ spring:
                 file-extension: "yaml"
                 shared-configs:
                     -   data-id: "database-config.yml"
-                    -   data-id: "xxl-job-media-config.yml"
+                    -   data-id: "redis-config.yml"
+
+study:
+    online:
+        mysql:
+            database: "so_media"
+            host: "127.0.0.1"
+            username: "root"
+            password: "000016"
+        redis:
+            host: "127.0.0.1"

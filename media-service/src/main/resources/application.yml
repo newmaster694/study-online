@@ -8,11 +8,6 @@ spring:
         multipart:
             max-file-size: 50MB
             max-request-size: 50MB
-    data:
-        redis:
-            host: localhost
-            port: 6379
-            database: 1
 
 logging:
     level:
@@ -25,6 +20,17 @@ minio:
     endpoint: http://127.0.0.1:9000
     accessKey: minioadmin
     secretKey: minioadmin
+
+xxl:
+    job:
+        admin:
+            addresses: http://127.0.0.1:18088/xxl-job-admin/
+        executor:
+            appname: media-process-service
+            port: 9999
+            logpath: /data/applogs/xxl-job-jobhandler
+            logretentiondays: 30
+        accessToken: default_token
 
 videoprocess:
     ffmpegpath: "D:\\develop\\ffmpeg\\bin\\ffmpeg.exe"
