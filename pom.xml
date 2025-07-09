@@ -40,6 +40,7 @@
 		<redis.version>3.4.0</redis.version>
 		<commons-lang3.version>3.17.0</commons-lang3.version>
 		<xxl-job.version>3.0.0</xxl-job.version>
+		<redisson.version>3.31.0</redisson.version>
 	</properties>
 
 	<dependencyManagement>
@@ -125,6 +126,11 @@
 				<groupId>com.xuxueli</groupId>
 				<artifactId>xxl-job-core</artifactId>
 				<version>${xxl-job.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.redisson</groupId>
+				<artifactId>redisson</artifactId>
+				<version>${redisson.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

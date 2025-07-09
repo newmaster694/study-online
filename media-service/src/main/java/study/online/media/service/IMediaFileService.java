@@ -6,6 +6,8 @@ import study.online.media.model.dto.UploadFileParamsDTO;
 import study.online.media.model.dto.UploadFileResultDTO;
 import study.online.media.model.po.MediaFiles;
 
+import java.io.File;
+
 public interface IMediaFileService {
 	/**
 	 * 上传普通文件
@@ -65,4 +67,13 @@ public interface IMediaFileService {
 	 * @return {@code RestResponse<Boolean>}
 	 */
 	RestResponse<Boolean> mergechunks(Long companyId, String fileMd5, int chunkTotal, UploadFileParamsDTO uploadFileParamsDTO) throws Exception;
+
+	/**
+	 * 从minio上下载文件到服务器
+	 *
+	 * @param bucket     存储桶名称
+	 * @param objectName 文件路径
+	 * @return File
+	 */
+	File getFile(String bucket, String objectName);
 }

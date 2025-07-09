@@ -25,3 +25,6 @@ minio:
     endpoint: http://127.0.0.1:9000
     accessKey: minioadmin
     secretKey: minioadmin
+
+videoprocess:
+    ffmpegpath: "D:\\develop\\ffmpeg\\bin\\ffmpeg.exe"

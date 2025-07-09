@@ -6,6 +6,7 @@ import io.minio.ObjectWriteResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,8 @@ import study.online.media.service.IMediaFileService;
 import study.online.media.utils.FileUtil;
 import study.online.media.utils.MinioUtil;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
@@ -64,7 +67,6 @@ public class MediaFileServiceImpl implements IMediaFileService {
 
 		//代理对象
 		proxy = (IMediaFileService) AopContext.currentProxy();
-
 		MediaFiles mediaFiles = proxy.addMediaFilesToDB(companyId, md5, uploadFileParamsDTO, objectname);
 
 		UploadFileResultDTO result = new UploadFileResultDTO();
@@ -203,6 +205,35 @@ public class MediaFileServiceImpl implements IMediaFileService {
 		/*清除分块文件*/
 		fileUtil.clearChunkFiles(chunkFileFolderPath);
 		return RestResponse.success(true);
+	}
+
+	@Override
+	public File getFile(String bucket, String objectName) {
+		//创建临时文件
+		File minioFile;
+		FileOutputStream outputStream = null;
+
+		try {
+			InputStream inputStream = minioUtil.getObject(bucket, objectName);
+			minioFile = File.createTempFile("minio", ".merge");
+
+			outputStream = new FileOutputStream(minioFile);
+			IOUtils.copy(inputStream, outputStream);
+
+			return minioFile;
+		} catch (IOException exception) {
+			log.error(exception.getMessage());
+		} finally {
+			if (outputStream != null) {
+				try {
+					outputStream.close();
+				} catch (IOException exception) {
+					log.error(exception.getMessage());
+				}
+			}
+		}
+
+		return null;
 	}
 
 	/**
