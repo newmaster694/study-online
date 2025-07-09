@@ -15,4 +15,15 @@ public interface IMediaProcessService {
 	 * @return {@code List<MediaProcess>}
 	 */
 	List<MediaProcess> getMediaProcessList(int shardIndex, int shardTotal, int count);
+
+	/**
+	 * 保存任务结果
+	 *
+	 * @param taskId 任务id
+	 * @param status 任务状态
+	 * @param fileId 文件id
+	 * @param url    文件外链
+	 * @param errmsg 错误信息
+	 */
+	void saveProcessFinishStatus(Long taskId, String status, String fileId, String url, String errmsg);
 }
