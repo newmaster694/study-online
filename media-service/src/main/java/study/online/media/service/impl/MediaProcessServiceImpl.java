@@ -74,4 +74,14 @@ public class MediaProcessServiceImpl implements IMediaProcessService {
 		//删除mediaProcess
 		mediaProcessMapper.deleteById(mediaProcess.getId());
 	}
+
+	@Override
+	public void startVideoTask(MediaProcess mediaProcess) {
+		mediaProcessMapper.updateById(mediaProcess);
+	}
+
+	@Override
+	public List<MediaProcess> getTimeoutProcessList() {
+		return mediaProcessMapper.selectTimeout();
+	}
 }

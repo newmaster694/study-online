@@ -17,6 +17,7 @@ import study.online.media.utils.Mp4VideoUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -74,6 +75,7 @@ public class VideoTask {
 		//将处理任务加入线程池
 		mediaProcessList.forEach(mediaProcess -> pool.execute(() -> {
 			Long taskId = mediaProcess.getId();
+
 			RLock lock = redissonClient.getLock(VIDEO_JOB_HANDLE_KEY + taskId);
 			boolean flag = lock.tryLock();
 			if (!flag) {
@@ -81,6 +83,8 @@ public class VideoTask {
 			}
 
 			log.info("开始执行任务:{}", mediaProcess.getId());
+
+			mediaProcessService.startVideoTask(mediaProcess.setStartTime(LocalDateTime.now()));
 
 			String bucket = mediaProcess.getBucket();
 			String filePath = mediaProcess.getFilePath();
@@ -140,5 +144,17 @@ public class VideoTask {
 
 		//等待,给一个充裕的超时时间,防止无限等待，到达超时时间还没有处理完成则结束任务
 		countDownLatch.await(30, TimeUnit.MINUTES);
+	}
+
+	@XxlJob("videoTimeoutHandler")
+	public void timeoutProcessHandler() {
+		List<MediaProcess> processList = mediaProcessService.getTimeoutProcessList();
+		if (processList == null) {
+			return;
+		}
+
+		processList.forEach(mediaProcess -> {
+			mediaProcessService.saveProcessFinishStatus(mediaProcess.getId(), "3", mediaProcess.getFileId(), null, "任务超时");
+		});
 	}
 }

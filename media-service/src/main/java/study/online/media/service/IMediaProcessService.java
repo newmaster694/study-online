@@ -26,4 +26,18 @@ public interface IMediaProcessService {
 	 * @param errmsg 错误信息
 	 */
 	void saveProcessFinishStatus(Long taskId, String status, String fileId, String url, String errmsg);
+
+	/**
+	 * 更新任务的开始时间
+	 *
+	 * @param mediaProcess 视频处理任务
+	 */
+	void startVideoTask(MediaProcess mediaProcess);
+
+	/**
+	 * 获取超时任务接口
+	 *
+	 * @return {@code List<MediaProcess>}
+	 */
+	List<MediaProcess> getTimeoutProcessList();
 }

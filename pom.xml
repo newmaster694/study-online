@@ -41,6 +41,7 @@
 		<commons-lang3.version>3.17.0</commons-lang3.version>
 		<xxl-job.version>3.0.0</xxl-job.version>
 		<redisson.version>3.31.0</redisson.version>
+		<amqp.version>2.7.12</amqp.version>
 	</properties>
 
 	<dependencyManagement>
@@ -127,10 +128,16 @@
 				<artifactId>xxl-job-core</artifactId>
 				<version>${xxl-job.version}</version>
 			</dependency>
+			<!--redisson-->
 			<dependency>
 				<groupId>org.redisson</groupId>
 				<artifactId>redisson</artifactId>
 				<version>${redisson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-amqp</artifactId>
+				<version>${amqp.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
