@@ -29,9 +29,12 @@ import static study.online.base.constant.RedisConstant.VIDEO_JOB_HANDLE_KEY;
 @Slf4j
 @RequiredArgsConstructor
 public class VideoTask {
+
 	private final IMediaFileService mediaFileService;
 	private final IMediaProcessService mediaProcessService;
+
 	private final RedissonClient redissonClient;
+
 	private final FileUtil fileUtil;
 	private final MinioUtil minioUtil;
 
@@ -131,6 +134,7 @@ public class VideoTask {
 				mediaProcessService.saveProcessFinishStatus(mediaProcess.getId(), "3", fileId, null, "处理后视频上传或入库失败");
 			} finally {
 				countDownLatch.countDown();
+				lock.unlock();
 			}
 		}));
 
