@@ -153,8 +153,6 @@ public class VideoTask {
 			return;
 		}
 
-		processList.forEach(mediaProcess -> {
-			mediaProcessService.saveProcessFinishStatus(mediaProcess.getId(), "3", mediaProcess.getFileId(), null, "任务超时");
-		});
+		processList.forEach(mediaProcess -> mediaProcessService.saveProcessFinishStatus(mediaProcess.getId(), "3", mediaProcess.getFileId(), null, "任务超时"));
 	}
 }
