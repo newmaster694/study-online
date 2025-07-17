@@ -207,7 +207,7 @@ public class MediaFileServiceImpl implements IMediaFileService {
 			uploadFileParamsDTO.setFileSize(minioUtil.getObjectInfo(MEDIA_FILE_PATH_BUCKET, mergeFilePath).size());
 		} catch (IOException e) {
 			log.debug("校验文件失败,fileMd5:{},异常:{}", fileMd5, e.getMessage(), e);
-			return RestResponse.validFail(false, "文件合并校验失败，最终上传失败。");
+			return RestResponse.validFail(false, "文件合并校验失败，最终上传失败");
 		}
 
 		//代理对象
@@ -217,6 +217,10 @@ public class MediaFileServiceImpl implements IMediaFileService {
 
 		/*清除分块文件*/
 		fileUtil.clearChunkFiles(chunkFileFolderPath);
+
+		/*清除Redis中的分块数据*/
+		redisTemplate.delete(CHUNK_KEY + fileMd5);
+
 		return RestResponse.success(true);
 	}
 
