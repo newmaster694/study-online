@@ -79,4 +79,9 @@ public class MediaProcessServiceImpl implements IMediaProcessService {
 	public MediaProcess getOne(Long id) {
 		return mediaProcessMapper.selectById(id);
 	}
+
+	@Override
+	public MediaProcess getOverFailCountProcess(Long id) {
+		return mediaProcessMapper.selectOverFailCountProcess(id);
+	}
 }

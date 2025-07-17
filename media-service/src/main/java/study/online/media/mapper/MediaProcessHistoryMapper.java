@@ -10,5 +10,4 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 @Mapper
 public interface MediaProcessHistoryMapper extends BaseMapper<MediaProcessHistory> {
-
 }

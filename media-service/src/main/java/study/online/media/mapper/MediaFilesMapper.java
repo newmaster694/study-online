@@ -12,5 +12,4 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 @Mapper
 public interface MediaFilesMapper extends BaseMapper<MediaFiles> {
-
 }

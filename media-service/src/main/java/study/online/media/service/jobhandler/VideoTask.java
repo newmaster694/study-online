@@ -11,6 +11,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import study.online.base.constant.MQConstant;
+import study.online.base.exception.BaseException;
 import study.online.media.model.po.MediaProcess;
 import study.online.media.service.IMediaFileService;
 import study.online.media.service.IMediaProcessService;
@@ -86,6 +87,12 @@ public class VideoTask {
 			}
 
 			log.info("开始执行任务:{}", mediaProcess.getId());
+
+			MediaProcess overFailCountProcess = mediaProcessService.getOverFailCountProcess(mediaProcess.getId());
+			if (overFailCountProcess != null) {
+				log.debug("超出最大重试次数-processid-{}", mediaProcess.getId());
+				throw new BaseException("超出最大重试次数，请尝试手工转码视频");
+			}
 
 			//发送延时消息
 			rabbitTemplate.convertAndSend(

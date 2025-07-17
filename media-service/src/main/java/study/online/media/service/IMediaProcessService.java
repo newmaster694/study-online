@@ -34,4 +34,12 @@ public interface IMediaProcessService {
 	 * @return MediaProcess
 	 */
 	MediaProcess getOne(Long id);
+
+	/**
+	 * 查询当前id的process是否超出最大重试次数
+	 *
+	 * @param id processid
+	 * @return MediaProcess
+	 */
+	MediaProcess getOverFailCountProcess(Long id);
 }
