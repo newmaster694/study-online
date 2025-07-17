@@ -33,7 +33,4 @@ public interface MediaProcessMapper extends BaseMapper<MediaProcess> {
 		@Param("shardIndex") int shardIndex,
 		@Param("count") int count
 	);
-
-	@Select("select * from media_process where status='1' and start_time < NOW() - INTERVAL 30 MINUTE")
-	List<MediaProcess> selectTimeout();
 }

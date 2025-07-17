@@ -28,16 +28,10 @@ public interface IMediaProcessService {
 	void saveProcessFinishStatus(Long taskId, String status, String fileId, String url, String errmsg);
 
 	/**
-	 * 更新任务的开始时间
+	 * 根据id获取mediaProcess
 	 *
-	 * @param mediaProcess 视频处理任务
+	 * @param id mediaProcessId
+	 * @return MediaProcess
 	 */
-	void startVideoTask(MediaProcess mediaProcess);
-
-	/**
-	 * 获取超时任务接口
-	 *
-	 * @return {@code List<MediaProcess>}
-	 */
-	List<MediaProcess> getTimeoutProcessList();
+	MediaProcess getOne(Long id);
 }

@@ -6,8 +6,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import study.online.base.constant.MQConstant;
 import study.online.media.model.po.MediaProcess;
 import study.online.media.service.IMediaFileService;
 import study.online.media.service.IMediaProcessService;
@@ -17,7 +20,6 @@ import study.online.media.utils.Mp4VideoUtil;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -35,6 +37,7 @@ public class VideoTask {
 	private final IMediaProcessService mediaProcessService;
 
 	private final RedissonClient redissonClient;
+	private final RabbitTemplate rabbitTemplate;
 
 	private final FileUtil fileUtil;
 	private final MinioUtil minioUtil;
@@ -84,7 +87,16 @@ public class VideoTask {
 
 			log.info("开始执行任务:{}", mediaProcess.getId());
 
-			mediaProcessService.startVideoTask(mediaProcess.setStartTime(LocalDateTime.now()));
+			//发送延时消息
+			rabbitTemplate.convertAndSend(
+				MQConstant.DELAY_EXCHANGE_NAME,
+				MQConstant.DELAY_VIDEO_KEY,
+				mediaProcess.getId(),
+				message -> {
+					message.getMessageProperties().setDelay(1800000);//这里设置成30分钟
+					return message;
+				}
+			);
 
 			String bucket = mediaProcess.getBucket();
 			String filePath = mediaProcess.getFilePath();
@@ -146,13 +158,14 @@ public class VideoTask {
 		countDownLatch.await(30, TimeUnit.MINUTES);
 	}
 
-	@XxlJob("videoTimeoutHandler")
-	public void timeoutProcessHandler() {
-		List<MediaProcess> processList = mediaProcessService.getTimeoutProcessList();
-		if (processList == null) {
-			return;
-		}
-
-		processList.forEach(mediaProcess -> mediaProcessService.saveProcessFinishStatus(mediaProcess.getId(), "3", mediaProcess.getFileId(), null, "任务超时"));
+	@RabbitListener(queues = MQConstant.DELAY_QUEUE_NAME)
+	public void timeoutProcessHandler(Long mediaProcessId) {
+		MediaProcess mediaProcess = mediaProcessService.getOne(mediaProcessId);
+		mediaProcessService.saveProcessFinishStatus(
+			mediaProcess.getId(),
+			"3",
+			mediaProcess.getFileId(),
+			null,
+			"处理文件超时");
 	}
 }

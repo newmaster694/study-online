@@ -42,8 +42,10 @@ public class MediaFileServiceImpl implements IMediaFileService {
 
 	private final MinioUtil minioUtil;
 	private final FileUtil fileUtil;
+
 	private final MediaFilesMapper mediaFilesMapper;
 	private final MediaProcessMapper mediaProcessMapper;
+
 	private final StringRedisTemplate redisTemplate;
 
 	private IMediaFileService proxy;
@@ -158,8 +160,8 @@ public class MediaFileServiceImpl implements IMediaFileService {
 		}
 
 		String key = CHUNK_KEY + fileMD5 + ":" + chunk;
-
 		redisTemplate.opsForValue().set(key, "upload");
+
 		return RestResponse.success(true);
 	}
 

@@ -76,12 +76,7 @@ public class MediaProcessServiceImpl implements IMediaProcessService {
 	}
 
 	@Override
-	public void startVideoTask(MediaProcess mediaProcess) {
-		mediaProcessMapper.updateById(mediaProcess);
-	}
-
-	@Override
-	public List<MediaProcess> getTimeoutProcessList() {
-		return mediaProcessMapper.selectTimeout();
+	public MediaProcess getOne(Long id) {
+		return mediaProcessMapper.selectById(id);
 	}
 }

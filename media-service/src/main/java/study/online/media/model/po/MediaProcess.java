@@ -45,9 +45,6 @@ public class MediaProcess implements Serializable {
     /*上传时间*/
     private LocalDateTime createDate;
 
-	/*任务开始时间*/
-	private LocalDateTime startTime;
-
     /*完成时间*/
     private LocalDateTime finishDate;
 

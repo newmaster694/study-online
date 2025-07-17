@@ -1,6 +1,7 @@
 package study.online.media.utils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -38,33 +39,12 @@ public class Mp4VideoUtil extends VideoUtil {
 	 */
 	public String generateMp4() {
 		//清除已生成的mp4
-		//clear_mp4(mp4folder_path+mp4_name);
 		clear_mp4(mp4folder_path);
-        /*
-        ffmpeg.exe -i  lucene.avi -c:v libx264 -s 1280x720 -pix_fmt yuv420p -b:a 63k -b:v 753k -r 18 .\lucene.mp4
-         */
-		List<String> commend = new ArrayList<>();
-		//commend.add("D:\\Program Files\\ffmpeg-20180227-fa0c9d6-win64-static\\bin\\ffmpeg.exe");
-		commend.add(ffmpeg_path);
-		commend.add("-i");
-		//commend.add("D:\\BaiduNetdiskDownload\\test1.avi");
-		commend.add(video_path);
-		commend.add("-c:v");
-		commend.add("libx264");
-		commend.add("-y");//覆盖输出文件
-		commend.add("-s");
-		commend.add("1280x720");
-		commend.add("-pix_fmt");
-		commend.add("yuv420p");
-		commend.add("-b:a");
-		commend.add("63k");
-		commend.add("-b:v");
-		commend.add("753k");
-		commend.add("-r");
-		commend.add("18");
-		//commend.add(mp4folder_path  + mp4_name );
-		commend.add(mp4folder_path);
+
+		//ffmpeg.exe -i  lucene.avi -c:v libx264 -s 1280x720 -pix_fmt yuv420p -b:a 63k -b:v 753k -r 18 .\lucene.mp4
+		List<String> commend = getCommond();
 		String outstring = null;
+
 		try {
 			ProcessBuilder builder = new ProcessBuilder();
 			builder.command(commend);
@@ -77,12 +57,37 @@ public class Mp4VideoUtil extends VideoUtil {
 			log.error(ex.getMessage());
 		}
 
-		//Boolean check_video_time = this.check_video_time(video_path, mp4folder_path + mp4_name);
 		Boolean check_video_time = this.check_video_time(video_path, mp4folder_path);
 		if (!check_video_time) {
 			return outstring;
 		} else {
 			return "success";
 		}
+	}
+
+	@NotNull
+	private List<String> getCommond() {
+		List<String> commend = new ArrayList<>();
+
+		commend.add(ffmpeg_path);
+		commend.add("-i");
+		commend.add(video_path);
+		commend.add("-c:v");
+		commend.add("libx264");
+		commend.add("-y");//覆盖输出文件
+		commend.add("-s");
+		commend.add("1920x1080");
+		commend.add("-pix_fmt");
+		commend.add("yuv420p");
+		commend.add("-c:a");
+		commend.add("aac");
+		commend.add("-b:a");
+		commend.add("128k");
+		commend.add("-b:v");
+		commend.add("753k");
+		commend.add("-r");
+		commend.add("18");
+		commend.add(mp4folder_path);
+		return commend;
 	}
 }
