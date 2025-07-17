@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.aop.framework.AopContext;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,6 +33,7 @@ import java.util.List;
 
 import static study.online.base.constant.MediaFilePathConstant.MEDIA_CHUNK_PATH_BUCKET;
 import static study.online.base.constant.MediaFilePathConstant.MEDIA_FILE_PATH_BUCKET;
+import static study.online.base.constant.RedisConstant.CHUNK_KEY;
 
 @Service
 @Slf4j
@@ -42,6 +44,7 @@ public class MediaFileServiceImpl implements IMediaFileService {
 	private final FileUtil fileUtil;
 	private final MediaFilesMapper mediaFilesMapper;
 	private final MediaProcessMapper mediaProcessMapper;
+	private final StringRedisTemplate redisTemplate;
 
 	private IMediaFileService proxy;
 
@@ -118,9 +121,14 @@ public class MediaFileServiceImpl implements IMediaFileService {
 		if (mediaFiles != null) {
 			String bucket = mediaFiles.getBucket();
 			String filePath = mediaFiles.getFilePath();
-			if (minioUtil.getObject(bucket, filePath) != null) {
+
+			try {
+				minioUtil.getObjectInfo(bucket, filePath);
 				return RestResponse.success(true);
+			} catch (Exception e) {
+				return RestResponse.success(false);
 			}
+
 		}
 
 		return RestResponse.success(false);
@@ -128,10 +136,10 @@ public class MediaFileServiceImpl implements IMediaFileService {
 
 	@Override
 	public RestResponse<Boolean> checkChunk(String fileMD5, Integer chunkIndex) {
-		String chunkFileFolderPath = fileUtil.getChunkFileFolderPath(fileMD5);
-		String chunkFilePath = chunkFileFolderPath + chunkIndex;
+		String key = CHUNK_KEY + fileMD5 + ":" + chunkIndex;
 
-		if (minioUtil.getObject(MEDIA_CHUNK_PATH_BUCKET, chunkFilePath) != null) {
+		String result = redisTemplate.opsForValue().get(key);
+		if (result != null) {
 			return RestResponse.success(true);
 		}
 
@@ -149,6 +157,9 @@ public class MediaFileServiceImpl implements IMediaFileService {
 			return RestResponse.validFail(false, "上传分块失败");
 		}
 
+		String key = CHUNK_KEY + fileMD5 + ":" + chunk;
+
+		redisTemplate.opsForValue().set(key, "upload");
 		return RestResponse.success(true);
 	}
 
