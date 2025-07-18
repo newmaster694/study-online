@@ -74,7 +74,7 @@ study-online/
 ### 2. 下载项目
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/newmaster694/study-online.git
 cd study-online
 ```
 
@@ -93,6 +93,8 @@ mvn clean install
 
 ### 5. 访问接口
 默认访问地址为：`http://localhost:8080`
+
+> 请注意，这个项目采用的是mybatis-plus的分页插件实现的分页效果，在分页的相关HTTP接口返回的是`com.baomidou.mybatisplus.extension.plugins.pagination.Page`类而不是教程中的`PageHelper`的相关类，所以前端在接收时的相关数据类型应当正确处理才能展示正确信息
 
 ---
 
