@@ -16,9 +16,10 @@ import study.online.media.service.IMediaProcessService;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
+@Slf4j
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class MediaProcessServiceImpl implements IMediaProcessService {
 
 	private final MediaProcessMapper mediaProcessMapper;

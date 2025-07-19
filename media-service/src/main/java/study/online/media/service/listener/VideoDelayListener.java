@@ -10,8 +10,9 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import study.online.base.constant.MQConstant;
 import study.online.media.model.po.MediaProcess;
+import study.online.media.service.IMediaFileService;
 import study.online.media.service.IMediaProcessService;
-import study.online.media.service.impl.FileService;
+import study.online.media.utils.FileUtil;
 
 import java.util.Set;
 
@@ -20,8 +21,9 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class VideoDelayListener {
 
-	private final FileService fileService;
 	private final IMediaProcessService mediaProcessService;
+	private final IMediaFileService mediaFileService;
+
 	private final StringRedisTemplate redisTemplate;
 
 	@RabbitListener(bindings = @QueueBinding(
@@ -48,7 +50,7 @@ public class VideoDelayListener {
 		Set<String> keys = redisTemplate.keys(pattern);
 		if (!keys.isEmpty()) {
 			redisTemplate.delete(keys);
-			fileService.clearChunkFiles(fileService.getChunkFileFolderPath(fileMd5));
+			mediaFileService.clearChunkFiles(FileUtil.getChunkFileFolderPath(fileMd5));
 		}
 	}
 }

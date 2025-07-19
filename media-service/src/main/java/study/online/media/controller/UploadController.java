@@ -10,7 +10,6 @@ import study.online.media.model.dto.UploadFileParamsDTO;
 import study.online.media.model.dto.UploadFileResultDTO;
 import study.online.media.service.IMediaFileService;
 
-import java.io.File;
 import java.io.IOException;
 
 @RestController
@@ -72,18 +71,16 @@ public class UploadController {
 	 *
 	 * @param file    上传的分块文件
 	 * @param fileMD5 文件的MD5值
-	 * @param chunk   分块文件的序号
+	 * @param chunkIndex   分块文件的序号
 	 * @return {@code RestResponse<Object>}
 	 */
 	@PostMapping("/uploadchunk")
 	public RestResponse<Boolean> uploadchunk(
 		@RequestParam("file") MultipartFile file,
 		@RequestParam("fileMd5") String fileMD5,
-		@RequestParam("chunk") int chunk
+		@RequestParam("chunk") int chunkIndex
 	) throws IOException {
-		File tempFile = new File("minio", "temp");
-		file.transferTo(tempFile);
-		return mediaFileService.uploadChunk(fileMD5, chunk, tempFile.getAbsolutePath());
+		return mediaFileService.uploadChunk(fileMD5, chunkIndex, file);
 	}
 
 	/**

@@ -50,12 +50,12 @@ public interface IMediaFileService {
 	/**
 	 * 上传分块文件
 	 *
-	 * @param fileMD5            文件MD5值
-	 * @param chunk              分块文件序号
-	 * @param localChunkFilePath 分块文件本地路径
+	 * @param fileMD5 文件MD5值
+	 * @param chunk   分块文件序号
+	 * @param file    上传的分块文件
 	 * @return {@code RestResponse<Boolean>}
 	 */
-	RestResponse<Boolean> uploadChunk(String fileMD5, int chunk, String localChunkFilePath);
+	RestResponse<Boolean> uploadChunk(String fileMD5, int chunk, MultipartFile file);
 
 	/**
 	 * 合并分块
@@ -76,4 +76,11 @@ public interface IMediaFileService {
 	 * @return File
 	 */
 	File getFile(String bucket, String objectName);
+
+	/**
+	 * 清除分块文件
+	 *
+	 * @param chunkFileFolderPath 分块文件路径
+	 */
+	void clearChunkFiles(String chunkFileFolderPath);
 }

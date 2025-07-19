@@ -14,7 +14,7 @@ import study.online.base.exception.BaseException;
 import study.online.media.model.po.MediaProcess;
 import study.online.media.service.IMediaFileService;
 import study.online.media.service.IMediaProcessService;
-import study.online.media.service.impl.FileService;
+import study.online.media.utils.FileUtil;
 import study.online.media.service.impl.MinioService;
 import study.online.media.utils.Mp4VideoUtil;
 
@@ -40,7 +40,6 @@ public class VideoTask {
 	private final RedissonClient redissonClient;
 	private final RabbitTemplate rabbitTemplate;
 
-	private final FileService fileService;
 	private final MinioService minioService;
 
 	@Value("${videoprocess.ffmpegpath}")
@@ -146,7 +145,7 @@ public class VideoTask {
 			}
 
 			/*将处理后的视频上传至minio*/
-			String objectName = fileService.getFilePathByMd5(fileId, ".mp4");
+			String objectName = FileUtil.getFilePathByMd5(fileId, ".mp4");
 			String url = "/" + bucket + "/" + objectName;
 
 			try {

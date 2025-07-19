@@ -40,8 +40,8 @@ public class MinioService {
 	/**
 	 * 获取文件信息
 	 *
-	 * @param bucketName  bucket名称
-	 * @param objectName  文件名称
+	 * @param bucketName bucket名称
+	 * @param objectName 文件名称
 	 */
 	@SneakyThrows(Exception.class)
 	public StatObjectResponse getObjectInfo(String bucketName, String objectName) {
@@ -53,7 +53,7 @@ public class MinioService {
 
 
 	/**
-	 * 使用MultipartFile进行文件上传
+	 * 上传图片文件
 	 *
 	 * @param bucketName  存储桶
 	 * @param file        文件名
@@ -143,6 +143,14 @@ public class MinioService {
 		} catch (Exception e) {
 			log.error("[Minio工具类] 批量删除文件时发生异常", e);
 		}
+	}
+
+	@SneakyThrows(Exception.class)
+	public void removeFile(String bucketName, String objectName) {
+		minioClient.removeObject(RemoveObjectArgs.builder()
+			.bucket(bucketName)
+			.object(objectName)
+			.build());
 	}
 
 	/**
