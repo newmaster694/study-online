@@ -9,13 +9,18 @@ import org.springframework.transaction.annotation.Transactional;
 import study.online.base.exception.BaseException;
 import study.online.content.mapper.TeachplanMapper;
 import study.online.content.mapper.TeachplanMediaMapper;
+import study.online.content.model.dto.BindTeachPlanMediaDTO;
 import study.online.content.model.dto.SaveTeachplanDTO;
 import study.online.content.model.dto.TeachplanDTO;
 import study.online.content.model.po.Teachplan;
 import study.online.content.model.po.TeachplanMedia;
 import study.online.content.service.ITeachplanService;
 
+import java.time.LocalDateTime;
 import java.util.List;
+
+import static study.online.base.constant.ErrorMessageConstant.TEACH_PLAN_GRADE_ERROR;
+import static study.online.base.constant.ErrorMessageConstant.UN_FIND_TEACH_PLAN;
 
 @Service
 public class TeachplanServiceImpl extends ServiceImpl<TeachplanMapper, Teachplan> implements ITeachplanService {
@@ -91,6 +96,38 @@ public class TeachplanServiceImpl extends ServiceImpl<TeachplanMapper, Teachplan
 			default:
 				throw new BaseException("操作异常，请联系管理员！");
 		}
+	}
+
+	@Override
+	@Transactional
+	public TeachplanMedia associationMedia(BindTeachPlanMediaDTO bindTeachPlanMediaDTO) {
+		Long teachPlanId = bindTeachPlanMediaDTO.getTeachPlanId();
+
+		Teachplan teachplan = this.getById(teachPlanId);
+		if (teachplan == null) {
+			BaseException.cast(UN_FIND_TEACH_PLAN);
+		}
+
+		if (teachplan.getGrade() != 2) {
+			BaseException.cast(TEACH_PLAN_GRADE_ERROR);
+		}
+
+		//先删除原来教学计划绑定的媒资
+		teachplanMediaMapper.delete(new LambdaQueryWrapper<TeachplanMedia>()
+			.eq(TeachplanMedia::getTeachplanId, teachPlanId));
+
+		//再添加教学计划与绑定的媒资关系
+		TeachplanMedia teachplanMedia = TeachplanMedia.builder()
+			.courseId(teachplan.getCourseId())
+			.teachplanId(teachPlanId)
+			.mediaFilename(bindTeachPlanMediaDTO.getFileName())
+			.mediaId(bindTeachPlanMediaDTO.getMediaId())
+			.createDate(LocalDateTime.now())
+			.build();
+
+		teachplanMediaMapper.insert(teachplanMedia);
+
+		return teachplanMedia;
 	}
 
 	/**

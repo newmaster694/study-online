@@ -1,9 +1,11 @@
 package study.online.content.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import study.online.content.model.dto.BindTeachPlanMediaDTO;
 import study.online.content.model.dto.SaveTeachplanDTO;
 import study.online.content.model.dto.TeachplanDTO;
 import study.online.content.model.po.Teachplan;
+import study.online.content.model.po.TeachplanMedia;
 
 import java.util.List;
 
@@ -44,4 +46,12 @@ public interface ITeachplanService extends IService<Teachplan> {
 	 * @param teachplanId 课程计划id
 	 */
 	void move(String moveType, Long teachplanId);
+
+	/**
+	 * 教学计划绑定媒资
+	 *
+	 * @param bindTeachPlanMediaDTO 绑定的媒资记录
+	 * @return {@code TeachplanMedia}
+	 */
+	TeachplanMedia associationMedia(BindTeachPlanMediaDTO bindTeachPlanMediaDTO);
 }
