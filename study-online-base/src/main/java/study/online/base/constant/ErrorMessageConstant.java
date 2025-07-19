@@ -16,4 +16,9 @@ public class ErrorMessageConstant {
 	public static final String FAIL_UPDATE_TEACHER_INFO = "更新教师失败";
 	public static final String CHARGING_RULES_NOT_SELECTED = "收费规则未选择";
 	public static final String ILLEGAL_CHARGES = "收费课程的收费金额必须要大于0";
+
+	public static final String SAVE_FILE_ERROR = "保存文件信息失败";
+	public static final String FILE_EXIST_ERROR = "文件不存在";
+
+	public static final String OVER_MAX_FAIL_COUNT_ERROR = "查出最大重试次数，请手工进行视频转码";
 }

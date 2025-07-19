@@ -1,4 +1,4 @@
-package study.online.media.utils;
+package study.online.media.service.impl;
 
 import io.minio.Result;
 import io.minio.messages.Item;
@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.http.MediaType;
 import org.springframework.http.MediaTypeFactory;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
@@ -21,16 +21,16 @@ import static study.online.base.constant.MediaFilePathConstant.MEDIA_CHUNK_PATH_
 
 @Slf4j
 @RequiredArgsConstructor
-@Component
-public class FileUtil {
-	private final MinioUtil minioUtil;
+@Service
+public class FileService {
+	private final MinioService minioService;
 
 	/*清除分块文件*/
 	public void clearChunkFiles(String chunkFileFolderPath) {
 
 		try {
 			List<String> sortedChunkFiles = this.getSortedChunkFiles(chunkFileFolderPath);
-			minioUtil.removeFiles(MEDIA_CHUNK_PATH_BUCKET, sortedChunkFiles);
+			minioService.removeFiles(MEDIA_CHUNK_PATH_BUCKET, sortedChunkFiles);
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			log.error("清除分块文件失败,chunkFileFolderPath:{}", chunkFileFolderPath, e);
@@ -47,7 +47,7 @@ public class FileUtil {
 		List<String> files = new ArrayList<>();
 
 		// 调用封装好的 listObjects 方法
-		Iterable<Result<Item>> results = minioUtil.listObjects(MEDIA_CHUNK_PATH_BUCKET, prefix, false);
+		Iterable<Result<Item>> results = minioService.listObjects(MEDIA_CHUNK_PATH_BUCKET, prefix, false);
 
 		for (Result<Item> result : results) {
 			Item item = result.get();
