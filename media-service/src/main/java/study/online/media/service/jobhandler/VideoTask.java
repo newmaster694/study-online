@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -15,8 +14,8 @@ import study.online.base.exception.BaseException;
 import study.online.media.model.po.MediaProcess;
 import study.online.media.service.IMediaFileService;
 import study.online.media.service.IMediaProcessService;
-import study.online.media.utils.FileUtil;
-import study.online.media.utils.MinioUtil;
+import study.online.media.service.impl.FileService;
+import study.online.media.service.impl.MinioService;
 import study.online.media.utils.Mp4VideoUtil;
 
 import java.io.File;
@@ -27,10 +26,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import static study.online.base.constant.ErrorMessageConstant.OVER_MAX_FAIL_COUNT_ERROR;
 import static study.online.base.constant.RedisConstant.VIDEO_JOB_HANDLE_KEY;
 
-@Component
 @Slf4j
+@Component
 @RequiredArgsConstructor
 public class VideoTask {
 
@@ -40,13 +40,13 @@ public class VideoTask {
 	private final RedissonClient redissonClient;
 	private final RabbitTemplate rabbitTemplate;
 
-	private final FileUtil fileUtil;
-	private final MinioUtil minioUtil;
+	private final FileService fileService;
+	private final MinioService minioService;
 
 	@Value("${videoprocess.ffmpegpath}")
 	private String ffmpegPath;
 
-	@XxlJob("videoJobHandler")
+	@XxlJob("video-job-handler")
 	public void videoJobHandler() throws Exception {
 		int shardIndex = XxlJobHelper.getShardIndex();
 		int shardTotal = XxlJobHelper.getShardTotal();
@@ -91,7 +91,7 @@ public class VideoTask {
 			MediaProcess overFailCountProcess = mediaProcessService.getOverFailCountProcess(mediaProcess.getId());
 			if (overFailCountProcess != null) {
 				log.debug("超出最大重试次数-processid-{}", mediaProcess.getId());
-				throw new BaseException("超出最大重试次数，请尝试手工转码视频");
+				BaseException.cast(OVER_MAX_FAIL_COUNT_ERROR);
 			}
 
 			//发送延时消息
@@ -146,11 +146,11 @@ public class VideoTask {
 			}
 
 			/*将处理后的视频上传至minio*/
-			String objectName = fileUtil.getFilePathByMd5(fileId, ".mp4");
+			String objectName = fileService.getFilePathByMd5(fileId, ".mp4");
 			String url = "/" + bucket + "/" + objectName;
 
 			try {
-				minioUtil.uploadFile(bucket, objectName, originalFile.getAbsolutePath());
+				minioService.uploadFile(bucket, objectName, originalFile.getAbsolutePath());
 				mediaProcessService.saveProcessFinishStatus(mediaProcess.getId(), "2", fileId, url, null);
 			} catch (Exception exception) {
 				log.error("处理视频失败:{}-{}", bucket + objectName, exception.getMessage());
@@ -163,16 +163,5 @@ public class VideoTask {
 
 		//等待,给一个充裕的超时时间,防止无限等待，到达超时时间还没有处理完成则结束任务
 		countDownLatch.await(30, TimeUnit.MINUTES);
-	}
-
-	@RabbitListener(queues = MQConstant.DELAY_QUEUE_NAME)
-	public void timeoutProcessHandler(Long mediaProcessId) {
-		MediaProcess mediaProcess = mediaProcessService.getOne(mediaProcessId);
-		mediaProcessService.saveProcessFinishStatus(
-			mediaProcess.getId(),
-			"3",
-			mediaProcess.getFileId(),
-			null,
-			"处理文件超时");
 	}
 }

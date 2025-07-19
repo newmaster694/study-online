@@ -7,11 +7,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.aop.framework.AopContext;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import study.online.base.constant.MQConstant;
 import study.online.base.exception.BaseException;
 import study.online.base.model.RestResponse;
 import study.online.media.mapper.MediaFilesMapper;
@@ -21,8 +23,6 @@ import study.online.media.model.dto.UploadFileResultDTO;
 import study.online.media.model.po.MediaFiles;
 import study.online.media.model.po.MediaProcess;
 import study.online.media.service.IMediaFileService;
-import study.online.media.utils.FileUtil;
-import study.online.media.utils.MinioUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -31,44 +31,47 @@ import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static study.online.base.constant.ErrorMessageConstant.FILE_EXIST_ERROR;
+import static study.online.base.constant.ErrorMessageConstant.SAVE_FILE_ERROR;
 import static study.online.base.constant.MediaFilePathConstant.MEDIA_CHUNK_PATH_BUCKET;
 import static study.online.base.constant.MediaFilePathConstant.MEDIA_FILE_PATH_BUCKET;
 import static study.online.base.constant.RedisConstant.CHUNK_KEY;
 
-@Service
 @Slf4j
+@Service
 @RequiredArgsConstructor
 public class MediaFileServiceImpl implements IMediaFileService {
 
-	private final MinioUtil minioUtil;
-	private final FileUtil fileUtil;
+	private final MinioService minioService;
+	private final FileService fileService;
 
 	private final MediaFilesMapper mediaFilesMapper;
 	private final MediaProcessMapper mediaProcessMapper;
 
 	private final StringRedisTemplate redisTemplate;
+	private final RabbitTemplate rabbitTemplate;
 
 	private IMediaFileService proxy;
 
 	@Override
 	public UploadFileResultDTO uploadFile(Long companyId, UploadFileParamsDTO uploadFileParamsDTO, MultipartFile file) {
 		if (file.isEmpty()) {
-			BaseException.cast("文件不存在");
+			BaseException.cast(FILE_EXIST_ERROR);
 		}
 
 		String filename = uploadFileParamsDTO.getFilename();
 		String extension = filename.substring(filename.lastIndexOf("."));
 
-		String md5 = fileUtil.getFileMd5(file);
-		String defaultFolderPath = fileUtil.getDefaultFolderPath();
+		String md5 = fileService.getFileMd5(file);
+		String defaultFolderPath = fileService.getDefaultFolderPath();
 
 		//拼接objectname
 		String objectname = defaultFolderPath + md5 + extension;
 
-		String contentType = fileUtil.getContentType(filename);
+		String contentType = fileService.getContentType(filename);
 
 		//文件上传
-		minioUtil.uploadFile(MEDIA_FILE_PATH_BUCKET, file, objectname, contentType);
+		minioService.uploadFile(MEDIA_FILE_PATH_BUCKET, file, objectname, contentType);
 
 		//代理对象
 		proxy = (IMediaFileService) AopContext.currentProxy();
@@ -82,9 +85,13 @@ public class MediaFileServiceImpl implements IMediaFileService {
 
 	@Override
 	@Transactional
-	public MediaFiles addMediaFilesToDB(Long companyId, String fileHash, UploadFileParamsDTO uploadFileParamsDTO, String objectName) {
+	public MediaFiles addMediaFilesToDB(Long companyId,
+	                                    String fileHash,
+	                                    UploadFileParamsDTO uploadFileParamsDTO,
+	                                    String objectName) {
 		MediaFiles mediaFiles = mediaFilesMapper.selectById(fileHash);
 		if (mediaFiles == null) {
+			/*不存在，创建新的文件记录*/
 			mediaFiles = new MediaFiles();
 
 			BeanUtil.copyProperties(uploadFileParamsDTO, mediaFiles, true);
@@ -101,11 +108,11 @@ public class MediaFileServiceImpl implements IMediaFileService {
 
 			int insert = mediaFilesMapper.insert(mediaFiles);
 			if (insert < 0) {
-				log.error("保存文件信息到数据库失败,{}", mediaFiles);
-				BaseException.cast("保存文件信息失败");
+				log.error("保存文件信息到数据库失败-{}", mediaFiles);
+				BaseException.cast(SAVE_FILE_ERROR);
 			}
 
-			log.info("保存文件信息到数据库成功,{}", mediaFiles);
+			log.info("保存文件信息到数据库成功-{}", mediaFiles);
 		}
 
 		/*记录待处理任务
@@ -121,11 +128,12 @@ public class MediaFileServiceImpl implements IMediaFileService {
 	public RestResponse<Boolean> checkFile(String fileMD5) {
 		MediaFiles mediaFiles = mediaFilesMapper.selectById(fileMD5);
 		if (mediaFiles != null) {
+			/*文件存在，直接返回真结果*/
 			String bucket = mediaFiles.getBucket();
 			String filePath = mediaFiles.getFilePath();
 
 			try {
-				minioUtil.getObjectInfo(bucket, filePath);
+				minioService.getObjectInfo(bucket, filePath);
 				return RestResponse.success(true);
 			} catch (Exception e) {
 				return RestResponse.success(false);
@@ -133,6 +141,16 @@ public class MediaFileServiceImpl implements IMediaFileService {
 
 		}
 
+		/*文件不存在，发送一条延时消息告诉RabbitMQ，一天之后还没上传完就是中断了，直接删除相关文件与redis记录*/
+		rabbitTemplate.convertAndSend(
+			MQConstant.FILE_INTERRUPT_EXCHANGE_NAME,
+			MQConstant.FILE_INTERRUPT_KEY,
+			fileMD5,
+			message -> {
+				message.getMessageProperties().setDelay(86400000);
+				return message;
+			}
+		);
 		return RestResponse.success(false);
 	}
 
@@ -150,10 +168,10 @@ public class MediaFileServiceImpl implements IMediaFileService {
 
 	@Override
 	public RestResponse<Boolean> uploadChunk(String fileMD5, int chunk, String localChunkFilePath) {
-		String chunkFileFolderPath = fileUtil.getChunkFileFolderPath(fileMD5);
+		String chunkFileFolderPath = fileService.getChunkFileFolderPath(fileMD5);
 		String chunkFilePath = chunkFileFolderPath + chunk;
 
-		ObjectWriteResponse response = minioUtil.uploadFile(MEDIA_CHUNK_PATH_BUCKET, chunkFilePath, localChunkFilePath);
+		ObjectWriteResponse response = minioService.uploadFile(MEDIA_CHUNK_PATH_BUCKET, chunkFilePath, localChunkFilePath);
 		if (response == null) {
 			log.debug("上传分块文件失败:{}", chunkFilePath);
 			return RestResponse.validFail(false, "上传分块失败");
@@ -168,10 +186,10 @@ public class MediaFileServiceImpl implements IMediaFileService {
 	@Override
 	public RestResponse<Boolean> mergechunks(Long companyId, String fileMd5, int chunkTotal, UploadFileParamsDTO uploadFileParamsDTO) throws Exception {
 		/*获取分块文件路径*/
-		String chunkFileFolderPath = fileUtil.getChunkFileFolderPath(fileMd5);
+		String chunkFileFolderPath = fileService.getChunkFileFolderPath(fileMd5);
 
 		/*将分块文件路径组成List<ComposeSource>*/
-		List<String> sortedChunkFiles = fileUtil.getSortedChunkFiles(chunkFileFolderPath);
+		List<String> sortedChunkFiles = fileService.getSortedChunkFiles(chunkFileFolderPath);
 		if (sortedChunkFiles.isEmpty()) {
 			return RestResponse.validFail(false, "未找到有效的分块文件");
 		}
@@ -186,10 +204,10 @@ public class MediaFileServiceImpl implements IMediaFileService {
 
 		String filename = uploadFileParamsDTO.getFilename();
 		String extName = filename.substring(filename.lastIndexOf("."));
-		String mergeFilePath = fileUtil.getFilePathByMd5(fileMd5, extName);
+		String mergeFilePath = fileService.getFilePathByMd5(fileMd5, extName);
 
 		try {
-			ObjectWriteResponse response = minioUtil.mergeFile(MEDIA_FILE_PATH_BUCKET, mergeFilePath, sourceList);
+			ObjectWriteResponse response = minioService.mergeFile(MEDIA_FILE_PATH_BUCKET, mergeFilePath, sourceList);
 
 			log.info("合并文件成功:{}-{}", mergeFilePath, response.toString());
 		} catch (Exception exception) {
@@ -198,13 +216,13 @@ public class MediaFileServiceImpl implements IMediaFileService {
 		}
 
 		/*验证MD5*/
-		try (InputStream inputStream = minioUtil.getObject(MEDIA_FILE_PATH_BUCKET, mergeFilePath)) {
+		try (InputStream inputStream = minioService.getObject(MEDIA_FILE_PATH_BUCKET, mergeFilePath)) {
 			String md5Hex = DigestUtils.md5Hex(inputStream);
 			if (!fileMd5.equals(md5Hex)) {
 				return RestResponse.validFail(false, "文件合并校验失败，最终上传失败");
 			}
 
-			uploadFileParamsDTO.setFileSize(minioUtil.getObjectInfo(MEDIA_FILE_PATH_BUCKET, mergeFilePath).size());
+			uploadFileParamsDTO.setFileSize(minioService.getObjectInfo(MEDIA_FILE_PATH_BUCKET, mergeFilePath).size());
 		} catch (IOException e) {
 			log.debug("校验文件失败,fileMd5:{},异常:{}", fileMd5, e.getMessage(), e);
 			return RestResponse.validFail(false, "文件合并校验失败，最终上传失败");
@@ -212,11 +230,10 @@ public class MediaFileServiceImpl implements IMediaFileService {
 
 		//代理对象
 		proxy = (IMediaFileService) AopContext.currentProxy();
-
 		proxy.addMediaFilesToDB(companyId, fileMd5, uploadFileParamsDTO, mergeFilePath);
 
 		/*清除分块文件*/
-		fileUtil.clearChunkFiles(chunkFileFolderPath);
+		fileService.clearChunkFiles(chunkFileFolderPath);
 
 		/*清除Redis中的分块数据*/
 		redisTemplate.delete(CHUNK_KEY + fileMd5);
@@ -231,7 +248,7 @@ public class MediaFileServiceImpl implements IMediaFileService {
 		FileOutputStream outputStream = null;
 
 		try {
-			InputStream inputStream = minioUtil.getObject(bucket, objectName);
+			InputStream inputStream = minioService.getObject(bucket, objectName);
 			minioFile = File.createTempFile("minio", ".merge");
 
 			outputStream = new FileOutputStream(minioFile);
@@ -259,7 +276,7 @@ public class MediaFileServiceImpl implements IMediaFileService {
 	 * @param mediaFiles 媒资文件信息
 	 */
 	private void addWaitingTask(MediaFiles mediaFiles) {
-		String mimeType = fileUtil.getContentType(mediaFiles.getFilename());
+		String mimeType = fileService.getContentType(mediaFiles.getFilename());
 		if (mimeType.equals("video/x-msvideo")) {
 			MediaProcess mediaProcess = new MediaProcess();
 
