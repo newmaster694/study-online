@@ -8,11 +8,6 @@ spring:
         multipart:
             max-file-size: 50MB
             max-request-size: 50MB
-    rabbitmq:
-        host: "127.0.0.1"
-        port: 5672
-        username: "/study-online"
-        password: "000016"
 
 logging:
     level:

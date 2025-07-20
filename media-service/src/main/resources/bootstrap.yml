@@ -11,6 +11,7 @@ spring:
                     -   data-id: "redis-config.yml"
                     -   data-id: "minio-config.yml"
                     -   data-id: "xxl-job-cinfig.yml"
+                    -   data-id: "rabbitmq-config.yml"
 
 study:
     online:
