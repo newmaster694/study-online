@@ -31,6 +31,9 @@
   - Druid 1.2.19
   - Hutool 5.8.25
   - OkHttp 4.12.0
+  - Redis 6.2+
+  - RabbitMQ（需启用 `rabbitmq_delayed_message_exchange` 插件）
+  - Nacos 2.2.3+
 
 #### 开发环境要求
 - **JDK**：Java 21
@@ -104,15 +107,39 @@ mvn clean install
 
 ```yaml
 spring:
-  datasource:
-    url: jdbc:mysql://${study.online.host:127.0.0.1}:3306/${study.online.database}?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai
-    username: ${study.online.username}
-    password: ${study.online.password}
-    driver-class-name: com.mysql.cj.jdbc.Driver
+	datasource:
+		url: "jdbc:mysql://${study.online.mysql.host:127.0.0.1}:3306/${study.online.mysql.database}?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai"
+		driver-class-name: com.mysql.cj.jdbc.Driver
+		username: ${study.online.mysql.username}
+		password: "${study.online.mysql.password}"
+mybatis-plus:
+	configuration:
+		map-underscore-to-camel-case: true # mybatis驼峰转换配置
 ```
 
 
 > 注意：请确保在 Nacos 中正确配置数据库相关信息。
+---
+
+## 🐇 RabbitMQ 配置
+
+本项目使用 RabbitMQ 实现异步任务处理，包括：
+- 视频处理超时任务（延迟队列）
+- 文件中断清理任务（延迟队列）
+
+### 配置示例：
+
+```yaml
+spring:
+    rabbitmq:
+        host: "${rabbitmq.host:127.0.0.1}"
+        port: 5672
+        username: "${rabbitmq.username}"
+        password: "${rabbitmq.password}"
+```
+
+> **注意**：如果使用延迟队列，请确保 RabbitMQ 已安装并启用了 `rabbitmq_delayed_message_exchange` 插件。
+
 ---
 
 ## 📞 联系方式
