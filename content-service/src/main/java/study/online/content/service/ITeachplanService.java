@@ -54,4 +54,12 @@ public interface ITeachplanService extends IService<Teachplan> {
 	 * @return {@code TeachplanMedia}
 	 */
 	TeachplanMedia associationMedia(BindTeachPlanMediaDTO bindTeachPlanMediaDTO);
+
+	/**
+	 * 教学计划取消绑定媒资
+	 *
+	 * @param teachplanId 教学计划id
+	 * @param mediaId     媒体资料id
+	 */
+	void unbindMedia(Long teachplanId, String mediaId);
 }

@@ -130,6 +130,18 @@ public class TeachplanServiceImpl extends ServiceImpl<TeachplanMapper, Teachplan
 		return teachplanMedia;
 	}
 
+	@Override
+	public void unbindMedia(Long teachplanId, String mediaId) {
+		Teachplan teachplan = this.getById(teachplanId);
+		if (teachplan == null) {
+			BaseException.cast(UN_FIND_TEACH_PLAN);
+		}
+
+		teachplanMediaMapper.delete(new LambdaQueryWrapper<TeachplanMedia>()
+			.eq(TeachplanMedia::getTeachplanId, teachplan)
+			.eq(TeachplanMedia::getMediaId,mediaId));
+	}
+
 	/**
 	 * 移动章节节点
 	 *

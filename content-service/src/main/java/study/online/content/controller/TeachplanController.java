@@ -71,4 +71,9 @@ public class TeachplanController {
 	public TeachplanMedia associationMedia(@RequestBody BindTeachPlanMediaDTO bindTeachPlanMediaDTO) {
 		return teachplanService.associationMedia(bindTeachPlanMediaDTO);
 	}
+
+	@DeleteMapping("/association/media/{teachplanId}/{mediaId}")
+	public void unbindMedia(@PathVariable Long teachplanId, @PathVariable String mediaId) {
+		teachplanService.unbindMedia(teachplanId, mediaId);
+	}
 }
