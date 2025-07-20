@@ -21,21 +21,5 @@ logging:
             service: info
             controller: info
 
-minio:
-    endpoint: http://127.0.0.1:9000
-    accessKey: minioadmin
-    secretKey: minioadmin
-
-xxl:
-    job:
-        admin:
-            addresses: http://127.0.0.1:18088/xxl-job-admin/
-        executor:
-            appname: media-process-service
-            port: 9999
-            logpath: /data/applogs/xxl-job-jobhandler
-            logretentiondays: 30
-        accessToken: default_token
-
 videoprocess:
     ffmpegpath: "D:\\develop\\ffmpeg\\bin\\ffmpeg.exe"

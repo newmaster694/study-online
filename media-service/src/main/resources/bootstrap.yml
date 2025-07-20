@@ -9,6 +9,8 @@ spring:
                 shared-configs:
                     -   data-id: "database-config.yml"
                     -   data-id: "redis-config.yml"
+                    -   data-id: "minio-config.yml"
+                    -   data-id: "xxl-job-cinfig.yml"
 
 study:
     online:
@@ -19,3 +21,8 @@ study:
             password: "000016"
         redis:
             host: "127.0.0.1"
+
+xxl:
+    job:
+        executor:
+            appname: "media-process-service"
