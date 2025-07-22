@@ -11,4 +11,12 @@ public interface ICoursePublishService {
 	 * @return CoursePreviewDTO
 	 */
 	CoursePreviewDTO getCoursePreviewInfo(Long courseId);
+
+	/**
+	 * 提交审核接口
+	 *
+	 * @param companyId 机构名称
+	 * @param courseId  课程id
+	 */
+	void commitAudit(Long companyId, Long courseId);
 }

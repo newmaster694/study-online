@@ -12,11 +12,18 @@ public class ErrorMessageConstant {
 	public static final String FAIL_CREATE_COURSE_INFO = "课程基本信息添加失败";
 
 	public static final String AUDIT_STATUS_MISMATCH = "审核状态不符";
+	public static final String AUDIT_STATUS_ERROR = "课程已提交，请等待审核";
+
+	public static final String COURSE_PIC_NULL_ERROR = "请上传课程图片";
+
 	public static final String FAIL_ADD_TEACHER_INFO = "新增教师失败";
 	public static final String FAIL_UPDATE_TEACHER_INFO = "更新教师失败";
+
 	public static final String CHARGING_RULES_NOT_SELECTED = "收费规则未选择";
 	public static final String ILLEGAL_CHARGES = "收费课程的收费金额必须要大于0";
+
 	public static final String TEACH_PLAN_GRADE_ERROR = "只允许二级教学计划绑定媒资文件";
+	public static final String TEACH_PLAN_NULL_ERROR = "请编写课程计划";
 
 	public static final String SAVE_FILE_ERROR = "保存文件信息失败";
 	public static final String FILE_EXIST_ERROR = "文件不存在";

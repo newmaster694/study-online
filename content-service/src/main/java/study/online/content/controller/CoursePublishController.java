@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import study.online.base.exception.BaseException;
 import study.online.content.model.dto.CoursePreviewDTO;
@@ -17,6 +19,12 @@ public class CoursePublishController {
 
 	private final ICoursePublishService coursePublishService;
 
+	/**
+	 * 预览课程接口
+	 *
+	 * @param courseId 课程id
+	 * @return ModelAndView
+	 */
 	@GetMapping("/coursepreview/{courseId}")
 	public ModelAndView preview(@PathVariable Long courseId) {
 		ModelAndView modelAndView = new ModelAndView();
@@ -30,5 +38,17 @@ public class CoursePublishController {
 		modelAndView.setViewName("course_template");
 
 		return modelAndView;
+	}
+
+	/**
+	 * 提交审核接口
+	 *
+	 * @param courseId 课程id
+	 */
+	@ResponseBody
+	@PostMapping("/courseaudit/commit/{courseId}")
+	public void commitAudit(@PathVariable Long courseId) {
+		Long companyId = 1232141425L;
+		coursePublishService.commitAudit(companyId, courseId);
 	}
 }
