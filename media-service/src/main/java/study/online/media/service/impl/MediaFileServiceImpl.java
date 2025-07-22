@@ -277,6 +277,11 @@ public class MediaFileServiceImpl implements IMediaFileService {
 		}
 	}
 
+	@Override
+	public MediaFiles getById(String mediaId) {
+		return mediaFilesMapper.selectById(mediaId);
+	}
+
 	/**
 	 * 添加待处理任务
 	 *

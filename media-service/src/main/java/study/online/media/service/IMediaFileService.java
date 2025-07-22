@@ -83,4 +83,12 @@ public interface IMediaFileService {
 	 * @param chunkFileFolderPath 分块文件路径
 	 */
 	void clearChunkFiles(String chunkFileFolderPath);
+
+	/**
+	 * 根据id获取媒资信息
+	 *
+	 * @param mediaId 媒资id
+	 * @return MediaFiles
+	 */
+	MediaFiles getById(String mediaId);
 }
