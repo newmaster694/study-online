@@ -24,4 +24,6 @@ public class ErrorMessageConstant {
 	public static final String FILE_EXIST_ERROR = "文件不存在";
 
 	public static final String OVER_MAX_FAIL_COUNT_ERROR = "查出最大重试次数，请手工进行视频转码";
+
+	public static final String PREVIEW_MODEL_ERROR = "预览模型未找到";
 }

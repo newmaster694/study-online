@@ -1,9 +1,9 @@
 package study.online.content.model.dto;
 
-import study.online.content.model.po.CourseBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import study.online.content.model.po.CourseBase;
 
 /**
  * <p>课程基本信息DTO</p>
@@ -11,9 +11,9 @@ import lombok.experimental.Accessors;
  * @author newmaster
  * @since 2025/6/6
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
+@EqualsAndHashCode(callSuper = true)
 public class CourseBaseInfoDTO extends CourseBase {
 
 	/*收费规则，对应数据字典*/
