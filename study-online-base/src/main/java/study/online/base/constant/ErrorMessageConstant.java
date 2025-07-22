@@ -7,12 +7,10 @@ public class ErrorMessageConstant {
 	public static final String QUERY_NULL = "查询结果为空";
 	public static final String REQUEST_NULL = "必要请求参数为空";
 
-	public static final String UN_FIND_COURSE = "课程不存在";
-	public static final String UN_FIND_TEACH_PLAN = "教学计划不存在";
-
 	public static final String COMPANY_INFORMATION_MISMATCH = "机构信息不匹配";
 	public static final String FAIL_CREATE_COURSE_MARKET = "课程营销信息添加失败";
 	public static final String FAIL_CREATE_COURSE_INFO = "课程基本信息添加失败";
+
 	public static final String AUDIT_STATUS_MISMATCH = "审核状态不符";
 	public static final String FAIL_ADD_TEACHER_INFO = "新增教师失败";
 	public static final String FAIL_UPDATE_TEACHER_INFO = "更新教师失败";

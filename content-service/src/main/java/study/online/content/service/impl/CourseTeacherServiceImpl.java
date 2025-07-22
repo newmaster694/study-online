@@ -36,7 +36,7 @@ public class CourseTeacherServiceImpl extends ServiceImpl<CourseTeacherMapper, C
 		}
 
 		if (courseBaseMapper.selectById(courseTeacherDTO.getCourseId()) == null) {
-			BaseException.cast(UN_FIND_COURSE);
+			BaseException.cast(QUERY_NULL);
 		}
 
 		if (!companyId.equals(courseBaseMapper.selectById(courseTeacherDTO.getCourseId()).getCompanyId())) {
@@ -75,7 +75,7 @@ public class CourseTeacherServiceImpl extends ServiceImpl<CourseTeacherMapper, C
 	@Override
 	public void deleteItem(Long courseId, Long courseTeacherId, Long companyId) {
 		if (courseBaseMapper.selectById(courseId) == null) {
-			BaseException.cast(UN_FIND_COURSE);
+			BaseException.cast(QUERY_NULL);
 		}
 
 		if (!companyId.equals(courseBaseMapper.selectById(courseId).getCompanyId())) {

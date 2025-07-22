@@ -19,8 +19,7 @@ import study.online.content.service.ITeachplanService;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static study.online.base.constant.ErrorMessageConstant.TEACH_PLAN_GRADE_ERROR;
-import static study.online.base.constant.ErrorMessageConstant.UN_FIND_TEACH_PLAN;
+import static study.online.base.constant.ErrorMessageConstant.*;
 
 @Service
 public class TeachplanServiceImpl extends ServiceImpl<TeachplanMapper, Teachplan> implements ITeachplanService {
@@ -105,7 +104,7 @@ public class TeachplanServiceImpl extends ServiceImpl<TeachplanMapper, Teachplan
 
 		Teachplan teachplan = this.getById(teachPlanId);
 		if (teachplan == null) {
-			BaseException.cast(UN_FIND_TEACH_PLAN);
+			BaseException.cast(QUERY_NULL);
 		}
 
 		if (teachplan.getGrade() != 2) {
@@ -134,7 +133,7 @@ public class TeachplanServiceImpl extends ServiceImpl<TeachplanMapper, Teachplan
 	public void unbindMedia(Long teachplanId, String mediaId) {
 		Teachplan teachplan = this.getById(teachplanId);
 		if (teachplan == null) {
-			BaseException.cast(UN_FIND_TEACH_PLAN);
+			BaseException.cast(QUERY_NULL);
 		}
 
 		teachplanMediaMapper.delete(new LambdaQueryWrapper<TeachplanMedia>()

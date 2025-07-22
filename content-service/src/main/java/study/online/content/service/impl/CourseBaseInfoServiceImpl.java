@@ -123,7 +123,7 @@ public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, Cou
 		CourseBase courseBase = this.getById(editCourseDTO.getId());
 
 		if (courseBase == null) {
-			BaseException.cast(UN_FIND_COURSE);
+			BaseException.cast(QUERY_NULL);
 		}
 
 		if (!companyId.equals(courseBase.getCompanyId())) {
@@ -152,7 +152,7 @@ public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, Cou
 		CourseBase courseBase = this.getById(courseId);
 
 		if (courseBase == null) {
-			BaseException.cast(UN_FIND_COURSE);
+			BaseException.cast(QUERY_NULL);
 		}
 
 		if (!companyId.equals(courseBase.getCompanyId())) {
