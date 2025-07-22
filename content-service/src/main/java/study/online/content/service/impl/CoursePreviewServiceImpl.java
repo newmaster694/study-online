@@ -5,6 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import study.online.base.exception.BaseException;
 import study.online.content.mapper.CourseBaseMapper;
 import study.online.content.mapper.CourseMarketMapper;
@@ -49,6 +50,7 @@ public class CoursePreviewServiceImpl implements ICoursePublishService {
 	}
 
 	@Override
+	@Transactional
 	public void commitAudit(Long companyId, Long courseId) {
 		CourseBaseInfoDTO courseBaseInfo = courseBaseInfoService.getCourseBaseInfo(courseId);
 		if (courseBaseInfo == null) {
