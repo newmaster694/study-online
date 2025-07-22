@@ -24,8 +24,8 @@
     <div class="banner-bg"></div>
     <div class="banner-info">
         <div class="banner-left">
-            <p>${model.courseBase.mtName}<span>\ ${model.courseBase.stName}</span></p>
-            <p class="tit">${model.courseBase.name}</p>
+            <p>${model.courseBase.mtName!''}<span>\ ${model.courseBase.stName!''}</span></p>
+            <p class="tit">${model.courseBase.name!''}</p>
             <p class="pic">
                 <#if model.courseBase.charge=='201000'>
                     <span class="new-pic">免费</span>
@@ -58,9 +58,9 @@
         </div>
         <div class="banner-rit">
             <p>
-                <a href="http://www.51xuecheng.cn/course/preview/learning.html?id=${model.courseBase.id}" target="_blank">
+                <a href="http://www.51xuecheng.cn/course/preview/learning.html?id=${model.courseBase.id!''}" target="_blank">
                     <#if model.courseBase.pic??>
-                        <img src="http://file.51xuecheng.cn${model.courseBase.pic}" alt="" width="270" height="156">
+                        <img src="http://file.51xuecheng.cn${model.courseBase.pic!''}" alt="" width="270" height="156">
                     <#else>
                         <img src="/static/img/widget-video.png" alt="" width="270" height="156">
                     </#if>
@@ -98,7 +98,7 @@
                             <div class="title"><span>适用人群</span></div>
                             <div class="cont cktop">
                                 <div >
-                                    <p>${model.courseBase.users!""}</p>
+                                    <p>${model.courseBase.users!''}</p>
                                 </div>
                                 <!--<span class="on-off">更多 <i class="i-chevron-bot"></i></span>-->
                             </div>
