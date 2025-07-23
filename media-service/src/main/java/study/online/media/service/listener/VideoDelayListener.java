@@ -32,6 +32,10 @@ public class VideoDelayListener {
 		key = MQConstant.DELAY_VIDEO_KEY))
 	public void timeoutProcessHandler(Long mediaProcessId) {
 		MediaProcess mediaProcess = mediaProcessService.getOne(mediaProcessId);
+		if (mediaProcess.getStatus().equals("2")) {
+			return;
+		}
+
 		mediaProcessService.saveProcessFinishStatus(
 			mediaProcess.getId(),
 			"3",
