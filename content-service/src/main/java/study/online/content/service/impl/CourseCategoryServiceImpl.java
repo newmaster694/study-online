@@ -1,13 +1,12 @@
 package study.online.content.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 import study.online.content.mapper.CourseCategoryMapper;
 import study.online.content.model.dto.CourseCategoryTreeDTO;
 import study.online.content.model.po.CourseCategory;
 import study.online.content.service.ICourseCategoryService;
-import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +15,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-public class CourseCategoryServiceImpl extends ServiceImpl<CourseCategoryMapper, CourseCategory>
-	implements ICourseCategoryService {
+public class CourseCategoryServiceImpl implements ICourseCategoryService {
 
 	@Resource
 	private CourseCategoryMapper courseCategoryMapper;

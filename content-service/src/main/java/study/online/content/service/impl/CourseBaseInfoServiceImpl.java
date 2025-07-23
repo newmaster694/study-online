@@ -4,13 +4,15 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import study.online.base.exception.BaseException;
 import study.online.base.model.PageParams;
 import study.online.content.mapper.CourseBaseMapper;
+import study.online.content.mapper.CourseCategoryMapper;
+import study.online.content.mapper.CourseMarketMapper;
+import study.online.content.mapper.CourseTeacherMapper;
 import study.online.content.model.dto.*;
 import study.online.content.model.po.CourseBase;
 import study.online.content.model.po.CourseCategory;
@@ -25,13 +27,15 @@ import static study.online.base.constant.ErrorMessageConstant.*;
 
 @Service
 @RequiredArgsConstructor
-public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, CourseBase>
-		implements ICourseBaseInfoService {
+public class CourseBaseInfoServiceImpl implements ICourseBaseInfoService {
 
-	private final ICourseMarketService courseMarketService;
-	private final ICourseCategoryService courseCategoryService;
 	private final ITeachplanService teachplanService;
 	private final ICourseTeacherService courseTeacherService;
+
+	private final CourseBaseMapper courseBaseMapper;
+	private final CourseMarketMapper courseMarketMapper;
+	private final CourseCategoryMapper courseCategoryMapper;
+	private final CourseTeacherMapper courseTeacherMapper;
 
 	@Override
 	public Page<CourseBase> queryCourseBaseList(PageParams pageParams, QueryCourseParamsDTO queryCourseParamsDTO) {
@@ -52,7 +56,10 @@ public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, Cou
 				CourseBase::getStatus,
 				queryCourseParamsDTO.getPublishStatus());
 
-		return this.page(new Page<>(pageParams.getPageNo(), pageParams.getPageSize()), queryWrapper);
+		return courseBaseMapper.selectPage(new Page<>(
+			pageParams.getPageNo(),
+			pageParams.getPageSize()),
+			queryWrapper);
 	}
 
 	@Override
@@ -68,9 +75,9 @@ public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, Cou
 				.setCompanyId(companyId)//设置机构id
 				.setCreateDate(LocalDateTime.now());//设置添加时间
 
-		boolean flagOfSaveCourseBase = this.save(courseBase);
+		int flagOfSaveCourseBase = courseBaseMapper.insert(courseBase);
 
-		if (!flagOfSaveCourseBase) {
+		if (flagOfSaveCourseBase <= 0) {
 			throw new BaseException(FAIL_CREATE_COURSE_INFO);
 		}
 
@@ -79,9 +86,9 @@ public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, Cou
 		BeanUtil.copyProperties(addCourseDTO, courseMarket, true);
 		courseMarket.setId(courseBase.getId());
 
-		boolean flagOfSaveCourseMarket = this.saveCourseMarket(courseMarket);
+		int flagOfSaveCourseMarket = this.saveCourseMarket(courseMarket);
 
-		if (!flagOfSaveCourseMarket) {
+		if (flagOfSaveCourseMarket <= 0) {
 			throw new BaseException(FAIL_CREATE_COURSE_MARKET);
 		}
 
@@ -91,13 +98,13 @@ public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, Cou
 
 	@Override
 	public CourseBaseInfoDTO getCourseBaseInfo(long courseId) {
-		CourseBase courseBase = this.getById(courseId);
+		CourseBase courseBase = courseBaseMapper.selectById(courseId);
 
 		if (courseBase == null) {
 			return null;
 		}
 
-		CourseMarket courseMarket = courseMarketService.getById(courseId);
+		CourseMarket courseMarket = courseMarketMapper.selectById(courseId);
 
 		CourseBaseInfoDTO courseBaseInfoDTO = new CourseBaseInfoDTO();
 
@@ -107,8 +114,8 @@ public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, Cou
 		}
 
 		//查询分类名称
-		CourseCategory categoryBySt = courseCategoryService.getById(courseBase.getSt());
-		CourseCategory categoryByMt = courseCategoryService.getById(courseBase.getMt());
+		CourseCategory categoryBySt = courseCategoryMapper.selectById(courseBase.getSt());
+		CourseCategory categoryByMt = courseCategoryMapper.selectById(courseBase.getMt());
 
 		courseBaseInfoDTO
 				.setStName(categoryBySt.getName())
@@ -120,7 +127,7 @@ public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, Cou
 	@Override
 	@Transactional
 	public CourseBaseInfoDTO updateCourseBase(Long companyId, EditCourseDTO editCourseDTO) {
-		CourseBase courseBase = this.getById(editCourseDTO.getId());
+		CourseBase courseBase = courseBaseMapper.selectById(editCourseDTO.getId());
 
 		if (courseBase == null) {
 			BaseException.cast(QUERY_NULL);
@@ -134,7 +141,7 @@ public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, Cou
 		BeanUtil.copyProperties(editCourseDTO, courseBase, true);
 		courseBase.setChangeDate(LocalDateTime.now());
 
-		this.updateById(courseBase);
+		courseBaseMapper.updateById(courseBase);
 
 		//封装营销数据基本信息
 		CourseMarket courseMarket = new CourseMarket();
@@ -149,7 +156,7 @@ public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, Cou
 	@Override
 	@Transactional
 	public void deleteItem(Long courseId, Long companyId) {
-		CourseBase courseBase = this.getById(courseId);
+		CourseBase courseBase = courseBaseMapper.selectById(courseId);
 
 		if (courseBase == null) {
 			BaseException.cast(QUERY_NULL);
@@ -163,8 +170,8 @@ public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, Cou
 			BaseException.cast(AUDIT_STATUS_MISMATCH);
 		}
 
-		this.removeById(courseId);
-		courseMarketService.removeById(courseId);
+		courseBaseMapper.deleteById(courseId);
+		courseMarketMapper.deleteById(courseId);
 
 		//删除课程计划
 		List<TeachplanDTO> teachplanTree = teachplanService.findTeachplanTree(courseId);
@@ -180,7 +187,7 @@ public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, Cou
 		List<Long> teacherIds = teacherList.stream()
 			.map(CourseTeacher::getId)
 			.toList();
-		courseTeacherService.removeBatchByIds(teacherIds);
+		courseTeacherMapper.deleteBatchIds(teacherIds);
 	}
 
 	/**
@@ -189,7 +196,7 @@ public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, Cou
 	 * @param courseMarket 要保存的课程营销记录
 	 * @return boolean-是否保存成功标志
 	 */
-	private boolean saveCourseMarket(CourseMarket courseMarket) {
+	private int saveCourseMarket(CourseMarket courseMarket) {
 		//收费规则
 		if (StrUtil.isBlank(courseMarket.getCharge())) {
 			throw new BaseException(CHARGING_RULES_NOT_SELECTED);
@@ -201,12 +208,12 @@ public class CourseBaseInfoServiceImpl extends ServiceImpl<CourseBaseMapper, Cou
 			}
 		}
 
-		CourseMarket selectCourseMarket = courseMarketService.getById(courseMarket.getId());
+		CourseMarket selectCourseMarket = courseMarketMapper.selectById(courseMarket.getId());
 		//判断数据库中是否已经存在这个营销数据：不存在=>新增；存在=>更新
 		if (selectCourseMarket == null) {
-			return courseMarketService.save(courseMarket);
+			return courseMarketMapper.insert(courseMarket);
 		} else {
-			return courseMarketService.updateById(courseMarket);
+			return courseMarketMapper.updateById(courseMarket);
 		}
 	}
 }

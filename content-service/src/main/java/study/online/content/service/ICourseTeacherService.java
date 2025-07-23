@@ -1,6 +1,5 @@
 package study.online.content.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import study.online.content.model.dto.SaveCourseTeacherDTO;
 import study.online.content.model.po.CourseTeacher;
 
@@ -12,7 +11,7 @@ import java.util.List;
  * @author newmaster
  * @since 2026/6/12
  */
-public interface ICourseTeacherService extends IService<CourseTeacher> {
+public interface ICourseTeacherService {
 
 	/**
 	 * 师资信息列表查询

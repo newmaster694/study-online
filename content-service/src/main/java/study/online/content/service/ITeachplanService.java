@@ -1,10 +1,8 @@
 package study.online.content.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import study.online.content.model.dto.BindTeachPlanMediaDTO;
 import study.online.content.model.dto.SaveTeachplanDTO;
 import study.online.content.model.dto.TeachplanDTO;
-import study.online.content.model.po.Teachplan;
 import study.online.content.model.po.TeachplanMedia;
 
 import java.util.List;
@@ -15,7 +13,7 @@ import java.util.List;
  * @author newmaster
  * @since 2025/6/9
  */
-public interface ITeachplanService extends IService<Teachplan> {
+public interface ITeachplanService {
 
 	/**
 	 * <p>查询课程计划树形结构</p>

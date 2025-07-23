@@ -2,8 +2,7 @@ package study.online.content.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import jakarta.annotation.Resource;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import study.online.base.exception.BaseException;
@@ -19,16 +18,15 @@ import study.online.content.service.ITeachplanService;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static study.online.base.constant.ErrorMessageConstant.*;
+import static study.online.base.constant.ErrorMessageConstant.QUERY_NULL;
+import static study.online.base.constant.ErrorMessageConstant.TEACH_PLAN_GRADE_ERROR;
 
 @Service
-public class TeachplanServiceImpl extends ServiceImpl<TeachplanMapper, Teachplan> implements ITeachplanService {
+@RequiredArgsConstructor
+public class TeachplanServiceImpl implements ITeachplanService {
 
-	@Resource
-	private TeachplanMapper teachplanMapper;
-
-	@Resource
-	private TeachplanMediaMapper teachplanMediaMapper;
+	private final TeachplanMapper teachplanMapper;
+	private final TeachplanMediaMapper teachplanMediaMapper;
 
 	@Override
 	public List<TeachplanDTO> findTeachplanTree(long courseId) {
@@ -39,38 +37,38 @@ public class TeachplanServiceImpl extends ServiceImpl<TeachplanMapper, Teachplan
 	public void saveTeachplan(SaveTeachplanDTO saveTeachplanDTO) {
 		Long id = saveTeachplanDTO.getId();
 		if (id != null) {
-			Teachplan teachplan = this.getById(id);
+			Teachplan teachplan = teachplanMapper.selectById(id);
 			BeanUtil.copyProperties(saveTeachplanDTO, teachplan, true);
-			this.updateById(teachplan);
+			teachplanMapper.updateById(teachplan);
 		} else {
 			int count = this.getTeachplanCount(saveTeachplanDTO.getCourseId(), saveTeachplanDTO.getParentid());
 			Teachplan teachplan = new Teachplan();
 			teachplan.setOrderby(count + 1);
 			BeanUtil.copyProperties(saveTeachplanDTO, teachplan, true);
 
-			this.save(teachplan);
+			teachplanMapper.insert(teachplan);
 		}
 	}
 
 	@Override
 	@Transactional
 	public void deleteTeachplan(Long teachplanId) {
-		Long parentid = this.getById(teachplanId).getParentid();
+		Long parentid = teachplanMapper.selectById(teachplanId).getParentid();
 		if (parentid == 0) {//大章节，必须保证下面没有小章节了才能删
 			//查找小章节
 			LambdaQueryWrapper<Teachplan> teachplanQueryWrapper = new LambdaQueryWrapper<>();
 			teachplanQueryWrapper.eq(Teachplan::getParentid, teachplanId);//这里比较的是找有没有其他记录的parentid等于这个大章节的id
-			long count = this.count(teachplanQueryWrapper);
+			long count = teachplanMapper.selectCount(teachplanQueryWrapper);
 			if (count > 0) {
 				throw new BaseException("课程计划还有子级信息，无法操作");
 			} else {
-				this.removeById(teachplanId);
+				teachplanMapper.deleteById(teachplanId);
 				LambdaQueryWrapper<TeachplanMedia> teachplanMediaQueryWrapper = new LambdaQueryWrapper<>();
 				teachplanMediaQueryWrapper.eq(TeachplanMedia::getTeachplanId, teachplanId);
 				teachplanMediaMapper.delete(teachplanMediaQueryWrapper);
 			}
 		} else { //小章节，直接删
-			this.removeById(teachplanId);
+			teachplanMapper.deleteById(teachplanId);
 			LambdaQueryWrapper<TeachplanMedia> teachplanMediaQueryWrapper = new LambdaQueryWrapper<>();
 			teachplanMediaQueryWrapper.eq(TeachplanMedia::getTeachplanId, teachplanId);
 			teachplanMediaMapper.delete(teachplanMediaQueryWrapper);
@@ -80,7 +78,7 @@ public class TeachplanServiceImpl extends ServiceImpl<TeachplanMapper, Teachplan
 	@Override
 	@Transactional
 	public void move(String moveType, Long teachplanId) {
-		Teachplan teachplan = this.getById(teachplanId);
+		Teachplan teachplan = teachplanMapper.selectById(teachplanId);
 		if (teachplan == null) {
 			throw new BaseException("课程计划不存在");
 		}
@@ -102,7 +100,7 @@ public class TeachplanServiceImpl extends ServiceImpl<TeachplanMapper, Teachplan
 	public TeachplanMedia associationMedia(BindTeachPlanMediaDTO bindTeachPlanMediaDTO) {
 		Long teachPlanId = bindTeachPlanMediaDTO.getTeachPlanId();
 
-		Teachplan teachplan = this.getById(teachPlanId);
+		Teachplan teachplan = teachplanMapper.selectById(teachPlanId);
 		if (teachplan == null) {
 			BaseException.cast(QUERY_NULL);
 		}
@@ -131,7 +129,7 @@ public class TeachplanServiceImpl extends ServiceImpl<TeachplanMapper, Teachplan
 
 	@Override
 	public void unbindMedia(Long teachplanId, String mediaId) {
-		Teachplan teachplan = this.getById(teachplanId);
+		Teachplan teachplan = teachplanMapper.selectById(teachplanId);
 		if (teachplan == null) {
 			BaseException.cast(QUERY_NULL);
 		}
@@ -148,11 +146,14 @@ public class TeachplanServiceImpl extends ServiceImpl<TeachplanMapper, Teachplan
 	 * @param index     移动的节点索引
 	 */
 	private void moveNode(Teachplan teachplan, int index) {
-		Teachplan preNode = lambdaQuery()
+		LambdaQueryWrapper<Teachplan> queryWrapper = new LambdaQueryWrapper<>();
+
+		queryWrapper
 			.eq(Teachplan::getParentid, teachplan.getParentid())
 			.eq(Teachplan::getCourseId, teachplan.getCourseId())
-			.eq(Teachplan::getOrderby, teachplan.getOrderby() + index)
-			.one();
+			.eq(Teachplan::getOrderby, teachplan.getOrderby() + index);
+
+		Teachplan preNode = teachplanMapper.selectOne(queryWrapper);
 
 		if (preNode == null) {
 			if (index == 1) {
@@ -166,8 +167,9 @@ public class TeachplanServiceImpl extends ServiceImpl<TeachplanMapper, Teachplan
 
 		preNode.setOrderby(teachplan.getOrderby());
 		teachplan.setOrderby(teachplan.getOrderby() + index);
-		this.updateById(teachplan);
-		this.updateById(preNode);
+
+		teachplanMapper.updateById(teachplan);
+		teachplanMapper.updateById(preNode);
 	}
 
 	/**
@@ -183,6 +185,6 @@ public class TeachplanServiceImpl extends ServiceImpl<TeachplanMapper, Teachplan
 		queryWrapper.eq(Teachplan::getCourseId, courseId);
 		queryWrapper.eq(Teachplan::getParentid, parentId);
 
-		return (int) this.count(queryWrapper);
+		return Math.toIntExact(teachplanMapper.selectCount(queryWrapper));
 	}
 }

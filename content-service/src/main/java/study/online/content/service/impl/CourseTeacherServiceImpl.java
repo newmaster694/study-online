@@ -1,8 +1,8 @@
 package study.online.content.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import jakarta.annotation.Resource;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import study.online.base.exception.BaseException;
 import study.online.content.mapper.CourseBaseMapper;
@@ -18,15 +18,18 @@ import java.util.Objects;
 import static study.online.base.constant.ErrorMessageConstant.*;
 
 @Service
-public class CourseTeacherServiceImpl extends ServiceImpl<CourseTeacherMapper, CourseTeacher>
-	implements ICourseTeacherService {
+@RequiredArgsConstructor
+public class CourseTeacherServiceImpl implements ICourseTeacherService {
 
-	@Resource
-	private CourseBaseMapper courseBaseMapper;
+	private final CourseBaseMapper courseBaseMapper;
+	private final CourseTeacherMapper courseTeacherMapper;
 
 	@Override
 	public List<CourseTeacher> getTeacherList(Long courseId) {
-		return lambdaQuery().eq(CourseTeacher::getCourseId, courseId).list();
+		LambdaQueryWrapper<CourseTeacher> queryWrapper = new LambdaQueryWrapper<>();
+
+		queryWrapper.eq(CourseTeacher::getCourseId, courseId);
+		return courseTeacherMapper.selectList(queryWrapper);
 	}
 
 	@Override
@@ -43,9 +46,14 @@ public class CourseTeacherServiceImpl extends ServiceImpl<CourseTeacherMapper, C
 			BaseException.cast(COMPANY_INFORMATION_MISMATCH);
 		}
 
-		CourseTeacher courseTeacher = lambdaQuery()
-			.eq(!Objects.isNull(courseTeacherDTO.getId()), CourseTeacher::getId, courseTeacherDTO.getId())
-			.one();
+		LambdaQueryWrapper<CourseTeacher> queryWrapper = new LambdaQueryWrapper<>();
+
+		queryWrapper.eq(
+			!Objects.isNull(courseTeacherDTO.getId()),
+			CourseTeacher::getId,
+			courseTeacherDTO.getId());
+
+		CourseTeacher courseTeacher = courseTeacherMapper.selectOne(queryWrapper);
 
 		if (courseTeacher == null) {
 			//新增逻辑
@@ -53,8 +61,8 @@ public class CourseTeacherServiceImpl extends ServiceImpl<CourseTeacherMapper, C
 			BeanUtil.copyProperties(courseTeacherDTO, courseTeacher, true);
 
 			courseTeacher.setCreateDate(LocalDateTime.now());
-			boolean flag = this.save(courseTeacher);
-			if (!flag) {
+			int flag = courseTeacherMapper.insert(courseTeacher);
+			if (flag <= 0) {
 				BaseException.cast(FAIL_ADD_TEACHER_INFO);
 			}
 
@@ -64,8 +72,8 @@ public class CourseTeacherServiceImpl extends ServiceImpl<CourseTeacherMapper, C
 		//更新逻辑
 		BeanUtil.copyProperties(courseTeacherDTO, courseTeacher, true);
 
-		boolean flag = this.updateById(courseTeacher);
-		if (!flag) {
+		int flag = courseTeacherMapper.updateById(courseTeacher);
+		if (flag <= 0) {
 			BaseException.cast(FAIL_UPDATE_TEACHER_INFO);
 		}
 
@@ -82,11 +90,11 @@ public class CourseTeacherServiceImpl extends ServiceImpl<CourseTeacherMapper, C
 			BaseException.cast(COMPANY_INFORMATION_MISMATCH);
 		}
 
-		CourseTeacher courseTeacher = this.getById(courseTeacherId);
+		CourseTeacher courseTeacher = courseTeacherMapper.selectById(courseTeacherId);
 		if (courseTeacher == null) {
 			BaseException.cast(OBJECT_NULL);
 		}
 
-		this.removeById(courseTeacherId);
+		courseTeacherMapper.deleteById(courseTeacherId);
 	}
 }

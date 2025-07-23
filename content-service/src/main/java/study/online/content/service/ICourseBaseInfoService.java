@@ -1,7 +1,6 @@
 package study.online.content.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.IService;
 import study.online.base.model.PageParams;
 import study.online.content.model.dto.AddCourseDTO;
 import study.online.content.model.dto.CourseBaseInfoDTO;
@@ -15,7 +14,7 @@ import study.online.content.model.po.CourseBase;
  * @author newmaster
  * @since 2025/6/4
  */
-public interface ICourseBaseInfoService extends IService<CourseBase> {
+public interface ICourseBaseInfoService {
 
 	/**
 	 * <p>课程查询接口</p>
