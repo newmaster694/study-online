@@ -51,4 +51,16 @@ public class CoursePublishController {
 		Long companyId = 1232141425L;
 		coursePublishService.commitAudit(companyId, courseId);
 	}
+
+	/**
+	 * 课程发布接口
+	 *
+	 * @param courseId 课程id
+	 */
+	@ResponseBody
+	@PostMapping("/coursepublish/{courseId}")
+	public void coursePublish(@PathVariable Long courseId) {
+		Long companyId = 1232141425L;
+		coursePublishService.publish(companyId, courseId);
+	}
 }

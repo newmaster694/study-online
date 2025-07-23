@@ -2,7 +2,6 @@ package study.online.base.constant;
 
 public class ErrorMessageConstant {
 	public static final String UNKNOW_ERROR = "执行过程异常，请重试！";
-	public static final String PARAMS_ERROR = "非法参数";
 	public static final String OBJECT_NULL = "空对象异常";
 	public static final String QUERY_NULL = "查询结果为空";
 	public static final String REQUEST_NULL = "必要请求参数为空";
