@@ -12,13 +12,14 @@ import study.online.base.model.PageParams;
 import study.online.content.mapper.CourseBaseMapper;
 import study.online.content.mapper.CourseCategoryMapper;
 import study.online.content.mapper.CourseMarketMapper;
-import study.online.content.mapper.CourseTeacherMapper;
 import study.online.content.model.dto.*;
 import study.online.content.model.po.CourseBase;
 import study.online.content.model.po.CourseCategory;
 import study.online.content.model.po.CourseMarket;
 import study.online.content.model.po.CourseTeacher;
-import study.online.content.service.*;
+import study.online.content.service.ICourseBaseInfoService;
+import study.online.content.service.ICourseTeacherService;
+import study.online.content.service.ITeachplanService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -35,7 +36,6 @@ public class CourseBaseInfoServiceImpl implements ICourseBaseInfoService {
 	private final CourseBaseMapper courseBaseMapper;
 	private final CourseMarketMapper courseMarketMapper;
 	private final CourseCategoryMapper courseCategoryMapper;
-	private final CourseTeacherMapper courseTeacherMapper;
 
 	@Override
 	public Page<CourseBase> queryCourseBaseList(PageParams pageParams, QueryCourseParamsDTO queryCourseParamsDTO) {
@@ -187,7 +187,17 @@ public class CourseBaseInfoServiceImpl implements ICourseBaseInfoService {
 		List<Long> teacherIds = teacherList.stream()
 			.map(CourseTeacher::getId)
 			.toList();
-		courseTeacherMapper.deleteBatchIds(teacherIds);
+		courseTeacherService.removeByIds(teacherIds);
+	}
+
+	@Override
+	public CourseBase getById(Long id) {
+		return courseBaseMapper.selectById(id);
+	}
+
+	@Override
+	public void updateById(CourseBase courseBase) {
+		courseBaseMapper.updateById(courseBase);
 	}
 
 	/**

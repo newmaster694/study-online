@@ -31,11 +31,13 @@ public interface ICourseTeacherService {
 	CourseTeacher addTeacherInfo(SaveCourseTeacherDTO courseTeacherDTO, Long companyId);
 
 	/**
-	 * 删除教师资料接口
+	 * 删除课程夫关联教师资料接口
 	 *
 	 * @param courseId        相关课程信息id
 	 * @param courseTeacherId 相关教师资料id
 	 * @param companyId       机构id
 	 */
 	void deleteItem(Long courseId, Long courseTeacherId, Long companyId);
+
+	void removeByIds(List<Long> teacherIds);
 }

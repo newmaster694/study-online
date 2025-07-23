@@ -60,4 +60,19 @@ public interface ICourseBaseInfoService {
 	 * @param companyId 机构id
 	 */
 	void deleteItem(Long courseId, Long companyId);
+
+	/**
+	 * 根据id查询课程信息
+	 *
+	 * @param id 课程id
+	 * @return CourseBase
+	 */
+	CourseBase getById(Long id);
+
+	/**
+	 * 更新课程信息记录
+	 *
+	 * @param courseBase 需要更新的记录
+	 */
+	void updateById(CourseBase courseBase);
 }

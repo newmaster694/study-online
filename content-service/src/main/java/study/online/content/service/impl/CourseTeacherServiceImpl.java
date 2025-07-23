@@ -97,4 +97,9 @@ public class CourseTeacherServiceImpl implements ICourseTeacherService {
 
 		courseTeacherMapper.deleteById(courseTeacherId);
 	}
+
+	@Override
+	public void removeByIds(List<Long> teacherIds) {
+		courseTeacherMapper.deleteBatchIds(teacherIds);
+	}
 }

@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import study.online.base.exception.BaseException;
-import study.online.content.mapper.CourseBaseMapper;
 import study.online.content.mapper.CourseMarketMapper;
 import study.online.content.mapper.CoursePublishMapper;
 import study.online.content.mapper.CoursePublishPreMapper;
@@ -36,7 +35,6 @@ public class CoursePreviewServiceImpl implements ICoursePublishService {
 
 	private final CourseMarketMapper courseMarketMapper;
 	private final CoursePublishPreMapper coursePublishPreMapper;
-	private final CourseBaseMapper courseBaseMapper;
 	private final CoursePublishMapper coursePublishMapper;
 
 	@Override
@@ -100,8 +98,8 @@ public class CoursePreviewServiceImpl implements ICoursePublishService {
 		}
 
 		//更新课程基本信息表的审核状态为“已提交”
-		CourseBase courseBase = courseBaseMapper.selectById(courseId);
-		courseBaseMapper.updateById(courseBase.setAuditStatus("202003"));
+		CourseBase courseBase = courseBaseInfoService.getById(courseId);
+		courseBaseInfoService.updateById(courseBase.setAuditStatus("202003"));
 	}
 
 	@Override
