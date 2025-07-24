@@ -5,9 +5,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@SpringBootApplication
+
 @Slf4j
 @EnableTransactionManagement
+@SpringBootApplication(scanBasePackages = {"study.online.content", "study.online.messagesdk"})
 public class ContentApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ContentApplication.class, args);

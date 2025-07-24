@@ -20,6 +20,8 @@ import study.online.content.model.po.CoursePublishPre;
 import study.online.content.service.ICourseBaseInfoService;
 import study.online.content.service.ICoursePublishService;
 import study.online.content.service.ITeachplanService;
+import study.online.messagesdk.model.po.MqMessage;
+import study.online.messagesdk.service.MqMessageService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -31,11 +33,16 @@ import static study.online.base.constant.ErrorMessageConstant.*;
 public class CoursePreviewServiceImpl implements ICoursePublishService {
 
 	private final ICourseBaseInfoService courseBaseInfoService;
+
 	private final ITeachplanService teachplanService;
 
 	private final CourseMarketMapper courseMarketMapper;
+
 	private final CoursePublishPreMapper coursePublishPreMapper;
+
 	private final CoursePublishMapper coursePublishMapper;
+
+	private final MqMessageService mqMessageService;
 
 	@Override
 	public CoursePreviewDTO getCoursePreviewInfo(Long courseId) {
@@ -127,7 +134,14 @@ public class CoursePreviewServiceImpl implements ICoursePublishService {
 			coursePublishMapper.updateById(coursePublish);
 		}
 
-		//TODO 向消息表写入数据
+		//向消息表写入数据
+		MqMessage mqMessage = mqMessageService.addMessage(
+			"course_publish",
+			String.valueOf(courseId),
+			null, null);
+		if (mqMessage == null) {
+			BaseException.cast(UNKNOW_ERROR);
+		}
 
 		//将预发布表的数据删除（其实也可以不删除的貌似）
 		coursePublishPreMapper.deleteById(coursePublishPre);
