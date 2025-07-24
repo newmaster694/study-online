@@ -1,4 +1,4 @@
-package study.online.media.config;
+package study.online.content.config;
 
 import com.xxl.job.core.executor.impl.XxlJobSpringExecutor;
 import lombok.extern.slf4j.Slf4j;

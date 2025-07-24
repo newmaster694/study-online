@@ -10,6 +10,7 @@ spring:
                     -   data-id: "database-config.yml"
                     -   data-id: "freemarker-config.yml"
                     -   data-id: "minio-config.yml"
+                    -   data-id: "xxl-job-config.yml"
 
 study:
     online:
@@ -20,3 +21,8 @@ study:
             password: "000016"
         redis:
             host: "127.0.0.1"
+        xxl:
+            job:
+                executor:
+                    appname: "coursepublish-job"
+                port: 8998

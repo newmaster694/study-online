@@ -1,5 +1,7 @@
 package study.online.content.service.jobhandler;
 
+import com.xxl.job.core.context.XxlJobHelper;
+import com.xxl.job.core.handler.annotation.XxlJob;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -19,17 +21,29 @@ public class CoursePublishTask extends MessageProcessAbstract {
 		super(mqMessageService);
 	}
 
+	/*任务调度入口*/
+	@XxlJob("course-publish-job-handler")
+	public void coursePublishJobHandler() {
+		int shardIndex = XxlJobHelper.getShardIndex();
+		int shardTotal = XxlJobHelper.getShardTotal();
+
+		this.process(shardIndex, shardTotal, "course_publish", 30, 60);
+
+
+	}
+
 	@Override
 	public boolean execute(MqMessage mqMessage) {
 		//从MqMessage拿到课程id
 		long courseId = Long.parseLong(mqMessage.getBusinessKey1());
 
-		//向elasticsearch写索引数据
-
-		//向Redis写缓存
-
 		//课程静态化上传到minio
 		this.generateCourseHtml(mqMessage, courseId);
+
+		//向elasticsearch写索引数据
+		this.saveCourseIndex(mqMessage, courseId);
+
+		//向Redis写缓存
 
 		//返回true表示任务完成
 		return true;
@@ -42,5 +56,40 @@ public class CoursePublishTask extends MessageProcessAbstract {
 	 * @param courseId  课程id
 	 */
 	private void generateCourseHtml(MqMessage mqMessage, Long courseId) {
+		Long taskId = mqMessage.getId();
+
+		//查询数据库取出该阶段执行状态
+		MqMessageService mqMessageService = this.getMqMessageService();
+		int stageOne = mqMessageService.getStageOne(taskId);
+		if (stageOne > 0) {//完成
+			log.info("课程静态化任务完成-{}", taskId);
+			return;
+		}
+
+		//TODO 开始进行课程静态化处理
+
+		mqMessageService.completedStageOne(taskId);
+	}
+
+	/**
+	 * 保存课程索引信息到elasticsearch
+	 *
+	 * @param mqMessage 任务消息
+	 * @param courseId  课程id
+	 */
+	private void saveCourseIndex(MqMessage mqMessage, Long courseId) {
+		Long taskId = mqMessage.getId();
+
+		MqMessageService mqMessageService = this.getMqMessageService();
+		int stageTwo = mqMessageService.getStageTwo(taskId);
+
+		if (stageTwo > 0) {
+			log.info("课程的索引信息已写入-{}", taskId);
+			return;
+		}
+
+		//TODO 查询课程信息，调用搜索服务添加索引
+
+		mqMessageService.completedStageTwo(taskId);
 	}
 }

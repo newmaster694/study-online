@@ -26,3 +26,4 @@ study:
             job:
                 executor:
                     appname: "media-process-service"
+                port: 8999
