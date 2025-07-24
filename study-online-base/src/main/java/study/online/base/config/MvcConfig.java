@@ -9,8 +9,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 /**
  * <p>注册web层相关组件</p>
  */
-@Configuration
 @Slf4j
+@Configuration
 @ConditionalOnClass(DispatcherServlet.class)
 public class MvcConfig extends WebMvcConfigurationSupport {
 }

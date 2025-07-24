@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import study.online.base.constant.MQConstant;
 import study.online.base.exception.BaseException;
 import study.online.base.model.RestResponse;
+import study.online.base.utils.MinioUtil;
 import study.online.media.mapper.MediaFilesMapper;
 import study.online.media.mapper.MediaProcessMapper;
 import study.online.media.model.dto.UploadFileParamsDTO;
@@ -44,7 +45,7 @@ import static study.online.base.constant.RedisConstant.CHUNK_KEY;
 @RequiredArgsConstructor
 public class MediaFileServiceImpl implements IMediaFileService {
 
-	private final MinioService minioService;
+	private final MinioUtil minioUtil;
 
 	private final MediaFilesMapper mediaFilesMapper;
 	private final MediaProcessMapper mediaProcessMapper;
@@ -72,7 +73,7 @@ public class MediaFileServiceImpl implements IMediaFileService {
 		String contentType = FileUtil.getContentType(filename);
 
 		//文件上传
-		minioService.uploadFile(MEDIA_FILE_PATH_BUCKET, file, objectname, contentType);
+		minioUtil.uploadFile(MEDIA_FILE_PATH_BUCKET, file, objectname, contentType);
 
 		//代理对象
 		proxy = (IMediaFileService) AopContext.currentProxy();
@@ -134,7 +135,7 @@ public class MediaFileServiceImpl implements IMediaFileService {
 			String filePath = mediaFiles.getFilePath();
 
 			try {
-				minioService.getObjectInfo(bucket, filePath);
+				minioUtil.getObjectInfo(bucket, filePath);
 				return RestResponse.success(true);
 			} catch (Exception e) {
 				return RestResponse.success(false);
@@ -173,7 +174,7 @@ public class MediaFileServiceImpl implements IMediaFileService {
 		String chunkFilePath = chunkFileFolderPath + chunk;
 
 		try {
-			minioService.uploadFile(MEDIA_CHUNK_PATH_BUCKET, file, chunkFilePath, null);
+			minioUtil.uploadFile(MEDIA_CHUNK_PATH_BUCKET, file, chunkFilePath, null);
 		} catch (Exception exception) {
 			log.debug("上传分块文件失败:{}", chunkFilePath);
 			return RestResponse.validFail(false, "上传分块失败");
@@ -203,7 +204,7 @@ public class MediaFileServiceImpl implements IMediaFileService {
 		String mergeFilePath = FileUtil.getFilePathByMd5(fileMd5, extName);
 
 		try {
-			ObjectWriteResponse response = minioService.mergeFile(MEDIA_FILE_PATH_BUCKET, mergeFilePath, sourceList);
+			ObjectWriteResponse response = minioUtil.mergeFile(MEDIA_FILE_PATH_BUCKET, mergeFilePath, sourceList);
 
 			log.info("合并文件成功:{}-{}", mergeFilePath, response.toString());
 		} catch (Exception exception) {
@@ -212,13 +213,13 @@ public class MediaFileServiceImpl implements IMediaFileService {
 		}
 
 		/*验证MD5*/
-		try (InputStream inputStream = minioService.getObject(MEDIA_FILE_PATH_BUCKET, mergeFilePath)) {
+		try (InputStream inputStream = minioUtil.getObject(MEDIA_FILE_PATH_BUCKET, mergeFilePath)) {
 			String md5Hex = DigestUtils.md5Hex(inputStream);
 			if (!fileMd5.equals(md5Hex)) {
 				return RestResponse.validFail(false, "文件合并校验失败，最终上传失败");
 			}
 
-			uploadFileParamsDTO.setFileSize(minioService.getObjectInfo(MEDIA_FILE_PATH_BUCKET, mergeFilePath).size());
+			uploadFileParamsDTO.setFileSize(minioUtil.getObjectInfo(MEDIA_FILE_PATH_BUCKET, mergeFilePath).size());
 		} catch (IOException e) {
 			log.debug("校验文件失败,fileMd5:{},异常:{}", fileMd5, e.getMessage(), e);
 			return RestResponse.validFail(false, "文件合并校验失败，最终上传失败");
@@ -244,7 +245,7 @@ public class MediaFileServiceImpl implements IMediaFileService {
 		FileOutputStream outputStream = null;
 
 		try {
-			InputStream inputStream = minioService.getObject(bucket, objectName);
+			InputStream inputStream = minioUtil.getObject(bucket, objectName);
 			minioFile = File.createTempFile("minio", ".merge");
 
 			outputStream = new FileOutputStream(minioFile);
@@ -270,7 +271,7 @@ public class MediaFileServiceImpl implements IMediaFileService {
 	public void clearChunkFiles(String chunkFileFolderPath) {
 
 		try {
-			minioService.removeFile(MEDIA_CHUNK_PATH_BUCKET, chunkFileFolderPath);
+			minioUtil.removeFile(MEDIA_CHUNK_PATH_BUCKET, chunkFileFolderPath);
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			log.error("清除分块文件失败,chunkFileFolderPath:{}", chunkFileFolderPath, e);

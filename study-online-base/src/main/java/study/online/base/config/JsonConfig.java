@@ -20,9 +20,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+@Slf4j
 @Configuration
 @ConditionalOnClass(ObjectMapper.class)
-@Slf4j
 public class JsonConfig {
 
 	public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";

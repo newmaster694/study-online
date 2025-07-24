@@ -3,7 +3,6 @@ package study.online.content.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import study.online.content.model.dto.CourseCategoryTreeDTO;
 import study.online.content.model.po.CourseCategory;
-import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -13,7 +12,6 @@ import java.util.List;
  * @author newmaster
  * @since 2025-06-04
  */
-@Mapper
 public interface CourseCategoryMapper extends BaseMapper<CourseCategory> {
 
 	/**

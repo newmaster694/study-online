@@ -2,20 +2,20 @@ import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import study.online.media.MediaApplication;
-import study.online.media.service.impl.MinioService;
+import study.online.base.utils.MinioUtil;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 @SpringBootTest(classes = MediaApplication.class)
-public class TestMinioService {
+public class TestMinioUtil {
 
 	@Resource
-	private MinioService minioService;
+	private MinioUtil minioUtil;
 
 	@Test
 	public void testUpload() throws FileNotFoundException {
 		FileInputStream fis = new FileInputStream("C:\\Users\\newmaster\\Desktop\\新建 Markdown File.md");
-		minioService.uploadFile("test-bucket", "aaa.md", fis);
+		minioUtil.uploadFile("test-bucket", "aaa.md", fis);
 	}
 }

@@ -15,7 +15,7 @@ import study.online.media.model.po.MediaProcess;
 import study.online.media.service.IMediaFileService;
 import study.online.media.service.IMediaProcessService;
 import study.online.media.utils.FileUtil;
-import study.online.media.service.impl.MinioService;
+import study.online.base.utils.MinioUtil;
 import study.online.media.utils.Mp4VideoUtil;
 
 import java.io.File;
@@ -40,7 +40,7 @@ public class VideoTask {
 	private final RedissonClient redissonClient;
 	private final RabbitTemplate rabbitTemplate;
 
-	private final MinioService minioService;
+	private final MinioUtil minioUtil;
 
 	@Value("${videoprocess.ffmpegpath}")
 	private String ffmpegPath;
@@ -149,7 +149,7 @@ public class VideoTask {
 			String url = "/" + bucket + "/" + objectName;
 
 			try {
-				minioService.uploadFile(bucket, objectName, originalFile.getAbsolutePath());
+				minioUtil.uploadFile(bucket, objectName, originalFile.getAbsolutePath());
 				mediaProcessService.saveProcessFinishStatus(mediaProcess.getId(), "2", fileId, url, null);
 			} catch (Exception exception) {
 				log.error("处理视频失败:{}-{}", bucket + objectName, exception.getMessage());

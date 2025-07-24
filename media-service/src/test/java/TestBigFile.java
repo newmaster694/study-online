@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import study.online.media.MediaApplication;
-import study.online.media.service.impl.MinioService;
+import study.online.base.utils.MinioUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -26,7 +26,7 @@ public class TestBigFile {
 	private MinioClient minioClient;
 
 	@Resource
-	private MinioService minioService;
+	private MinioUtil minioUtil;
 
 	/*测试文件分块*/
 	@Test
@@ -199,7 +199,7 @@ public class TestBigFile {
 
 		List<String> sortedChunkFiles = this.getSortedChunkFiles(bucketName, chunkPrefix);
 
-		minioService.removeFiles(bucketName, sortedChunkFiles);
+		minioUtil.removeFiles(bucketName, sortedChunkFiles);
 	}
 
 	/*获取指定路径下的所有分块文件，并按文件名数字升序排序*/
@@ -207,7 +207,7 @@ public class TestBigFile {
 		List<String> files = new ArrayList<>();
 
 		// 调用封装好的 listObjects 方法
-		Iterable<Result<Item>> results = minioService.listObjects(bucketName, prefix, false);
+		Iterable<Result<Item>> results = minioUtil.listObjects(bucketName, prefix, false);
 
 		for (Result<Item> result : results) {
 			Item item = result.get();

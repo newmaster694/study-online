@@ -1,4 +1,4 @@
-package study.online.media.service.impl;
+package study.online.base.utils;
 
 import io.minio.*;
 import io.minio.messages.DeleteError;
@@ -7,17 +7,17 @@ import io.minio.messages.Item;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
 @Slf4j
+@Component
 @RequiredArgsConstructor
-public class MinioService {
+public class MinioUtil {
 
 	private final MinioClient minioClient;
 
