@@ -107,14 +107,14 @@ mvn clean install
 
 ```yaml
 spring:
-	datasource:
-		url: "jdbc:mysql://${study.online.mysql.host:127.0.0.1}:3306/${study.online.mysql.database}?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai"
-		driver-class-name: com.mysql.cj.jdbc.Driver
-		username: ${study.online.mysql.username}
-		password: "${study.online.mysql.password}"
+    datasource:
+        url: "jdbc:mysql://${study.online.mysql.host:127.0.0.1}:3306/${study.online.mysql.database}?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai"
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        username: ${study.online.mysql.username}
+        password: "${study.online.mysql.password}"
 mybatis-plus:
-	configuration:
-		map-underscore-to-camel-case: true # mybatis驼峰转换配置
+    configuration:
+        map-underscore-to-camel-case: true # mybatis驼峰转换配置
 ```
 
 
