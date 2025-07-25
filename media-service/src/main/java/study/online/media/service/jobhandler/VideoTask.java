@@ -15,7 +15,7 @@ import study.online.media.model.po.MediaProcess;
 import study.online.media.service.IMediaFileService;
 import study.online.media.service.IMediaProcessService;
 import study.online.media.utils.FileUtil;
-import study.online.base.utils.MinioUtil;
+import study.online.media.utils.MinioUtil;
 import study.online.media.utils.Mp4VideoUtil;
 
 import java.io.File;

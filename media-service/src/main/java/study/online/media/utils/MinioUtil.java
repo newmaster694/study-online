@@ -1,4 +1,4 @@
-package study.online.base.utils;
+package study.online.media.utils;
 
 import io.minio.*;
 import io.minio.messages.DeleteError;

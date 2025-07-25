@@ -1,8 +1,9 @@
-package study.online.media.model.dto;
+package study.online.api.model.dto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import study.online.media.model.po.MediaFiles;
+import study.online.api.model.po.MediaFiles;
+
 
 @Data
 @EqualsAndHashCode(callSuper = true)

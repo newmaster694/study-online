@@ -15,9 +15,10 @@ public interface IMediaFileService {
 	 * @param companyId           机构id
 	 * @param uploadFileParamsDTO 上传文件的记录
 	 * @param file                上传的文件
+	 * @param objectName          如果objectName不为空则按照该路径存储
 	 * @return UploadFileResultDTO
 	 */
-	UploadFileResultDTO uploadFile(Long companyId, UploadFileParamsDTO uploadFileParamsDTO, MultipartFile file);
+	UploadFileResultDTO uploadFile(Long companyId, UploadFileParamsDTO uploadFileParamsDTO, MultipartFile file, String objectName);
 
 	/**
 	 * 添加普通文件的资料到数据库里

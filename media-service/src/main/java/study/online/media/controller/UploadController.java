@@ -10,8 +10,6 @@ import study.online.media.model.dto.UploadFileParamsDTO;
 import study.online.media.model.dto.UploadFileResultDTO;
 import study.online.media.service.IMediaFileService;
 
-import java.io.IOException;
-
 @RestController
 @Slf4j
 @RequestMapping("/upload")
@@ -27,7 +25,8 @@ public class UploadController {
 	 * @return UploadFileResultDTO
 	 */
 	@PostMapping(value = "/coursefile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public UploadFileResultDTO upload(@RequestPart("filedata") MultipartFile file) {
+	public UploadFileResultDTO upload(@RequestPart("filedata") MultipartFile file,
+	                                  @RequestParam(value = "objectName", required = false) String objectName) {
 
 		Long companyId = 1232141425L;
 
@@ -37,7 +36,7 @@ public class UploadController {
 			.setFileType("001001")
 			.setFilename(file.getOriginalFilename());
 
-		return mediaFileService.uploadFile(companyId, uploadFileParamsDTO, file);
+		return mediaFileService.uploadFile(companyId, uploadFileParamsDTO, file, objectName);
 	}
 
 	/**
@@ -79,7 +78,7 @@ public class UploadController {
 		@RequestParam("file") MultipartFile file,
 		@RequestParam("fileMd5") String fileMD5,
 		@RequestParam("chunk") int chunkIndex
-	) throws IOException {
+	) {
 		return mediaFileService.uploadChunk(fileMD5, chunkIndex, file);
 	}
 

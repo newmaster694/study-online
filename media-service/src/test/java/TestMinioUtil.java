@@ -2,7 +2,7 @@ import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import study.online.media.MediaApplication;
-import study.online.base.utils.MinioUtil;
+import study.online.media.utils.MinioUtil;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

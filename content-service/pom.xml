@@ -21,6 +21,12 @@
 
 		<dependency>
 			<groupId>com.study.online</groupId>
+			<artifactId>study-online-api</artifactId>
+			<version>1.0-RC</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.study.online</groupId>
 			<artifactId>study-online-message-sdk</artifactId>
 			<version>1.0-RC</version>
 		</dependency>
@@ -90,6 +96,7 @@
 			<groupId>com.xuxueli</groupId>
 			<artifactId>xxl-job-core</artifactId>
 		</dependency>
+
 	</dependencies>
 
 	<build>

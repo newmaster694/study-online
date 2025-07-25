@@ -9,7 +9,6 @@ spring:
                 shared-configs:
                     -   data-id: "database-config.yml"
                     -   data-id: "freemarker-config.yml"
-                    -   data-id: "minio-config.yml"
                     -   data-id: "xxl-job-config.yml"
 
 study:

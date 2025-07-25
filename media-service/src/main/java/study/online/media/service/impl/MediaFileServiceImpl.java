@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import study.online.base.constant.MQConstant;
 import study.online.base.exception.BaseException;
 import study.online.base.model.RestResponse;
-import study.online.base.utils.MinioUtil;
+import study.online.media.utils.MinioUtil;
 import study.online.media.mapper.MediaFilesMapper;
 import study.online.media.mapper.MediaProcessMapper;
 import study.online.media.model.dto.UploadFileParamsDTO;
@@ -48,15 +48,17 @@ public class MediaFileServiceImpl implements IMediaFileService {
 	private final MinioUtil minioUtil;
 
 	private final MediaFilesMapper mediaFilesMapper;
+
 	private final MediaProcessMapper mediaProcessMapper;
 
 	private final StringRedisTemplate redisTemplate;
+
 	private final RabbitTemplate rabbitTemplate;
 
 	private IMediaFileService proxy;
 
 	@Override
-	public UploadFileResultDTO uploadFile(Long companyId, UploadFileParamsDTO uploadFileParamsDTO, MultipartFile file) {
+	public UploadFileResultDTO uploadFile(Long companyId, UploadFileParamsDTO uploadFileParamsDTO, MultipartFile file, String objectname) {
 		if (file.isEmpty()) {
 			BaseException.cast(FILE_EXIST_ERROR);
 		}
@@ -67,8 +69,10 @@ public class MediaFileServiceImpl implements IMediaFileService {
 		String md5 = FileUtil.getFileMd5(file);
 		String defaultFolderPath = FileUtil.getDefaultFolderPath();
 
-		//拼接objectname
-		String objectname = defaultFolderPath + md5 + extension;
+		if (objectname == null) {
+			//拼接objectname
+			objectname = defaultFolderPath + md5 + extension;
+		}
 
 		String contentType = FileUtil.getContentType(filename);
 
