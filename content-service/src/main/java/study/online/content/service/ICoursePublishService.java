@@ -2,6 +2,8 @@ package study.online.content.service;
 
 import study.online.content.model.dto.CoursePreviewDTO;
 
+import java.io.File;
+
 public interface ICoursePublishService {
 
 	/**
@@ -27,4 +29,14 @@ public interface ICoursePublishService {
 	 * @param courseId  课程id
 	 */
 	void publish(Long companyId, Long courseId);
+
+	/**
+	 * 生成静态页面接口
+	 *
+	 * @param courseId 课程id
+	 * @return 生成的文件对象
+	 */
+	File generateCourseHtml(Long courseId);
+
+	void uploadCourseHtml(Long courseId, File file);
 }

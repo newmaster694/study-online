@@ -1,11 +1,19 @@
 package study.online.content.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+import org.springframework.web.multipart.MultipartFile;
+import study.online.api.client.UploadFileClient;
+import study.online.api.model.dto.UploadFileResultDTO;
 import study.online.base.exception.BaseException;
 import study.online.content.mapper.CourseMarketMapper;
 import study.online.content.mapper.CoursePublishMapper;
@@ -20,14 +28,18 @@ import study.online.content.model.po.CoursePublishPre;
 import study.online.content.service.ICourseBaseInfoService;
 import study.online.content.service.ICoursePublishService;
 import study.online.content.service.ITeachplanService;
+import study.online.content.utils.MutipartFileSupportUtil;
 import study.online.messagesdk.model.po.MqMessage;
 import study.online.messagesdk.service.MqMessageService;
 
+import java.io.File;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 
 import static study.online.base.constant.ErrorMessageConstant.*;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CoursePreviewServiceImpl implements ICoursePublishService {
@@ -43,6 +55,8 @@ public class CoursePreviewServiceImpl implements ICoursePublishService {
 	private final CoursePublishMapper coursePublishMapper;
 
 	private final MqMessageService mqMessageService;
+
+	private final UploadFileClient uploadFileClient;
 
 	@Override
 	public CoursePreviewDTO getCoursePreviewInfo(Long courseId) {
@@ -145,5 +159,50 @@ public class CoursePreviewServiceImpl implements ICoursePublishService {
 
 		//将预发布表的数据删除（其实也可以不删除的貌似）
 		coursePublishPreMapper.deleteById(coursePublishPre);
+	}
+
+	@Override
+	public File generateCourseHtml(Long courseId) {
+		File htmlFile = null;
+
+		try {
+			//配置FreeMarker
+			Configuration configuration = new Configuration(Configuration.getVersion());
+
+			String classPath = this.getClass().getResource("/").getPath();
+			configuration.setDirectoryForTemplateLoading(new File(classPath + "/template/"));
+
+			configuration.setDefaultEncoding("UTF-8");
+
+			Template template = configuration.getTemplate("course_template.ftl");
+
+			CoursePreviewDTO coursePreviewInfo = this.getCoursePreviewInfo(courseId);
+
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("model", coursePreviewInfo);
+
+			String content = FreeMarkerTemplateUtils.processTemplateIntoString(template, map);
+
+			//将静态化页面输出到文件中
+			htmlFile = File.createTempFile("course", "html");
+
+			FileUtil.writeString(content, htmlFile, "UTF-8");
+		} catch (Exception exception) {
+			log.error("课程静态化异常-{}", exception.getMessage());
+			BaseException.cast(COURSE_STATIC_ERROR);
+		}
+
+		return htmlFile;
+	}
+
+	@Override
+	public void uploadCourseHtml(Long courseId, File file) {
+		MultipartFile multipartFile = MutipartFileSupportUtil.fileToMultipartFile(file);
+		UploadFileResultDTO uploadfile = uploadFileClient
+			.uploadfile(multipartFile, "course/" + courseId + ".html");
+
+		if (uploadfile == null) {
+			BaseException.cast(SAVE_FILE_ERROR);
+		}
 	}
 }

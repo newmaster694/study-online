@@ -2,15 +2,22 @@ package study.online.content.service.jobhandler;
 
 import com.xxl.job.core.context.XxlJobHelper;
 import com.xxl.job.core.handler.annotation.XxlJob;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import study.online.content.service.ICoursePublishService;
 import study.online.messagesdk.model.po.MqMessage;
 import study.online.messagesdk.service.MessageProcessAbstract;
 import study.online.messagesdk.service.MqMessageService;
 
+import java.io.File;
+
 @Slf4j
 @Component
 public class CoursePublishTask extends MessageProcessAbstract {
+
+	@Resource
+	private ICoursePublishService coursePublishService;
 
 	public CoursePublishTask(MqMessageService mqMessageService) {
 		super(mqMessageService);
@@ -23,8 +30,6 @@ public class CoursePublishTask extends MessageProcessAbstract {
 		int shardTotal = XxlJobHelper.getShardTotal();
 
 		this.process(shardIndex, shardTotal, "course_publish", 30, 60);
-
-
 	}
 
 	@Override
@@ -61,7 +66,11 @@ public class CoursePublishTask extends MessageProcessAbstract {
 			return;
 		}
 
-		//TODO 开始进行课程静态化处理
+		//开始进行课程静态化处理
+		File file = coursePublishService.generateCourseHtml(courseId);
+		if (file != null) {
+			coursePublishService.uploadCourseHtml(courseId, file);
+		}
 
 		mqMessageService.completedStageOne(taskId);
 	}

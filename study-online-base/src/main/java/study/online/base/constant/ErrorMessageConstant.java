@@ -30,4 +30,6 @@ public class ErrorMessageConstant {
 	public static final String OVER_MAX_FAIL_COUNT_ERROR = "查出最大重试次数，请手工进行视频转码";
 
 	public static final String PREVIEW_MODEL_ERROR = "预览模型未找到";
+
+	public static final String COURSE_STATIC_ERROR = "课程静态化异常";
 }
