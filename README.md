@@ -142,6 +142,15 @@ spring:
 
 ---
 
+## ✈ Openfeign相关配置
+
+关于OpenFeign的相关服务作者将其抽成了一个独立的模块`study-online-api`，然后在需要远程调用的服务中(例如`content-service`)引入该模块。
+
+> [!note]
+> 在 Spring Boot 3.x 之后就废弃了`CommonsMultipartFile`这个实现类,所以直接导入教程的`MultipartSupportConfig.java`会报错`无法解析 CommonsMultipartFile`。参考网上的案例,作者直接把这个缺失的类拷贝到了`content-service`模块下的`util`工具包下作为解决方案。
+
+---
+
 ## 📞 联系方式
 
 如有任何问题或需要技术支持，请联系：
