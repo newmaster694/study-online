@@ -5,18 +5,16 @@ import freemarker.template.TemplateException;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+import org.springframework.web.multipart.MultipartFile;
 import study.online.api.client.UploadFileClient;
 import study.online.content.ContentApplication;
 import study.online.content.model.dto.CoursePreviewDTO;
 import study.online.content.service.ICoursePublishService;
+import study.online.content.utils.MutipartFileSupportUtil;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -55,14 +53,11 @@ class FreeMarkerTest {
 		FileUtil.writeString(html, new File("C:\\Users\\newmaster\\Desktop\\upload"),
 			"utf-8");
 
-		Path path = Paths.get("C:\\Users\\newmaster\\Desktop\\upload\\120.html");
-		String name = path.getFileName().toString();
-
-		String contentType = Files.probeContentType(path);
-		byte[] content = Files.readAllBytes(path);
+		MultipartFile multipartFile = MutipartFileSupportUtil
+			.fileToMultipartFile(new File("C:\\Users\\newmaster\\Desktop\\upload"));
 
 		uploadFileClient.uploadfile(
-			new MockMultipartFile(name, name, contentType, content),
+			multipartFile,
 			"/course/120.html");
 	}
 }
