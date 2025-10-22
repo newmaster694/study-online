@@ -23,7 +23,7 @@ import java.time.format.DateTimeFormatter;
 @Slf4j
 @Configuration
 @ConditionalOnClass(ObjectMapper.class)
-public class JsonConfig {
+public class JsonObjectMapper {
 
 	public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
 	public static final String DEFAULT_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm";
@@ -35,18 +35,40 @@ public class JsonConfig {
 
 		return jacksonObjectMapperBuilder -> {
 			// long -> string
-			jacksonObjectMapperBuilder.serializerByType(Long.class, ToStringSerializer.instance);
-			jacksonObjectMapperBuilder.serializerByType(BigInteger.class, ToStringSerializer.instance);
+			jacksonObjectMapperBuilder.serializerByType(
+				Long.class,
+				ToStringSerializer.instance);
+			jacksonObjectMapperBuilder.serializerByType(
+				BigInteger.class,
+				ToStringSerializer.instance);
 
 			//时间精度序列化
-			jacksonObjectMapperBuilder.serializerByType(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(DEFAULT_DATE_TIME_FORMAT)));
-			jacksonObjectMapperBuilder.serializerByType(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern(DEFAULT_DATE_FORMAT)));
-			jacksonObjectMapperBuilder.serializerByType(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern(DEFAULT_TIME_FORMAT)));
+			jacksonObjectMapperBuilder.serializerByType(
+				LocalDateTime.class,
+				new LocalDateTimeSerializer(
+					DateTimeFormatter.ofPattern(DEFAULT_DATE_TIME_FORMAT)));
+			jacksonObjectMapperBuilder.serializerByType(
+				LocalDate.class,
+				new LocalDateSerializer(
+					DateTimeFormatter.ofPattern(DEFAULT_DATE_FORMAT)));
+			jacksonObjectMapperBuilder.serializerByType(
+				LocalTime.class,
+				new LocalTimeSerializer(
+					DateTimeFormatter.ofPattern(DEFAULT_TIME_FORMAT)));
 
 			//时间精度反序列化
-			jacksonObjectMapperBuilder.deserializerByType(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern(DEFAULT_DATE_TIME_FORMAT)));
-			jacksonObjectMapperBuilder.deserializerByType(LocalDate.class, new LocalDateDeserializer(DateTimeFormatter.ofPattern(DEFAULT_DATE_FORMAT)));
-			jacksonObjectMapperBuilder.deserializerByType(LocalTime.class, new LocalTimeDeserializer(DateTimeFormatter.ofPattern(DEFAULT_TIME_FORMAT)));
+			jacksonObjectMapperBuilder.deserializerByType(
+				LocalDateTime.class,
+				new LocalDateTimeDeserializer(
+					DateTimeFormatter.ofPattern(DEFAULT_DATE_TIME_FORMAT)));
+			jacksonObjectMapperBuilder.deserializerByType(
+				LocalDate.class,
+				new LocalDateDeserializer(
+					DateTimeFormatter.ofPattern(DEFAULT_DATE_FORMAT)));
+			jacksonObjectMapperBuilder.deserializerByType(
+				LocalTime.class,
+				new LocalTimeDeserializer(
+					DateTimeFormatter.ofPattern(DEFAULT_TIME_FORMAT)));
 		};
 	}
 }

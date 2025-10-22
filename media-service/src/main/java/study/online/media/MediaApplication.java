@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Slf4j
 @EnableTransactionManagement
 @EnableAspectJAutoProxy(exposeProxy = true) //暴露代理对象注解
-@SpringBootApplication(scanBasePackages = {"study.online", "study.online.base"})
+@SpringBootApplication
 public class MediaApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MediaApplication.class, args);

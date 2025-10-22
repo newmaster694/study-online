@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @MapperScan("study.online.content.mapper")
 @EnableFeignClients(basePackages = "study.online.api.client")
-@SpringBootApplication(scanBasePackages = {"study.online.content", "study.online.messagesdk", "study.online.base"})
+@SpringBootApplication(scanBasePackages = {"study.online.content", "study.online.messagesdk"})
 public class ContentApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ContentApplication.class, args);

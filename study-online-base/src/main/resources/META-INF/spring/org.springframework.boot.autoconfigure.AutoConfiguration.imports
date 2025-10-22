@@ -1,0 +1,3 @@
+study.online.base.config.JsonObjectMapper
+study.online.base.config.MvcConfig
+study.online.base.config.MybatisConfig

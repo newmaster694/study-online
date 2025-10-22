@@ -45,17 +45,11 @@ import static study.online.base.constant.ErrorMessageConstant.*;
 public class CoursePreviewServiceImpl implements ICoursePublishService {
 
 	private final ICourseBaseInfoService courseBaseInfoService;
-
 	private final ITeachplanService teachplanService;
-
 	private final CourseMarketMapper courseMarketMapper;
-
 	private final CoursePublishPreMapper coursePublishPreMapper;
-
 	private final CoursePublishMapper coursePublishMapper;
-
 	private final MqMessageService mqMessageService;
-
 	private final UploadFileClient uploadFileClient;
 
 	@Override

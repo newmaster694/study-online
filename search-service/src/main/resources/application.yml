@@ -1,0 +1,13 @@
+server:
+    port: 8084
+logging:
+    level:
+        study.online.search:
+            mapper: debug
+            service: info
+            controller: info
+elasticsearch:
+    hostlist: 192.168.43.129:9300
+    course:
+        index: course-publish
+        source_fields: id,companyId,companyName,name,users,tags,mt,mtName,st,stName,grade,teachmode,pic,description,createDate,status,remark,charge,price,originalPrice,validDays

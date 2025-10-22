@@ -91,10 +91,7 @@ public class MediaFileServiceImpl implements IMediaFileService {
 
 	@Override
 	@Transactional
-	public MediaFiles addMediaFilesToDB(Long companyId,
-	                                    String fileHash,
-	                                    UploadFileParamsDTO uploadFileParamsDTO,
-	                                    String objectName) {
+	public MediaFiles addMediaFilesToDB(Long companyId, String fileHash, UploadFileParamsDTO uploadFileParamsDTO, String objectName) {
 		MediaFiles mediaFiles = mediaFilesMapper.selectById(fileHash);
 		if (mediaFiles == null) {
 			/*不存在，创建新的文件记录*/
