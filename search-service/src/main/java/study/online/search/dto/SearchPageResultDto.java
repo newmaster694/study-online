@@ -1,6 +1,7 @@
 package study.online.search.dto;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import study.online.base.model.PageResult;
 
@@ -11,6 +12,7 @@ import java.util.List;
  * @version 1.0
  * @since 2022/9/25 17:51
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @ToString
 public class SearchPageResultDto<T> extends PageResult<T> {

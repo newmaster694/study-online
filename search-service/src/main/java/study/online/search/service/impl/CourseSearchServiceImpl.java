@@ -112,7 +112,7 @@ public class CourseSearchServiceImpl implements ICourseSearchService {
 			searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
 		} catch (IOException e) {
 			log.error("课程搜索异常：{}", e.getMessage());
-			return new SearchPageResultDto<CourseIndex>(new ArrayList(), 0, 0, 0);
+			return new SearchPageResultDto<>(new ArrayList<>(), 0, 0, 0);
 		}
 
 		//结果集处理
