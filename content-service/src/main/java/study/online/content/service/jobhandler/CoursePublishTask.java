@@ -1,10 +1,16 @@
 package study.online.content.service.jobhandler;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.xxl.job.core.context.XxlJobHelper;
 import com.xxl.job.core.handler.annotation.XxlJob;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import study.online.api.client.SearchClient;
+import study.online.api.model.po.CourseIndex;
+import study.online.base.exception.BaseException;
+import study.online.content.mapper.CoursePublishMapper;
+import study.online.content.model.po.CoursePublish;
 import study.online.content.service.ICoursePublishService;
 import study.online.messagesdk.model.po.MqMessage;
 import study.online.messagesdk.service.MessageProcessAbstract;
@@ -18,6 +24,12 @@ public class CoursePublishTask extends MessageProcessAbstract {
 
 	@Resource
 	private ICoursePublishService coursePublishService;
+
+	@Resource
+	private CoursePublishMapper coursePublishMapper;
+
+	@Resource
+	private SearchClient searchClient;
 
 	public CoursePublishTask(MqMessageService mqMessageService) {
 		super(mqMessageService);
@@ -92,7 +104,14 @@ public class CoursePublishTask extends MessageProcessAbstract {
 			return;
 		}
 
-		//TODO 查询课程信息，调用搜索服务添加索引
+		//查询课程信息，调用搜索服务添加索引
+		CoursePublish coursePublish = coursePublishMapper.selectById(courseId);
+		CourseIndex courseIndex = BeanUtil.copyProperties(coursePublish, CourseIndex.class);
+		Boolean flag = searchClient.add(courseIndex);
+		if (!flag) {
+			BaseException.cast("远程调用添加课程索引失败");
+			return;
+		}
 
 		mqMessageService.completedStageTwo(taskId);
 	}
