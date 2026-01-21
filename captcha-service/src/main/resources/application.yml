@@ -1,0 +1,7 @@
+server:
+    port: 8086
+    servlet:
+        context-path: '/captcha'
+spring:
+    application:
+        name: 'captcha-service'

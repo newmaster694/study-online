@@ -11,7 +11,7 @@ import study.online.api.client.UploadFileClient;
 import study.online.content.ContentApplication;
 import study.online.content.model.dto.CoursePreviewDTO;
 import study.online.content.service.ICoursePublishService;
-import study.online.content.utils.MutipartFileSupportUtil;
+import study.online.content.utils.MultipartFileSupportUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -53,7 +53,7 @@ class FreeMarkerTest {
 		FileUtil.writeString(html, new File("C:\\Users\\newmaster\\Desktop\\upload"),
 			"utf-8");
 
-		MultipartFile multipartFile = MutipartFileSupportUtil
+		MultipartFile multipartFile = MultipartFileSupportUtil
 			.fileToMultipartFile(new File("C:\\Users\\newmaster\\Desktop\\upload"));
 
 		uploadFileClient.uploadfile(

@@ -1,52 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="CodeInsightWorkspaceSettings">
-    <option name="optimizeImportsOnTheFly" value="true" />
-  </component>
-  <component name="EntryPointsManager">
-    <list size="1">
-      <item index="0" class="java.lang.String" itemvalue="com.xxl.job.core.handler.annotation.XxlJob" />
-    </list>
-  </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/study-online-message-sdk/pom.xml" />
       </list>
     </option>
   </component>
-  <component name="ProjectInspectionProfilesVisibleTreeState">
-    <entry key="Project Default">
-      <profile-state>
-        <expanded-state>
-          <State />
-          <State>
-            <id>Groovy</id>
-          </State>
-          <State>
-            <id>UI 窗体</id>
-          </State>
-          <State>
-            <id>可能的错误Groovy</id>
-          </State>
-          <State>
-            <id>校对</id>
-          </State>
-          <State>
-            <id>清单</id>
-          </State>
-        </expanded-state>
-        <selected-state>
-          <State>
-            <id>校对</id>
-          </State>
-        </selected-state>
-      </profile-state>
-    </entry>
-  </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="graalvm-21" project-jdk-type="JavaSDK">
-    <output url="file://$PROJECT_DIR$/out" />
-  </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="25" project-jdk-type="JavaSDK" />
 </project>

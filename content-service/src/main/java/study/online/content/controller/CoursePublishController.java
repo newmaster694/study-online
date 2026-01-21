@@ -11,7 +11,7 @@ import study.online.base.exception.BaseException;
 import study.online.content.model.dto.CoursePreviewDTO;
 import study.online.content.service.ICoursePublishService;
 
-import static study.online.base.constant.ErrorMessageConstant.PREVIEW_MODEL_ERROR;
+import static study.online.base.constant.ErrorMessage.PREVIEW_MODEL_ERROR;
 
 @Controller
 @RequiredArgsConstructor

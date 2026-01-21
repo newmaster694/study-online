@@ -21,3 +21,10 @@ spring:
                 uri: "lb://system-service"
                 predicates:
                 - Path=/system/**
+
+system:
+    security-whitelist-path:
+        - "/**"
+        - "/auth/**"
+        - "/content/open/**"
+        - "/media/open/**"

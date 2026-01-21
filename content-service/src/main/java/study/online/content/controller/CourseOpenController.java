@@ -18,6 +18,9 @@ public class CourseOpenController {
 
 	private final ICoursePublishService coursePublishService;
 
+	/**
+	 * 课程预览接口
+	 */
 	@GetMapping("/course/whole/{courseId}")
 	public CoursePreviewDTO getPreviewInfo(@PathVariable Long courseId) {
 		return coursePublishService.getCoursePreviewInfo(courseId);

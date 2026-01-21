@@ -28,7 +28,7 @@ import study.online.content.model.po.CoursePublishPre;
 import study.online.content.service.ICourseBaseInfoService;
 import study.online.content.service.ICoursePublishService;
 import study.online.content.service.ITeachplanService;
-import study.online.content.utils.MutipartFileSupportUtil;
+import study.online.content.utils.MultipartFileSupportUtil;
 import study.online.messagesdk.model.po.MqMessage;
 import study.online.messagesdk.service.MqMessageService;
 
@@ -37,7 +37,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 
-import static study.online.base.constant.ErrorMessageConstant.*;
+import static study.online.base.constant.ErrorMessage.*;
 
 @Slf4j
 @Service
@@ -191,7 +191,12 @@ public class CoursePreviewServiceImpl implements ICoursePublishService {
 
 	@Override
 	public void uploadCourseHtml(Long courseId, File file) {
-		MultipartFile multipartFile = MutipartFileSupportUtil.fileToMultipartFile(file);
+		MultipartFile multipartFile = MultipartFileSupportUtil.fileToMultipartFile(file);
+
+		if (multipartFile == null) {
+			throw new BaseException("将File转换为MultipartFile出错");
+		}
+
 		UploadFileResultDTO uploadfile = uploadFileClient
 			.uploadfile(multipartFile, "course/" + courseId + ".html");
 

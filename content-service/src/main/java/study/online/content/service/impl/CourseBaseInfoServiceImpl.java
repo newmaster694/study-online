@@ -24,7 +24,7 @@ import study.online.content.service.ITeachplanService;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static study.online.base.constant.ErrorMessageConstant.*;
+import static study.online.base.constant.ErrorMessage.*;
 
 @Service
 @RequiredArgsConstructor

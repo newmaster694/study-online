@@ -34,11 +34,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static study.online.base.constant.ErrorMessageConstant.FILE_EXIST_ERROR;
-import static study.online.base.constant.ErrorMessageConstant.SAVE_FILE_ERROR;
-import static study.online.base.constant.MediaFilePathConstant.MEDIA_CHUNK_PATH_BUCKET;
-import static study.online.base.constant.MediaFilePathConstant.MEDIA_FILE_PATH_BUCKET;
-import static study.online.base.constant.RedisConstant.CHUNK_KEY;
+import static study.online.base.constant.ErrorMessage.FILE_EXIST_ERROR;
+import static study.online.base.constant.ErrorMessage.SAVE_FILE_ERROR;
+import static study.online.base.constant.MediaFilePath.MEDIA_CHUNK_PATH_BUCKET;
+import static study.online.base.constant.MediaFilePath.MEDIA_FILE_PATH_BUCKET;
+import static study.online.base.constant.RedisPrefix.CHUNK_KEY;
 
 @Slf4j
 @Service

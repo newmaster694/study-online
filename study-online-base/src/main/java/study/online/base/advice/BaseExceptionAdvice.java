@@ -13,7 +13,7 @@ import study.online.base.model.RestResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-import static study.online.base.constant.ErrorMessageConstant.UNKNOW_ERROR;
+import static study.online.base.constant.ErrorMessage.UNKNOW_ERROR;
 
 /**
  * 全局异常处理（必须要保证这个类被其他的Spring Boot微服务的运行主类被扫描到才能够正确使用！！）

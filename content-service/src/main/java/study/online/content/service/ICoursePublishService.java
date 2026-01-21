@@ -38,5 +38,10 @@ public interface ICoursePublishService {
 	 */
 	File generateCourseHtml(Long courseId);
 
+	/**
+	 * 将生成的课程静态页面添加到minio中
+	 * @param courseId 课程id
+	 * @param file 静态页面文件
+	 */
 	void uploadCourseHtml(Long courseId, File file);
 }

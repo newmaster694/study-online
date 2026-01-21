@@ -26,8 +26,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import static study.online.base.constant.ErrorMessageConstant.OVER_MAX_FAIL_COUNT_ERROR;
-import static study.online.base.constant.RedisConstant.VIDEO_JOB_HANDLE_KEY;
+import static study.online.base.constant.ErrorMessage.OVER_MAX_FAIL_COUNT_ERROR;
+import static study.online.base.constant.RedisPrefix.VIDEO_JOB_HANDLE_KEY;
 
 @Slf4j
 @Component

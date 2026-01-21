@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
-import static study.online.base.constant.ErrorMessageConstant.*;
+import static study.online.base.constant.ErrorMessage.*;
 
 @Service
 @RequiredArgsConstructor

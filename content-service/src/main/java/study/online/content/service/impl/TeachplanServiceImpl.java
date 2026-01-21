@@ -18,8 +18,8 @@ import study.online.content.service.ITeachplanService;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static study.online.base.constant.ErrorMessageConstant.QUERY_NULL;
-import static study.online.base.constant.ErrorMessageConstant.TEACH_PLAN_GRADE_ERROR;
+import static study.online.base.constant.ErrorMessage.QUERY_NULL;
+import static study.online.base.constant.ErrorMessage.TEACH_PLAN_GRADE_ERROR;
 
 @Service
 @RequiredArgsConstructor

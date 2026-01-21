@@ -10,7 +10,7 @@ import study.online.base.model.RestResponse;
 import study.online.media.model.po.MediaFiles;
 import study.online.media.service.IMediaFileService;
 
-import static study.online.base.constant.ErrorMessageConstant.QUERY_NULL;
+import static study.online.base.constant.ErrorMessage.QUERY_NULL;
 
 @RestController
 @RequiredArgsConstructor

@@ -3,6 +3,7 @@ package study.online.content.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import study.online.base.exception.ValidationGroup;
@@ -30,6 +31,7 @@ public class CourseBaseInfoController {
 	 * @return {@code Page<CourseBase>}
 	 */
 	@PostMapping("/list")
+	@PreAuthorize("hasAuthority('xc_teachmanager_course_list')")
 	public Page<CourseBase> list(PageParams pageParams, @RequestBody QueryCourseParamsDTO queryCourseParamsDTO) {
 		return courseBaseInfoService.queryCourseBaseList(pageParams, queryCourseParamsDTO);
 	}
