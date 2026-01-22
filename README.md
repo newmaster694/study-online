@@ -94,10 +94,11 @@ mvn clean install
 
 
 ### 4. 启动服务
-分别运行各个模块的主类以启动服务：
-- [ContentApplication.java](file://K:\java_workspace\study-online\content-service\src\main\java\study\online\content\ContentApplication.java) → 启动课程服务
-- [GatewayApplication.java](file://K:\java_workspace\study-online\gateway-service\src\main\java\study\online\gateway\GatewayApplication.java) → 启动网关服务
-- [MediaApplication.java](file://K:\java_workspace\study-online\media-service\src\main\java\study\online\media\MediaApplication.java) → 启动媒体服务
+分别运行各个模块的主类以启动服务。
+
+> [!Tip]
+>
+> 注意:请先启动mysql服务器、Redis服务器、Nacos服务治理中心、elasticsearch搜索服务中心、minio对象存储服务器、xxl-job分布式定时任务处理框架。然后再启动项目。
 
 ### 5. 访问接口
 
