@@ -1,11 +1,13 @@
 package study.online.auth.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository;
@@ -21,7 +23,11 @@ import org.springframework.security.web.authentication.LoginUrlAuthenticationEnt
 import java.time.Duration;
 
 @Configuration
+@RequiredArgsConstructor
 public class AuthorizationServerConfig {
+
+	private final PasswordEncoder encoder;
+
 	@Bean
 	@Order(Ordered.HIGHEST_PRECEDENCE)
 	public SecurityFilterChain authorizationServerSecurityFilterChian(HttpSecurity http) throws Exception {
@@ -49,7 +55,7 @@ public class AuthorizationServerConfig {
 
 			//设置客户端id与密钥,{noop}表示不进行编码
 			.clientId("xc_web_app")
-			.clientSecret("{noop}xc_web_app")
+			.clientSecret("{bcrypt}" + encoder.encode("xc_web_app"))
 
 			//配置客户端使用基本认证方式【client_id:client_secret 进行base64编码】
 			.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)

@@ -5,111 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4e7a11de-c3f4-4c66-b7d4-c0219f0d74f3" name="更改" comment="feat(auth-service/gateway-service): 配置项更新&#10;&#10;- 引入了spring-security/spring-oauth2-authentication-server的相关依赖&#10;- 新增了安全认证的配置类">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/AuthApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/config/AuthorizationServerConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/config/DefaultSecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/config/TokenConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/controller/LoginController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/ucenter/mapper/XcCompanyMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/ucenter/mapper/XcCompanyUserMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/ucenter/mapper/XcMenuMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/ucenter/mapper/XcPermissionMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/ucenter/mapper/XcRoleMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/ucenter/mapper/XcTeacherMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/ucenter/mapper/XcUserMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/ucenter/mapper/XcUserRoleMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/ucenter/model/dto/AuthParamsDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/ucenter/model/dto/XcUserExt.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/ucenter/model/po/XcCompany.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/ucenter/model/po/XcCompanyUser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/ucenter/model/po/XcMenu.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/ucenter/model/po/XcPermission.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/ucenter/model/po/XcRole.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/ucenter/model/po/XcTeacher.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/ucenter/model/po/XcUser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/ucenter/model/po/XcUserRole.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/resources/bootstrap.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/resources/mapper/XcCompanyMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/resources/mapper/XcCompanyUserMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/resources/mapper/XcMenuMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/resources/mapper/XcPermissionMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/resources/mapper/XcRoleMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/resources/mapper/XcTeacherMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/resources/mapper/XcUserMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/resources/mapper/XcUserRoleMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/captcha-service/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/captcha-service/src/main/java/study/online/captcha/CaptchaApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/captcha-service/src/main/java/study/online/captcha/config/KaptchaConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/captcha-service/src/main/java/study/online/captcha/controller/CheckCodeController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/captcha-service/src/main/java/study/online/captcha/model/CheckCodeParamsDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/captcha-service/src/main/java/study/online/captcha/model/CheckCodeResultDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/captcha-service/src/main/java/study/online/captcha/service/AbstractCheckCodeService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/captcha-service/src/main/java/study/online/captcha/service/ICheckCodeService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/captcha-service/src/main/java/study/online/captcha/service/impl/MemoryCheckCodeStore.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/captcha-service/src/main/java/study/online/captcha/service/impl/NumberLetterCheckCodeGenerator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/captcha-service/src/main/java/study/online/captcha/service/impl/PicCheckCodeServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/captcha-service/src/main/java/study/online/captcha/service/impl/RedisCheckCodeStore.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/captcha-service/src/main/java/study/online/captcha/service/impl/UUIDKeyGenerator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/captcha-service/src/main/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/captcha-service/src/main/resources/bootstrap.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/captcha-service/src/test/java/XuechengPlusCaptchaApplicationTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/utils/MultipartFileSupportUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gateway-service/src/main/java/study/online/gateway/common/RestErrorResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gateway-service/src/main/java/study/online/gateway/config/AuthorizationServerConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gateway-service/src/main/java/study/online/gateway/config/DefaultSecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gateway-service/src/main/java/study/online/gateway/config/TokenConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gateway-service/src/main/java/study/online/gateway/config/properties/SystemProperties.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gateway-service/src/main/java/study/online/gateway/exception/CustomAccessDeniedException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gateway-service/src/main/java/study/online/gateway/exception/CustomAuthenticationException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gateway-service/src/main/java/study/online/gateway/filter/GatewayAuthFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/study-online-api/src/main/java/study/online/api/client/CaptchaClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/study-online-api/src/main/java/study/online/api/client/fallback/CaptchaClientFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/ApifoxUploaderProjectSetting.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/utils/SecurityUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/GitCommitMessageStorage.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/GitCommitMessageStorage.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/MyBatisCodeHelperDatasource.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/newmaster.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/intellij-javadocs-4.0.1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/mybatisx/templates.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.xcodemap/config/xcodemap-class-filter.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/content-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/content-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/controller/CourseBaseInfoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/controller/CourseBaseInfoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/controller/CourseOpenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/controller/CourseOpenController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/controller/CoursePublishController.java" beforeDir="false" afterPath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/controller/CoursePublishController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/controller/TeachplanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/controller/TeachplanController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/service/ICoursePublishService.java" beforeDir="false" afterPath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/service/ICoursePublishService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/service/impl/CourseBaseInfoServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/service/impl/CourseBaseInfoServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/service/impl/CoursePreviewServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/service/impl/CoursePreviewServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/service/impl/CourseTeacherServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/service/impl/CourseTeacherServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/service/impl/TeachplanServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/service/impl/TeachplanServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/utils/CommonsMultipartFile.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/utils/MutipartFileSupportUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/content-service/src/test/java/FreeMarkerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/content-service/src/test/java/FreeMarkerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/media-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media-service/src/main/java/study/online/media/controller/MediaOpenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/media-service/src/main/java/study/online/media/controller/MediaOpenController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media-service/src/main/java/study/online/media/service/impl/MediaFileServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/media-service/src/main/java/study/online/media/service/impl/MediaFileServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media-service/src/main/java/study/online/media/service/jobhandler/VideoTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/media-service/src/main/java/study/online/media/service/jobhandler/VideoTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/config/AuthorizationServerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/config/AuthorizationServerConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/study/online/ucenter/model/po/XcUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/ucenter/model/po/XcUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway-service/src/main/java/study/online/gateway/config/DefaultSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/src/main/java/study/online/gateway/config/DefaultSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway-service/src/main/java/study/online/gateway/exception/CustomAccessDeniedException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway-service/src/main/java/study/online/gateway/exception/CustomAuthenticationException.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/study-online-base/src/main/java/study/online/base/advice/BaseExceptionAdvice.java" beforeDir="false" afterPath="$PROJECT_DIR$/study-online-base/src/main/java/study/online/base/advice/BaseExceptionAdvice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/study-online-base/src/main/java/study/online/base/constant/ErrorMessageConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/study-online-base/src/main/java/study/online/base/constant/ErrorMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/study-online-base/src/main/java/study/online/base/constant/MQConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/study-online-base/src/main/java/study/online/base/constant/MQConstant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/study-online-base/src/main/java/study/online/base/constant/MediaFilePathConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/study-online-base/src/main/java/study/online/base/constant/MediaFilePath.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/study-online-base/src/main/java/study/online/base/constant/RedisConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/study-online-base/src/main/java/study/online/base/constant/RedisPrefix.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -167,7 +82,7 @@
     "project.structure.last.edited": "模块",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.3275862",
-    "settings.editor.selected.configurable": "com.bruce.plugin.ui.TemplateSettingForm",
+    "settings.editor.selected.configurable": "editor.preferences.import",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -215,8 +130,17 @@
       <updated>1768903751665</updated>
       <workItem from="1768903753017" duration="2006000" />
       <workItem from="1768917000861" duration="14752000" />
-      <workItem from="1768991805740" duration="4404000" />
+      <workItem from="1768991805740" duration="13229000" />
     </task>
+    <task id="LOCAL-00001" summary="feat(auth-service/gateway-service): 配置项更新&#10;&#10;- 引入了spring-security/spring-oauth2-authentication-server的相关依赖&#10;- 新增了安全认证的配置类">
+      <option name="closed" value="true" />
+      <created>1768996916542</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1768996916542</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

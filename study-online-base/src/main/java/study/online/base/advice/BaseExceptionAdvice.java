@@ -31,14 +31,14 @@ public class BaseExceptionAdvice {
 	@ExceptionHandler(BaseException.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	public RestResponse<Object> bussinessExceptionHandler(BaseException exception) {
-		log.error("异常信息：{}", exception.getMessage());
+		log.error("业务异常-{}", exception.getMessage());
 		return RestResponse.validFail(exception.getMessage());
 	}
 
 	@ExceptionHandler(Exception.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	public RestResponse<Object> execption(Exception exception) {
-		log.error("异常信息：{}", exception.getMessage());
+		log.error("未知异常-{}", exception.getMessage());
 		return RestResponse.validFail(UNKNOW_ERROR);
 	}
 
@@ -53,7 +53,7 @@ public class BaseExceptionAdvice {
 
 		//拼接错误信息
 		String msg = String.join(";", msgList);
-		log.error("异常信息：{}", msg);
+		log.error("参数异常-{}", msg);
 
 		return RestResponse.validFail(msg);
 	}

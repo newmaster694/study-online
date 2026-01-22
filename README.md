@@ -6,8 +6,8 @@
 
 ### 核心功能
 
-- **课程管理**：支持课程基本信息、分类、教师信息、教学计划等内容的管理。
-- **媒体服务**：提供对媒体文件的上传、存储及处理功能。
+- **内容管理(content-service)**：支持课程基本信息、分类、教师信息、教学计划等内容的管理。
+- **媒体服务(media-service)**：提供对媒体文件的上传、存储及处理功能。
 - **统一网关**：作为系统请求的统一入口，进行路由转发和权限控制。
 - **基础服务**：封装通用的功能模块，如异常处理、配置管理等。
 
@@ -63,6 +63,11 @@ study-online/
 | `gateway-service` | 作为系统的统一入口，负责请求路由、鉴权、限流等功能。 |
 | `media-service` | 负责媒体资源（如视频、图片）的上传、下载及处理。 |
 | `study-online-base` | 封装了通用的基础类、异常处理、工具类、常量定义等。 |
+| `auth-service` | 认证服务，提供了账号密码认证与基于Oauth2的微信登录认证 |
+| `captcha-service` | 验证码服务，负责生成与校验验证码 |
+| `search-sercice` | 搜索服务，调用elasticsearch框架，主要搜索课程详情信息 |
+| `study-online-api` | open-feign框架进行微服务之间的远程接口调用 |
+| `study-online-message-sdk` | 消息队列信息处理服务 |
 
 ---
 
@@ -152,8 +157,16 @@ spring:
 
 ---
 
+## 🔒认证与授权模块
+
+由于本项目采用的是==spring-boot 3.2.0==，对应的安全框架是`spring-security 6.2.0`与`spring-oauth2-authentication-server 1.2.0`，配置文件改为了标准DSL语法与Lambda表达式调用，另外相较于教程中的`spring-oauth2-server`框架，本项目的oauth2服务器框架默认只支持Oauth2.1的安全协议（简单点说，不支持密码模式，想使用密码模式只能手动扩展了）
+
+by the way，spring security框架实在是太难配了，后期可能会换成 sa-token 这样的轻量级框架。
+
+---
+
 ## 📞 联系方式
 
 如有任何问题或需要技术支持，请联系：
-- Email: cryingsky@icloud.com
+- Email: newmaster695@gmail.com
 - GitHub: [https://github.com/newmaster694/study-online](https://github.com/newmaster694/study-online)

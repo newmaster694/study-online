@@ -8,8 +8,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import study.online.gateway.config.properties.SystemProperties;
-import study.online.gateway.exception.CustomAccessDeniedException;
-import study.online.gateway.exception.CustomAuthenticationException;
 
 @Configuration
 @EnableMethodSecurity
@@ -17,9 +15,6 @@ import study.online.gateway.exception.CustomAuthenticationException;
 public class DefaultSecurityConfig {
 
 	private static final String[] whiteList = new SystemProperties().getSecurityWhitelistPath();
-
-	private final CustomAuthenticationException customAuthenticationException;
-	private final CustomAccessDeniedException customAccessDeniedException;
 
 	@Bean
 	public SecurityFilterChain defaultSecurityConfig(HttpSecurity http) throws Exception {
@@ -32,12 +27,6 @@ public class DefaultSecurityConfig {
 			)
 			.csrf(AbstractHttpConfigurer::disable)
 			.cors(AbstractHttpConfigurer::disable);
-
-		http.exceptionHandling(exception ->
-			exception
-				.authenticationEntryPoint(customAuthenticationException)
-				.accessDeniedHandler(customAccessDeniedException)
-		);
 
 		return http.build();
 	}
