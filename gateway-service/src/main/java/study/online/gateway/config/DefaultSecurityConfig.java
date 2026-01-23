@@ -17,7 +17,7 @@ public class DefaultSecurityConfig {
 	private static final String[] whiteList = new SystemProperties().getSecurityWhitelistPath();
 
 	@Bean
-	public SecurityFilterChain defaultSecurityConfig(HttpSecurity http) throws Exception {
+	public SecurityFilterChain defaultGatewaySecurityConfig(HttpSecurity http) throws Exception {
 
 		http
 			.authorizeHttpRequests(auth ->

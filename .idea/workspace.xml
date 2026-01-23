@@ -4,19 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4e7a11de-c3f4-4c66-b7d4-c0219f0d74f3" name="更改" comment="feat(auth-service/gateway-service): 配置项更新&#10;&#10;- 引入了spring-security/spring-oauth2-authentication-server的相关依赖&#10;- 新增了安全认证的配置类">
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/service/impl/UserServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/utils/SecurityUtil.java" afterDir="false" />
+    <list default="true" id="4e7a11de-c3f4-4c66-b7d4-c0219f0d74f3" name="更改" comment="docs(README): 更新服务启动说明&#10;&#10;- 修改了服务启动方式的描述，将具体应用列表改为统一说明&#10;- 添加了启动前的依赖服务提示信息&#10;- 增加了 Tip 标记来强调注意事项&#10;- 补充了需要预先启动的基础设施服务列表">
+      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/provider/CustomAuthenticationProvider.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/service/IAuthService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/service/impl/PasswordAuthServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/GitCommitMessageStorage.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/GitCommitMessageStorage.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/config/AuthorizationServerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/config/AuthorizationServerConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/study/online/ucenter/model/po/XcUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/ucenter/model/po/XcUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/config/DefaultSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/config/DefaultSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/study/online/ucenter/model/dto/AuthParamsDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/ucenter/model/dto/AuthParamsDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/controller/CourseBaseInfoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/controller/CourseBaseInfoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/service/jobhandler/CoursePublishTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/service/jobhandler/CoursePublishTask.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gateway-service/src/main/java/study/online/gateway/config/DefaultSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/src/main/java/study/online/gateway/config/DefaultSecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-service/src/main/java/study/online/gateway/exception/CustomAccessDeniedException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-service/src/main/java/study/online/gateway/exception/CustomAuthenticationException.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/study-online-base/src/main/java/study/online/base/advice/BaseExceptionAdvice.java" beforeDir="false" afterPath="$PROJECT_DIR$/study-online-base/src/main/java/study/online/base/advice/BaseExceptionAdvice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/study-online-base/src/main/java/study/online/base/constant/ErrorMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/study-online-base/src/main/java/study/online/base/constant/ErrorMessage.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,27 +67,27 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "K:/java_workspace/study-online/gateway-service/src/main/java/study/online/gateway",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "模块",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.3275862",
-    "settings.editor.selected.configurable": "editor.preferences.import",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;K:/java_workspace/study-online/gateway-service/src/main/java/study/online/gateway&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;模块&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.3275862&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.import&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="K:\java_workspace\study-online\gateway-service\src\main\java\study\online\gateway" />
@@ -116,8 +118,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-30f59d01ecdd-26cb7f24e5b0-intellij.indexing.shared.core-IU-253.29346.240" />
-        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.29346.240" />
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.30387.90" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.30387.90" />
       </set>
     </attachedChunks>
   </component>
@@ -130,7 +132,8 @@
       <updated>1768903751665</updated>
       <workItem from="1768903753017" duration="2006000" />
       <workItem from="1768917000861" duration="14752000" />
-      <workItem from="1768991805740" duration="13229000" />
+      <workItem from="1768991805740" duration="17067000" />
+      <workItem from="1769096497486" duration="6619000" />
     </task>
     <task id="LOCAL-00001" summary="feat(auth-service/gateway-service): 配置项更新&#10;&#10;- 引入了spring-security/spring-oauth2-authentication-server的相关依赖&#10;- 新增了安全认证的配置类">
       <option name="closed" value="true" />
@@ -140,7 +143,23 @@
       <option name="project" value="LOCAL" />
       <updated>1768996916542</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="feat(auth): 完善认证服务配置并优化异常处理&#10;&#10;- 在AuthorizationServerConfig中引入PasswordEncoder实现客户端密钥加密&#10;- 添加SecurityUtil工具类用于获取当前用户身份信息&#10;- 实现UserServiceImpl提供用户认证详情查询功能&#10;- 优化BaseExceptionAdvice中异常日志输出格式&#10;- 移除网关服务中自定义异常处理器，统一使用基础服务异常处理&#10;- 更新README文档中的服务架构说明与联系方式&#10;- 升级lombok版本至1.18.42">
+      <option name="closed" value="true" />
+      <created>1769065299437</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1769065299437</updated>
+    </task>
+    <task id="LOCAL-00003" summary="docs(README): 更新服务启动说明&#10;&#10;- 修改了服务启动方式的描述，将具体应用列表改为统一说明&#10;- 添加了启动前的依赖服务提示信息&#10;- 增加了 Tip 标记来强调注意事项&#10;- 补充了需要预先启动的基础设施服务列表">
+      <option name="closed" value="true" />
+      <created>1769099421807</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1769099421807</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -148,6 +167,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="feat(auth-service/gateway-service): 配置项更新&#10;&#10;- 引入了spring-security/spring-oauth2-authentication-server的相关依赖&#10;- 新增了安全认证的配置类" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(auth-service/gateway-service): 配置项更新&#10;&#10;- 引入了spring-security/spring-oauth2-authentication-server的相关依赖&#10;- 新增了安全认证的配置类" />
+    <MESSAGE value="feat(auth): 完善认证服务配置并优化异常处理&#10;&#10;- 在AuthorizationServerConfig中引入PasswordEncoder实现客户端密钥加密&#10;- 添加SecurityUtil工具类用于获取当前用户身份信息&#10;- 实现UserServiceImpl提供用户认证详情查询功能&#10;- 优化BaseExceptionAdvice中异常日志输出格式&#10;- 移除网关服务中自定义异常处理器，统一使用基础服务异常处理&#10;- 更新README文档中的服务架构说明与联系方式&#10;- 升级lombok版本至1.18.42" />
+    <MESSAGE value="docs(README): 更新服务启动说明&#10;&#10;- 修改了服务启动方式的描述，将具体应用列表改为统一说明&#10;- 添加了启动前的依赖服务提示信息&#10;- 增加了 Tip 标记来强调注意事项&#10;- 补充了需要预先启动的基础设施服务列表" />
+    <option name="LAST_COMMIT_MESSAGE" value="docs(README): 更新服务启动说明&#10;&#10;- 修改了服务启动方式的描述，将具体应用列表改为统一说明&#10;- 添加了启动前的依赖服务提示信息&#10;- 增加了 Tip 标记来强调注意事项&#10;- 补充了需要预先启动的基础设施服务列表" />
   </component>
 </project>

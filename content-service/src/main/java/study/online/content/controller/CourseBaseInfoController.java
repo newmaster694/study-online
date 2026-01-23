@@ -31,7 +31,7 @@ public class CourseBaseInfoController {
 	 * @return {@code Page<CourseBase>}
 	 */
 	@PostMapping("/list")
-	@PreAuthorize("hasAuthority('xc_teachmanager_course_list')")
+	@PreAuthorize("hasRole('xc_teacher')")
 	public Page<CourseBase> list(PageParams pageParams, @RequestBody QueryCourseParamsDTO queryCourseParamsDTO) {
 		return courseBaseInfoService.queryCourseBaseList(pageParams, queryCourseParamsDTO);
 	}

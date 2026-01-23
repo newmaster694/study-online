@@ -5,6 +5,7 @@ import com.xxl.job.core.context.XxlJobHelper;
 import com.xxl.job.core.handler.annotation.XxlJob;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import study.online.api.client.SearchClient;
 import study.online.api.model.po.CourseIndex;
@@ -31,6 +32,7 @@ public class CoursePublishTask extends MessageProcessAbstract {
 	@Resource
 	private SearchClient searchClient;
 
+	@Autowired
 	public CoursePublishTask(MqMessageService mqMessageService) {
 		super(mqMessageService);
 	}

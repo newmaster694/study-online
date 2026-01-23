@@ -33,10 +33,9 @@ public interface ErrorMessage {
 
 	String COURSE_STATIC_ERROR = "课程静态化异常";
 
-	String VALDATE_PARAMETER_ERROR = "参数校验失败";
-	String REGISTER_USER_ERROR = "用户未注册";
-	String AUTH_ERROR = "登录失败";
+	String VALDATE_PARAMETER_ERROR = "认证请求的数据格式错误";
+	String ERROR_AUTHENTICATION_PASSWORD = "账号或密码错误";
 
-	String UNKNOW_LOGIN_OAUTH_PLATEFORM = "无对应的第三方登录平台";
-	String UNKNOW_JUSTAUTH_CONFIG = "未配置第三方平台数据";
+	String EMPTY_CAPTCHA = "验证码为空";
+	String ERROR_CAPTCHA = "验证码校验失败";
 }

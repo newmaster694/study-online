@@ -52,7 +52,6 @@
 		<elasticsearch-rest-high-level-client.version>7.12.1</elasticsearch-rest-high-level-client.version>
 		<spring-cloud-starter-security.version>2.2.5.RELEASE</spring-cloud-starter-security.version>
 		<spring-security-oauth2-authorization-server.version>1.2.0</spring-security-oauth2-authorization-server.version>
-		<justauth.version>1.16.6</justauth.version>
 		<kaptcha.version>2.3.3</kaptcha.version>
 		<lettuce-core.version>6.2.2.RELEASE</lettuce-core.version>
 	</properties>
@@ -197,12 +196,6 @@
 				<groupId>org.springframework.security</groupId>
 				<artifactId>spring-security-oauth2-authorization-server</artifactId>
 				<version>${spring-security-oauth2-authorization-server.version}</version> <!-- 与 Spring Boot 3.2 兼容 -->
-			</dependency>
-
-			<dependency>
-				<groupId>me.zhyd.oauth</groupId>
-				<artifactId>JustAuth</artifactId>
-				<version>${justauth.version}</version>
 			</dependency>
 
 			<dependency>

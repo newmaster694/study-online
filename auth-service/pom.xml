@@ -85,11 +85,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>me.zhyd.oauth</groupId>
-			<artifactId>JustAuth</artifactId>
-		</dependency>
-
-		<dependency>
 			<groupId>com.study.online</groupId>
 			<artifactId>study-online-api</artifactId>
 			<version>1.0-RC</version>
