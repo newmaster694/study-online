@@ -1,4 +1,4 @@
-package study.online.gateway.common;
+package study.online.base.model;
 
 import lombok.Data;
 

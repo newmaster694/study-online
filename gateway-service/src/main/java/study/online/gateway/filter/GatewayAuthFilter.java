@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-import study.online.gateway.common.RestErrorResponse;
+import study.online.base.model.RestErrorResponse;
 import study.online.gateway.config.properties.SystemProperties;
 
 import java.nio.charset.StandardCharsets;

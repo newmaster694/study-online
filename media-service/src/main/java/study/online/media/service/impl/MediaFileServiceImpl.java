@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import study.online.base.constant.MQConstant;
 import study.online.base.exception.BaseException;
 import study.online.base.model.RestResponse;
-import study.online.media.utils.MinioUtil;
 import study.online.media.mapper.MediaFilesMapper;
 import study.online.media.mapper.MediaProcessMapper;
 import study.online.media.model.dto.UploadFileParamsDTO;
@@ -25,6 +24,7 @@ import study.online.media.model.po.MediaFiles;
 import study.online.media.model.po.MediaProcess;
 import study.online.media.service.IMediaFileService;
 import study.online.media.utils.FileUtil;
+import study.online.media.utils.MinioUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -178,7 +178,7 @@ public class MediaFileServiceImpl implements IMediaFileService {
 			minioUtil.uploadFile(MEDIA_CHUNK_PATH_BUCKET, file, chunkFilePath, null);
 		} catch (Exception exception) {
 			log.debug("上传分块文件失败:{}", chunkFilePath);
-			return RestResponse.validFail(false, "上传分块失败");
+			throw new BaseException("上传分块失败");
 		}
 
 		String key = CHUNK_KEY + fileMD5 + ":" + chunk;
@@ -194,10 +194,12 @@ public class MediaFileServiceImpl implements IMediaFileService {
 
 		/*构建composeSource列表*/
 		List<ComposeSource> sourceList = Stream.iterate(0, i -> ++i).limit(chunkTotal)
-			.map(i -> ComposeSource.builder()
-				.bucket(MEDIA_CHUNK_PATH_BUCKET)
-				.object(chunkFileFolderPath + i)
-				.build())
+			.map(i ->
+				ComposeSource
+					.builder()
+					.bucket(MEDIA_CHUNK_PATH_BUCKET)
+					.object(chunkFileFolderPath + i)
+					.build())
 			.toList();
 
 		String filename = uploadFileParamsDTO.getFilename();
@@ -210,20 +212,20 @@ public class MediaFileServiceImpl implements IMediaFileService {
 			log.info("合并文件成功:{}-{}", mergeFilePath, response.toString());
 		} catch (Exception exception) {
 			log.error("文件合并失败：{}", exception.getMessage());
-			return RestResponse.validFail(false, "合并文件失败");
+			throw new BaseException("合并文件失败");
 		}
 
 		/*验证MD5*/
 		try (InputStream inputStream = minioUtil.getObject(MEDIA_FILE_PATH_BUCKET, mergeFilePath)) {
 			String md5Hex = DigestUtils.md5Hex(inputStream);
 			if (!fileMd5.equals(md5Hex)) {
-				return RestResponse.validFail(false, "文件合并校验失败，最终上传失败");
+				throw new BaseException("文件合并校验失败，最终上传失败");
 			}
 
 			uploadFileParamsDTO.setFileSize(minioUtil.getObjectInfo(MEDIA_FILE_PATH_BUCKET, mergeFilePath).size());
 		} catch (IOException e) {
 			log.debug("校验文件失败,fileMd5:{},异常:{}", fileMd5, e.getMessage(), e);
-			return RestResponse.validFail(false, "文件合并校验失败，最终上传失败");
+			throw new BaseException("文件合并校验失败，最终上传失败");
 		}
 
 		//代理对象
