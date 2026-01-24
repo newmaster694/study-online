@@ -4,16 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4e7a11de-c3f4-4c66-b7d4-c0219f0d74f3" name="更改" comment="feat(auth): 实现微信认证功能并重构认证控制器&#10;&#10;- 将LoginController重命名为AuthenticationController并修改为Controller注解&#10;- 新增IWXAuthService接口定义微信认证方法&#10;- 实现WXAuthenticationServiceImpl提供微信认证和用户信息处理逻辑&#10;- 添加RestTemplate配置用于HTTP请求微信API&#10;- 更新XcUserRole实体类启用链式访问器&#10;- 在IDEA配置中添加XxlJob入口点管理">
+    <list default="true" id="4e7a11de-c3f4-4c66-b7d4-c0219f0d74f3" name="更改" comment="fix(base): 统一异常响应处理并优化安全配置&#10;&#10;- 将RestErrorResponse类从网关服务迁移到基础服务模块&#10;- 更新全局异常处理器返回RestErrorResponse对象而非RestResponse&#10;- 添加对AccessDeniedException访问拒绝异常的处理">
+      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/config/properties/WxProPerties.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auth-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-service/src/main/java/study/online/gateway/common/RestErrorResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/study-online-base/src/main/java/study/online/base/model/RestErrorResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-service/src/main/java/study/online/gateway/filter/GatewayAuthFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/src/main/java/study/online/gateway/filter/GatewayAuthFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media-service/src/main/java/study/online/media/service/impl/MediaFileServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/media-service/src/main/java/study/online/media/service/impl/MediaFileServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/study-online-base/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/study-online-base/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/study-online-base/src/main/java/study/online/base/advice/BaseExceptionAdvice.java" beforeDir="false" afterPath="$PROJECT_DIR$/study-online-base/src/main/java/study/online/base/advice/BaseExceptionAdvice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/study-online-base/src/main/java/study/online/base/model/RestResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/study-online-base/src/main/java/study/online/base/model/RestResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/config/DefaultSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/config/DefaultSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/service/impl/WXAuthenticationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/service/impl/WXAuthenticationServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,27 +59,27 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;K:/java_workspace/study-online/gateway-service/src/main/java/study/online/gateway&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;模块&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.3275862&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;io.github.linwancen.plugin.show.settings.AppSettingsConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "K:/java_workspace/study-online/gateway-service/src/main/java/study/online/gateway",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "模块",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.3275862",
+    "settings.editor.selected.configurable": "editor.preferences.completion",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="K:\java_workspace\study-online\gateway-service\src\main\java\study\online\gateway" />
@@ -130,7 +127,7 @@
       <workItem from="1768991805740" duration="17067000" />
       <workItem from="1769096497486" duration="13601000" />
       <workItem from="1769239161821" duration="1146000" />
-      <workItem from="1769240586548" duration="9037000" />
+      <workItem from="1769240586548" duration="13375000" />
     </task>
     <task id="LOCAL-00001" summary="feat(auth-service/gateway-service): 配置项更新&#10;&#10;- 引入了spring-security/spring-oauth2-authentication-server的相关依赖&#10;- 新增了安全认证的配置类">
       <option name="closed" value="true" />
@@ -172,7 +169,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769246382642</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="fix(base): 统一异常响应处理并优化安全配置&#10;&#10;- 将RestErrorResponse类从网关服务迁移到基础服务模块&#10;- 更新全局异常处理器返回RestErrorResponse对象而非RestResponse&#10;- 添加对AccessDeniedException访问拒绝异常的处理">
+      <option name="closed" value="true" />
+      <created>1769266597356</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1769266597356</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -184,7 +189,8 @@
     <MESSAGE value="docs(README): 更新服务启动说明&#10;&#10;- 修改了服务启动方式的描述，将具体应用列表改为统一说明&#10;- 添加了启动前的依赖服务提示信息&#10;- 增加了 Tip 标记来强调注意事项&#10;- 补充了需要预先启动的基础设施服务列表" />
     <MESSAGE value="feat(auth): 实现多类型认证服务并优化安全配置&#10;&#10;- 新增AuthParamsDTO添加认证类型字段支持多种认证模式&#10;- 实现CustomAuthenticationProvider屏蔽密码对比逻辑&#10;- 集成SecurityFilterChain配置自定义认证提供者&#10;- 实现IAuthService接口及PasswordAuthServiceImpl密码认证&#10;- 更新UserServiceImpl支持多种认证方式校验流程&#10;- 重构网关安全配置类名称增强代码可读性" />
     <MESSAGE value="feat(auth): 实现微信认证功能并重构认证控制器&#10;&#10;- 将LoginController重命名为AuthenticationController并修改为Controller注解&#10;- 新增IWXAuthService接口定义微信认证方法&#10;- 实现WXAuthenticationServiceImpl提供微信认证和用户信息处理逻辑&#10;- 添加RestTemplate配置用于HTTP请求微信API&#10;- 更新XcUserRole实体类启用链式访问器&#10;- 在IDEA配置中添加XxlJob入口点管理" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(auth): 实现微信认证功能并重构认证控制器&#10;&#10;- 将LoginController重命名为AuthenticationController并修改为Controller注解&#10;- 新增IWXAuthService接口定义微信认证方法&#10;- 实现WXAuthenticationServiceImpl提供微信认证和用户信息处理逻辑&#10;- 添加RestTemplate配置用于HTTP请求微信API&#10;- 更新XcUserRole实体类启用链式访问器&#10;- 在IDEA配置中添加XxlJob入口点管理" />
+    <MESSAGE value="fix(base): 统一异常响应处理并优化安全配置&#10;&#10;- 将RestErrorResponse类从网关服务迁移到基础服务模块&#10;- 更新全局异常处理器返回RestErrorResponse对象而非RestResponse&#10;- 添加对AccessDeniedException访问拒绝异常的处理" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(base): 统一异常响应处理并优化安全配置&#10;&#10;- 将RestErrorResponse类从网关服务迁移到基础服务模块&#10;- 更新全局异常处理器返回RestErrorResponse对象而非RestResponse&#10;- 添加对AccessDeniedException访问拒绝异常的处理" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

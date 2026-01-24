@@ -54,6 +54,7 @@
 		<spring-security-oauth2-authorization-server.version>1.2.0</spring-security-oauth2-authorization-server.version>
 		<kaptcha.version>2.3.3</kaptcha.version>
 		<lettuce-core.version>6.2.2.RELEASE</lettuce-core.version>
+		<justauth.version>1.16.6</justauth.version>
 	</properties>
 
 	<dependencyManagement>
@@ -203,6 +204,12 @@
 				<artifactId>kaptcha</artifactId>
 				<version>${kaptcha.version}</version>
 				<scope>compile</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>me.zhyd.oauth</groupId>
+				<artifactId>JustAuth</artifactId>
+				<version>${justauth.version}</version>
 			</dependency>
 
 		</dependencies>
