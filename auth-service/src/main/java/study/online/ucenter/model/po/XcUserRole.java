@@ -2,6 +2,7 @@ package study.online.ucenter.model.po;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
  * @author itcast
  */
 @Data
+@Accessors(chain = true)
 @TableName("xc_user_role")
 public class XcUserRole implements Serializable {
 
