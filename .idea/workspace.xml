@@ -4,13 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4e7a11de-c3f4-4c66-b7d4-c0219f0d74f3" name="更改" comment="fix(base): 统一异常响应处理并优化安全配置&#10;&#10;- 将RestErrorResponse类从网关服务迁移到基础服务模块&#10;- 更新全局异常处理器返回RestErrorResponse对象而非RestResponse&#10;- 添加对AccessDeniedException访问拒绝异常的处理">
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/config/properties/WxProPerties.java" afterDir="false" />
+    <list default="true" id="4e7a11de-c3f4-4c66-b7d4-c0219f0d74f3" name="更改" comment="feat(auth): 集成JustAuth实现微信认证功能并优化安全配置&#10;&#10;- 添加JustAuth依赖库支持第三方OAuth认证&#10;- 实现WXAuthenticationServiceImpl使用JustAuth进行微信认证&#10;- 创建WxProPerties配置类管理微信认证参数&#10;- 移除自定义微信API调用逻辑和RestTemplate配置&#10;- 优化认证服务实现统一的用户信息处理流程">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/data_source_mapping.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/db-forest-config.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/config/DefaultSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/config/DefaultSecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/service/impl/WXAuthenticationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/service/impl/WXAuthenticationServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/controller/AuthenticationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/controller/AuthenticationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/service/impl/PasswordAuthServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/service/impl/CustomPasswordAuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/service/impl/WXAuthenticationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/service/impl/CustomWxAuthenticationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/study/online/ucenter/mapper/XcMenuMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/ucenter/mapper/XcMenuMapper.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,6 +68,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "K:/java_workspace/study-online/gateway-service/src/main/java/study/online/gateway",
@@ -78,6 +82,12 @@
     "project.structure.side.proportion": "0.3275862",
     "settings.editor.selected.configurable": "editor.preferences.completion",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql",
+      "mongo"
+    ]
   }
 }]]></component>
   <component name="RecentsManager">
@@ -127,7 +137,7 @@
       <workItem from="1768991805740" duration="17067000" />
       <workItem from="1769096497486" duration="13601000" />
       <workItem from="1769239161821" duration="1146000" />
-      <workItem from="1769240586548" duration="13375000" />
+      <workItem from="1769240586548" duration="14872000" />
     </task>
     <task id="LOCAL-00001" summary="feat(auth-service/gateway-service): 配置项更新&#10;&#10;- 引入了spring-security/spring-oauth2-authentication-server的相关依赖&#10;- 新增了安全认证的配置类">
       <option name="closed" value="true" />
@@ -177,7 +187,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769266597356</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="feat(auth): 集成JustAuth实现微信认证功能并优化安全配置&#10;&#10;- 添加JustAuth依赖库支持第三方OAuth认证&#10;- 实现WXAuthenticationServiceImpl使用JustAuth进行微信认证&#10;- 创建WxProPerties配置类管理微信认证参数&#10;- 移除自定义微信API调用逻辑和RestTemplate配置&#10;- 优化认证服务实现统一的用户信息处理流程">
+      <option name="closed" value="true" />
+      <created>1769277579166</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1769277579166</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -190,7 +208,8 @@
     <MESSAGE value="feat(auth): 实现多类型认证服务并优化安全配置&#10;&#10;- 新增AuthParamsDTO添加认证类型字段支持多种认证模式&#10;- 实现CustomAuthenticationProvider屏蔽密码对比逻辑&#10;- 集成SecurityFilterChain配置自定义认证提供者&#10;- 实现IAuthService接口及PasswordAuthServiceImpl密码认证&#10;- 更新UserServiceImpl支持多种认证方式校验流程&#10;- 重构网关安全配置类名称增强代码可读性" />
     <MESSAGE value="feat(auth): 实现微信认证功能并重构认证控制器&#10;&#10;- 将LoginController重命名为AuthenticationController并修改为Controller注解&#10;- 新增IWXAuthService接口定义微信认证方法&#10;- 实现WXAuthenticationServiceImpl提供微信认证和用户信息处理逻辑&#10;- 添加RestTemplate配置用于HTTP请求微信API&#10;- 更新XcUserRole实体类启用链式访问器&#10;- 在IDEA配置中添加XxlJob入口点管理" />
     <MESSAGE value="fix(base): 统一异常响应处理并优化安全配置&#10;&#10;- 将RestErrorResponse类从网关服务迁移到基础服务模块&#10;- 更新全局异常处理器返回RestErrorResponse对象而非RestResponse&#10;- 添加对AccessDeniedException访问拒绝异常的处理" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(base): 统一异常响应处理并优化安全配置&#10;&#10;- 将RestErrorResponse类从网关服务迁移到基础服务模块&#10;- 更新全局异常处理器返回RestErrorResponse对象而非RestResponse&#10;- 添加对AccessDeniedException访问拒绝异常的处理" />
+    <MESSAGE value="feat(auth): 集成JustAuth实现微信认证功能并优化安全配置&#10;&#10;- 添加JustAuth依赖库支持第三方OAuth认证&#10;- 实现WXAuthenticationServiceImpl使用JustAuth进行微信认证&#10;- 创建WxProPerties配置类管理微信认证参数&#10;- 移除自定义微信API调用逻辑和RestTemplate配置&#10;- 优化认证服务实现统一的用户信息处理流程" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(auth): 集成JustAuth实现微信认证功能并优化安全配置&#10;&#10;- 添加JustAuth依赖库支持第三方OAuth认证&#10;- 实现WXAuthenticationServiceImpl使用JustAuth进行微信认证&#10;- 创建WxProPerties配置类管理微信认证参数&#10;- 移除自定义微信API调用逻辑和RestTemplate配置&#10;- 优化认证服务实现统一的用户信息处理流程" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

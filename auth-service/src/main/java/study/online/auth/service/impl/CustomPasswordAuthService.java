@@ -17,7 +17,7 @@ import study.online.ucenter.model.po.XcUser;
 
 @RequiredArgsConstructor
 @Service("password_authentication")
-public class PasswordAuthServiceImpl implements IAuthService {
+public class CustomPasswordAuthService implements IAuthService {
 
 	private final XcUserMapper userMapper;
 	private final PasswordEncoder passwordEncoder;

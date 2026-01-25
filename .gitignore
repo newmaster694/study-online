@@ -36,3 +36,24 @@ build/
 
 ### Mac OS ###
 .DS_Store
+/.idea/dataSources/70c797dc-73eb-4865-be36-d2f6bf598ab6.xml
+/.idea/dataSources/595cafcf-2508-4e08-b2c3-b0b9d38d14a1.xml
+/.idea/dataSources/1281a209-41d8-46e2-9d32-bacecdc01aaf.xml
+/.idea/dataSources/ae41c2b8-631f-45d4-a870-54d3de6f5435.xml
+/.idea/dataSources.local.xml
+/.idea/dataSources/70c797dc-73eb-4865-be36-d2f6bf598ab6/storage_v2/_src_/schema/information_schema.FNRwLQ.meta
+/.idea/dataSources/595cafcf-2508-4e08-b2c3-b0b9d38d14a1/storage_v2/_src_/schema/information_schema.FNRwLQ.meta
+/.idea/dataSources/1281a209-41d8-46e2-9d32-bacecdc01aaf/storage_v2/_src_/schema/information_schema.FNRwLQ.meta
+/.idea/dataSources/ae41c2b8-631f-45d4-a870-54d3de6f5435/storage_v2/_src_/schema/information_schema.FNRwLQ.meta
+/.idea/dataSources/70c797dc-73eb-4865-be36-d2f6bf598ab6/storage_v2/_src_/schema/mysql.osA4Bg.meta
+/.idea/dataSources/595cafcf-2508-4e08-b2c3-b0b9d38d14a1/storage_v2/_src_/schema/mysql.osA4Bg.meta
+/.idea/dataSources/1281a209-41d8-46e2-9d32-bacecdc01aaf/storage_v2/_src_/schema/mysql.osA4Bg.meta
+/.idea/dataSources/ae41c2b8-631f-45d4-a870-54d3de6f5435/storage_v2/_src_/schema/mysql.osA4Bg.meta
+/.idea/dataSources/70c797dc-73eb-4865-be36-d2f6bf598ab6/storage_v2/_src_/schema/performance_schema.kIw0nw.meta
+/.idea/dataSources/595cafcf-2508-4e08-b2c3-b0b9d38d14a1/storage_v2/_src_/schema/performance_schema.kIw0nw.meta
+/.idea/dataSources/1281a209-41d8-46e2-9d32-bacecdc01aaf/storage_v2/_src_/schema/performance_schema.kIw0nw.meta
+/.idea/dataSources/ae41c2b8-631f-45d4-a870-54d3de6f5435/storage_v2/_src_/schema/performance_schema.kIw0nw.meta
+/.idea/dataSources/70c797dc-73eb-4865-be36-d2f6bf598ab6/storage_v2/_src_/schema/sys.zb4BAA.meta
+/.idea/dataSources/595cafcf-2508-4e08-b2c3-b0b9d38d14a1/storage_v2/_src_/schema/sys.zb4BAA.meta
+/.idea/dataSources/1281a209-41d8-46e2-9d32-bacecdc01aaf/storage_v2/_src_/schema/sys.zb4BAA.meta
+/.idea/dataSources/ae41c2b8-631f-45d4-a870-54d3de6f5435/storage_v2/_src_/schema/sys.zb4BAA.meta

@@ -21,6 +21,9 @@ public class AuthenticationController {
 
 	private final IWXAuthService wxAuthService;
 
+	/**
+	 * 微信扫码回调接口
+	 */
 	@RequestMapping("/wx-login")
 	public String login(String code, String state) {
 		log.debug("微信扫码回调:code-{};state-{}", code, state);

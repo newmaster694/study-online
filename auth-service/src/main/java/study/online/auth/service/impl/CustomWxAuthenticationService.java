@@ -29,11 +29,11 @@ import java.util.UUID;
 @Slf4j
 @RequiredArgsConstructor
 @Service("wx_authentication")
-public class WXAuthenticationServiceImpl implements IAuthService, IWXAuthService {
+public class CustomWxAuthenticationService implements IAuthService, IWXAuthService {
 
 	private final XcUserMapper xcUserMapper;
 	private final XcUserRoleMapper xcUserRoleMapper;
-	private final WXAuthenticationServiceImpl currentProxy;
+	private final CustomWxAuthenticationService currentProxy;
 	private final WxProPerties wxProPerties;
 
 	@Override
