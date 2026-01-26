@@ -12,15 +12,19 @@ spring:
             -   id: "content"
                 uri: "lb://content-service"
                 predicates:
-                - Path=/content/**
+                    - Path=/content/**
             -   id: "media"
                 uri: "lb://media-service"
                 predicates:
-                - Path=/media/**
+                    - Path=/media/**
             -   id: "system"
                 uri: "lb://system-service"
                 predicates:
-                - Path=/system/**
+                    - Path=/system/**
+            -   id: "auth"
+                uri: "lb://auth-service"
+                predicates:
+                    - Path=/auth/**
 
 system:
     security-whitelist-path:

@@ -4,9 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.web.server.SecurityWebFilterChain;
 import study.online.gateway.config.properties.SystemProperties;
 
 @Configuration
@@ -14,19 +13,20 @@ import study.online.gateway.config.properties.SystemProperties;
 @RequiredArgsConstructor
 public class DefaultSecurityConfig {
 
-	private static final String[] whiteList = new SystemProperties().getSecurityWhitelistPath();
+	private final SystemProperties systemProperties;
 
 	@Bean
-	public SecurityFilterChain defaultGatewaySecurityConfig(HttpSecurity http) throws Exception {
+	public SecurityWebFilterChain defaultGatewaySecurityConfig(ServerHttpSecurity http) throws Exception {
 
 		http
-			.authorizeHttpRequests(auth ->
-				auth
-					.requestMatchers(whiteList).permitAll()
-					.anyRequest().authenticated()
+			.authorizeExchange(exchange ->
+				exchange
+					.pathMatchers(systemProperties.getSecurityWhitelistPath()).permitAll()
+					.anyExchange().authenticated()
 			)
-			.csrf(AbstractHttpConfigurer::disable)
-			.cors(AbstractHttpConfigurer::disable);
+			.csrf(ServerHttpSecurity.CsrfSpec::disable)
+			.cors(ServerHttpSecurity.CorsSpec::disable)
+		;
 
 		return http.build();
 	}

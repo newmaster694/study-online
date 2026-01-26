@@ -5,10 +5,12 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @Slf4j
 @SpringBootApplication
 @MapperScan("study.online.ucenter.mapper")
+@EnableAspectJAutoProxy(exposeProxy = true)
 @EnableFeignClients(basePackages = "study.online.api.client")
 public class AuthApplication {
 

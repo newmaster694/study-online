@@ -22,7 +22,6 @@ import study.online.gateway.config.properties.SystemProperties;
 
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
-import java.util.*;
 
 /**
  * @author Mr.M
@@ -33,11 +32,10 @@ import java.util.*;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class GatewayAuthFilter implements GlobalFilter, Ordered {
-
+public class AuthFilter implements GlobalFilter, Ordered {
 
 	//白名单
-	private final List<String> whitelist = Arrays.asList(new SystemProperties().getSecurityWhitelistPath());
+	private final SystemProperties systemProperties;
 
 	private final JwtDecoder jwtDecoder;
 
@@ -45,6 +43,9 @@ public class GatewayAuthFilter implements GlobalFilter, Ordered {
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		String requestUrl = exchange.getRequest().getPath().value();
 		AntPathMatcher pathMatcher = new AntPathMatcher();
+
+		String[] whitelist = systemProperties.getSecurityWhitelistPath();
+
 		//白名单放行
 		for (String url : whitelist) {
 			if (pathMatcher.match(url, requestUrl)) {
@@ -66,6 +67,13 @@ public class GatewayAuthFilter implements GlobalFilter, Ordered {
 			if (jwt.getExpiresAt() != null && jwt.getExpiresAt().isBefore(Instant.now())) {
 				return buildReturnMono("认证令牌已过期", exchange);
 			}
+
+			//传递用户信息
+			String userInfo = jwt.getClaimAsString("user_name");
+
+			exchange = exchange.mutate()
+				.request(builder -> builder.header("user-info", userInfo))
+				.build();
 
 			return chain.filter(exchange);
 		} catch (JwtValidationException e) {

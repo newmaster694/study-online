@@ -1,4 +1,4 @@
-package study.online.auth.utils;
+package study.online.base.utils;
 
 import com.alibaba.fastjson2.JSON;
 import lombok.Data;
@@ -52,7 +52,7 @@ public class SecurityUtil {
 		private String name;
 		private String nickname;
 		private String wxUnionid;
-		private String companyId;
+		private Long companyId;
 		/**
 		 * 头像
 		 */

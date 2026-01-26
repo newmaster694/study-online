@@ -4,16 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4e7a11de-c3f4-4c66-b7d4-c0219f0d74f3" name="更改" comment="feat(auth): 集成JustAuth实现微信认证功能并优化安全配置&#10;&#10;- 添加JustAuth依赖库支持第三方OAuth认证&#10;- 实现WXAuthenticationServiceImpl使用JustAuth进行微信认证&#10;- 创建WxProPerties配置类管理微信认证参数&#10;- 移除自定义微信API调用逻辑和RestTemplate配置&#10;- 优化认证服务实现统一的用户信息处理流程">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/data_source_mapping.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/db-forest-config.xml" afterDir="false" />
+    <list default="true" id="4e7a11de-c3f4-4c66-b7d4-c0219f0d74f3" name="更改" comment="feat(auth): 集成JustAuth实现微信认证功能并优化安全配置&#10;&#10;- 添加JustAuth依赖库支持第三方OAuth认证&#10;- 实现WXAuthenticationServiceImpl使用JustAuth进行微信认证&#10;- 创建WxProPerties配置类管理微信认证参数&#10;- 移除自定义微信API调用逻辑和RestTemplate配置&#10;- 优化认证服务实现统一的用户信息处理流程&#10;- 添加微信扫码回调接口文档注释&#10;- 重命名PasswordAuthServiceImpl为CustomPasswordAuthService&#10;- 重命名WXAuthenticationServiceImpl为CustomWxAuthenticationService&#10;- 集成用户权限查询功能返回动态权限列表&#10;- 修复XcMenuMapper中用户ID参数类型为Long&#10;- 更新项目配置文件以共享数据库源设置">
+      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/security/converter/OAuth2ResourceOwnerPasswordAuthenticationConverter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/security/provider/OAuth2ResourceOwnerPasswordAuthenticationProvider.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/security/token/OAuth2ResourceOwnerPasswordAuthenticationToken.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/utils/OAuth2EndpointUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/filter/AuthFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/data_source_mapping.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/controller/AuthenticationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/controller/AuthenticationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/service/impl/PasswordAuthServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/service/impl/CustomPasswordAuthService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/service/impl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/service/impl/WXAuthenticationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/service/impl/CustomWxAuthenticationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/study/online/ucenter/mapper/XcMenuMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/ucenter/mapper/XcMenuMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/study/online/AuthApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/AuthApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/config/AuthorizationServerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/config/AuthorizationServerConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/config/DefaultSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/config/DefaultSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/config/TokenConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/config/TokenConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/provider/CustomAuthenticationProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/security/provider/CustomAuthenticationProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/service/impl/CustomWxAuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/service/impl/CustomWxAuthenticationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/utils/SecurityUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/study-online-base/src/main/java/study/online/base/utils/SecurityUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/controller/CourseBaseInfoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/controller/CourseBaseInfoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway-service/src/main/java/study/online/gateway/config/AuthorizationServerConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway-service/src/main/java/study/online/gateway/config/DefaultSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/src/main/java/study/online/gateway/config/DefaultSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway-service/src/main/java/study/online/gateway/config/TokenConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/src/main/java/study/online/gateway/config/TokenConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway-service/src/main/java/study/online/gateway/filter/GatewayAuthFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/src/main/java/study/online/gateway/filter/AuthFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,6 +48,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="dev_sa_token_authentication" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -65,10 +87,18 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.AuthApplication.executor": "Run",
+    "Spring Boot.ContentApplication.executor": "Run",
+    "Spring Boot.GatewayApplication.executor": "Run",
     "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "K:/java_workspace/study-online/gateway-service/src/main/java/study/online/gateway",
@@ -77,10 +107,11 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "模块",
+    "project.structure.last.edited": "项目",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.3275862",
-    "settings.editor.selected.configurable": "editor.preferences.completion",
+    "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -90,6 +121,9 @@
     ]
   }
 }]]></component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="K:\java_workspace\study-online\gateway-service\src\main\java\study\online\gateway" />
@@ -101,7 +135,30 @@
       <recent name="study.online.gateway.config" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.ContentApplication">
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="KtorApplicationConfigurationType" />
+        <option value="MicronautRunConfigurationType" />
+        <option value="QuarkusRunConfigurationType" />
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+    <option name="configurationStatuses">
+      <map>
+        <entry key="SpringBootApplicationConfigurationType">
+          <value>
+            <map>
+              <entry key="AuthApplication" value="STOPPED" />
+              <entry key="ContentApplication" value="STOPPED" />
+              <entry key="GatewayApplication" value="STOPPED" />
+            </map>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.AuthApplication">
     <configuration name="ContentApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="content-service" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="study.online.content.ContentApplication" />
@@ -116,6 +173,11 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.AuthApplication" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -124,6 +186,9 @@
         <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.30387.90" />
       </set>
     </attachedChunks>
+  </component>
+  <component name="StructureViewState">
+    <option name="selectedTab" value="逻辑" />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="默认任务">
@@ -137,7 +202,9 @@
       <workItem from="1768991805740" duration="17067000" />
       <workItem from="1769096497486" duration="13601000" />
       <workItem from="1769239161821" duration="1146000" />
-      <workItem from="1769240586548" duration="14872000" />
+      <workItem from="1769240586548" duration="19705000" />
+      <workItem from="1769329361941" duration="4263000" />
+      <workItem from="1769334586043" duration="17893000" />
     </task>
     <task id="LOCAL-00001" summary="feat(auth-service/gateway-service): 配置项更新&#10;&#10;- 引入了spring-security/spring-oauth2-authentication-server的相关依赖&#10;- 新增了安全认证的配置类">
       <option name="closed" value="true" />
@@ -195,11 +262,30 @@
       <option name="project" value="LOCAL" />
       <updated>1769277579166</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="feat(auth): 集成JustAuth实现微信认证功能并优化安全配置&#10;&#10;- 添加JustAuth依赖库支持第三方OAuth认证&#10;- 实现WXAuthenticationServiceImpl使用JustAuth进行微信认证&#10;- 创建WxProPerties配置类管理微信认证参数&#10;- 移除自定义微信API调用逻辑和RestTemplate配置&#10;- 优化认证服务实现统一的用户信息处理流程&#10;- 添加微信扫码回调接口文档注释&#10;- 重命名PasswordAuthServiceImpl为CustomPasswordAuthService&#10;- 重命名WXAuthenticationServiceImpl为CustomWxAuthenticationService&#10;- 集成用户权限查询功能返回动态权限列表&#10;- 修复XcMenuMapper中用户ID参数类型为Long&#10;- 更新项目配置文件以共享数据库源设置">
+      <option name="closed" value="true" />
+      <created>1769322732774</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1769322732774</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="feat(auth-service/gateway-service): 配置项更新&#10;&#10;- 引入了spring-security/spring-oauth2-authentication-server的相关依赖&#10;- 新增了安全认证的配置类" />
@@ -209,7 +295,8 @@
     <MESSAGE value="feat(auth): 实现微信认证功能并重构认证控制器&#10;&#10;- 将LoginController重命名为AuthenticationController并修改为Controller注解&#10;- 新增IWXAuthService接口定义微信认证方法&#10;- 实现WXAuthenticationServiceImpl提供微信认证和用户信息处理逻辑&#10;- 添加RestTemplate配置用于HTTP请求微信API&#10;- 更新XcUserRole实体类启用链式访问器&#10;- 在IDEA配置中添加XxlJob入口点管理" />
     <MESSAGE value="fix(base): 统一异常响应处理并优化安全配置&#10;&#10;- 将RestErrorResponse类从网关服务迁移到基础服务模块&#10;- 更新全局异常处理器返回RestErrorResponse对象而非RestResponse&#10;- 添加对AccessDeniedException访问拒绝异常的处理" />
     <MESSAGE value="feat(auth): 集成JustAuth实现微信认证功能并优化安全配置&#10;&#10;- 添加JustAuth依赖库支持第三方OAuth认证&#10;- 实现WXAuthenticationServiceImpl使用JustAuth进行微信认证&#10;- 创建WxProPerties配置类管理微信认证参数&#10;- 移除自定义微信API调用逻辑和RestTemplate配置&#10;- 优化认证服务实现统一的用户信息处理流程" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(auth): 集成JustAuth实现微信认证功能并优化安全配置&#10;&#10;- 添加JustAuth依赖库支持第三方OAuth认证&#10;- 实现WXAuthenticationServiceImpl使用JustAuth进行微信认证&#10;- 创建WxProPerties配置类管理微信认证参数&#10;- 移除自定义微信API调用逻辑和RestTemplate配置&#10;- 优化认证服务实现统一的用户信息处理流程" />
+    <MESSAGE value="feat(auth): 集成JustAuth实现微信认证功能并优化安全配置&#10;&#10;- 添加JustAuth依赖库支持第三方OAuth认证&#10;- 实现WXAuthenticationServiceImpl使用JustAuth进行微信认证&#10;- 创建WxProPerties配置类管理微信认证参数&#10;- 移除自定义微信API调用逻辑和RestTemplate配置&#10;- 优化认证服务实现统一的用户信息处理流程&#10;- 添加微信扫码回调接口文档注释&#10;- 重命名PasswordAuthServiceImpl为CustomPasswordAuthService&#10;- 重命名WXAuthenticationServiceImpl为CustomWxAuthenticationService&#10;- 集成用户权限查询功能返回动态权限列表&#10;- 修复XcMenuMapper中用户ID参数类型为Long&#10;- 更新项目配置文件以共享数据库源设置" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(auth): 集成JustAuth实现微信认证功能并优化安全配置&#10;&#10;- 添加JustAuth依赖库支持第三方OAuth认证&#10;- 实现WXAuthenticationServiceImpl使用JustAuth进行微信认证&#10;- 创建WxProPerties配置类管理微信认证参数&#10;- 移除自定义微信API调用逻辑和RestTemplate配置&#10;- 优化认证服务实现统一的用户信息处理流程&#10;- 添加微信扫码回调接口文档注释&#10;- 重命名PasswordAuthServiceImpl为CustomPasswordAuthService&#10;- 重命名WXAuthenticationServiceImpl为CustomWxAuthenticationService&#10;- 集成用户权限查询功能返回动态权限列表&#10;- 修复XcMenuMapper中用户ID参数类型为Long&#10;- 更新项目配置文件以共享数据库源设置" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

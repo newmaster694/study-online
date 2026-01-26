@@ -5,11 +5,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
+import org.springframework.security.oauth2.server.authorization.InMemoryOAuth2AuthorizationService;
+import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
@@ -17,8 +20,11 @@ import org.springframework.security.oauth2.server.authorization.config.annotatio
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
 import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
+import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import study.online.auth.security.converter.OAuth2ResourceOwnerPasswordAuthenticationConverter;
+import study.online.auth.security.provider.OAuth2ResourceOwnerPasswordAuthenticationProvider;
 
 import java.time.Duration;
 
@@ -30,9 +36,22 @@ public class AuthorizationServerConfig {
 
 	@Bean
 	@Order(Ordered.HIGHEST_PRECEDENCE)
-	public SecurityFilterChain authorizationServerSecurityFilterChian(HttpSecurity http) throws Exception {
+	public SecurityFilterChain authorizationServerSecurityFilterChian(HttpSecurity http, OAuth2AuthorizationService authorizationService, OAuth2TokenGenerator<?> tokenGenerator
+	) throws Exception {
+
+		AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
 
 		OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
+
+		http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
+			.tokenEndpoint(tokenEndpoint ->
+				tokenEndpoint
+					.accessTokenRequestConverter(
+						new OAuth2ResourceOwnerPasswordAuthenticationConverter())
+					.authenticationProvider(
+						new OAuth2ResourceOwnerPasswordAuthenticationProvider(
+							authenticationManager, authorizationService, tokenGenerator))
+			);
 
 		http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
 			.oidc(Customizer.withDefaults()); // 启用 OpenID Connect 1.0
@@ -55,7 +74,7 @@ public class AuthorizationServerConfig {
 
 			//设置客户端id与密钥,{noop}表示不进行编码
 			.clientId("xc_web_app")
-			.clientSecret("{bcrypt}" + encoder.encode("xc_web_app"))
+			.clientSecret(encoder.encode("xc_web_app"))
 
 			//配置客户端使用基本认证方式【client_id:client_secret 进行base64编码】
 			.clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
@@ -81,5 +100,10 @@ public class AuthorizationServerConfig {
 			.build();
 
 		return new InMemoryRegisteredClientRepository(registeredClient);
+	}
+
+	@Bean
+	public OAuth2AuthorizationService authorizationService() {
+		return new InMemoryOAuth2AuthorizationService();
 	}
 }

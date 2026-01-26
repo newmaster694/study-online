@@ -3,17 +3,19 @@ package study.online.content.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import study.online.base.exception.ValidationGroup;
 import study.online.base.model.PageParams;
+import study.online.base.utils.SecurityUtil;
 import study.online.content.model.dto.AddCourseDTO;
 import study.online.content.model.dto.CourseBaseInfoDTO;
 import study.online.content.model.dto.EditCourseDTO;
 import study.online.content.model.dto.QueryCourseParamsDTO;
 import study.online.content.model.po.CourseBase;
 import study.online.content.service.ICourseBaseInfoService;
+
+import java.util.Objects;
 
 @RestController
 @Slf4j
@@ -31,7 +33,6 @@ public class CourseBaseInfoController {
 	 * @return {@code Page<CourseBase>}
 	 */
 	@PostMapping("/list")
-	@PreAuthorize("hasRole('xc_teacher')")
 	public Page<CourseBase> list(PageParams pageParams, @RequestBody QueryCourseParamsDTO queryCourseParamsDTO) {
 		return courseBaseInfoService.queryCourseBaseList(pageParams, queryCourseParamsDTO);
 	}
@@ -45,8 +46,7 @@ public class CourseBaseInfoController {
 	@PostMapping
 	public CourseBaseInfoDTO createCourseBase(
 		@RequestBody @Validated({ValidationGroup.Inster.class}) AddCourseDTO addCourseDTO) {
-		//机构ID，由于认证系统还未上线，先硬编码
-		Long companyId = 1232141425L;
+		Long companyId = Objects.requireNonNull(SecurityUtil.getUser()).getCompanyId();
 		return courseBaseInfoService.createCourseBase(companyId, addCourseDTO);
 	}
 
@@ -70,8 +70,7 @@ public class CourseBaseInfoController {
 	@PutMapping
 	public CourseBaseInfoDTO modifyCourseBase(
 		@RequestBody @Validated(ValidationGroup.Update.class) EditCourseDTO editCourseDTO) {
-		//机构id，由于认证系统没有上线暂时硬编码
-		Long companyId = 1232141425L;
+		Long companyId = Objects.requireNonNull(SecurityUtil.getUser()).getCompanyId();
 		return courseBaseInfoService.updateCourseBase(companyId, editCourseDTO);
 	}
 
@@ -82,7 +81,7 @@ public class CourseBaseInfoController {
 	 */
 	@DeleteMapping("/{courseId}")
 	public void deleteItem(@PathVariable Long courseId) {
-		Long companyId = 1232141425L;
+		Long companyId = Objects.requireNonNull(SecurityUtil.getUser()).getCompanyId();
 		courseBaseInfoService.deleteItem(courseId, companyId);
 	}
 }

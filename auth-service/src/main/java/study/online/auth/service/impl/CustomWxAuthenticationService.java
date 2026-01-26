@@ -9,6 +9,7 @@ import me.zhyd.oauth.model.AuthCallback;
 import me.zhyd.oauth.model.AuthResponse;
 import me.zhyd.oauth.model.AuthUser;
 import me.zhyd.oauth.request.AuthWeChatOpenRequest;
+import org.springframework.aop.framework.AopContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import study.online.auth.config.properties.WxProPerties;
@@ -33,7 +34,9 @@ public class CustomWxAuthenticationService implements IAuthService, IWXAuthServi
 
 	private final XcUserMapper xcUserMapper;
 	private final XcUserRoleMapper xcUserRoleMapper;
-	private final CustomWxAuthenticationService currentProxy;
+
+	private CustomWxAuthenticationService currentProxy;
+
 	private final WxProPerties wxProPerties;
 
 	@Override
@@ -74,6 +77,8 @@ public class CustomWxAuthenticationService implements IAuthService, IWXAuthServi
 			userInfo.put("nickname", authUser.getNickname());
 			userInfo.put("headimgurl", authUser.getAvatar());
 			userInfo.put("openid", authUser.getRawUserInfo().get("openid").toString());
+
+			currentProxy = (CustomWxAuthenticationService) AopContext.currentProxy();
 
 			return currentProxy.addVXUser(userInfo);
 		} catch (Exception e) {

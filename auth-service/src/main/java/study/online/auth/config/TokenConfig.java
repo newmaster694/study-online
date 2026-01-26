@@ -8,8 +8,11 @@ import com.nimbusds.jose.proc.SecurityContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtEncoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
+import org.springframework.security.oauth2.server.authorization.token.*;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -54,6 +57,22 @@ public class TokenConfig {
 	public JwtDecoder jwtDecoder(JWKSource<SecurityContext> jwkSource) {
 		return OAuth2AuthorizationServerConfiguration.jwtDecoder(jwkSource);
 	}
+
+	@Bean
+	public JwtEncoder jwtEncoder(JWKSource<SecurityContext> jwkSource) {
+		return new NimbusJwtEncoder(jwkSource);
+	}
+
+	@Bean
+	public OAuth2TokenGenerator<?> tokenGenerator(JwtEncoder jwtEncoder) {
+		JwtGenerator jwtGenerator = new JwtGenerator(jwtEncoder);
+		OAuth2AccessTokenGenerator accessTokenGenerator = new OAuth2AccessTokenGenerator();
+		OAuth2RefreshTokenGenerator refreshTokenGenerator = new OAuth2RefreshTokenGenerator();
+
+		return new DelegatingOAuth2TokenGenerator(
+			jwtGenerator, accessTokenGenerator, refreshTokenGenerator);
+	}
+
 
 	@Bean
 	public AuthorizationServerSettings authorizationServerSettings() {
