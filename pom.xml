@@ -19,6 +19,7 @@
 		<module>search-service</module>
 		<module>auth-service</module>
 		<module>captcha-service</module>
+		<module>learning-service</module>
 	</modules>
 
 	<parent>

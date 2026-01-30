@@ -4,33 +4,46 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4e7a11de-c3f4-4c66-b7d4-c0219f0d74f3" name="更改" comment="feat(auth): 集成JustAuth实现微信认证功能并优化安全配置&#10;&#10;- 添加JustAuth依赖库支持第三方OAuth认证&#10;- 实现WXAuthenticationServiceImpl使用JustAuth进行微信认证&#10;- 创建WxProPerties配置类管理微信认证参数&#10;- 移除自定义微信API调用逻辑和RestTemplate配置&#10;- 优化认证服务实现统一的用户信息处理流程&#10;- 添加微信扫码回调接口文档注释&#10;- 重命名PasswordAuthServiceImpl为CustomPasswordAuthService&#10;- 重命名WXAuthenticationServiceImpl为CustomWxAuthenticationService&#10;- 集成用户权限查询功能返回动态权限列表&#10;- 修复XcMenuMapper中用户ID参数类型为Long&#10;- 更新项目配置文件以共享数据库源设置">
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/security/converter/OAuth2ResourceOwnerPasswordAuthenticationConverter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/security/provider/OAuth2ResourceOwnerPasswordAuthenticationProvider.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/security/token/OAuth2ResourceOwnerPasswordAuthenticationToken.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/utils/OAuth2EndpointUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/filter/AuthFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/data_source_mapping.xml" beforeDir="false" />
+    <list default="true" id="4e7a11de-c3f4-4c66-b7d4-c0219f0d74f3" name="更改" comment="feat(learning): 新增学习服务并重构客户端配置&#10;&#10;- 添加了 learning-service 模块及其相关配置文件&#10;- 创建了选课功能相关的接口和服务实现&#10;- 重构了多个客户端类名以符合命名规范&#10;- 更新了课程发布服务中的文件上传客户端依赖&#10;- 添加了课程发布信息的数据传输对象&#10;- 修改了课程预览和发布的控制器端点路径&#10;- 在基础模块中添加了新的错误消息常量&#10;- 更新了安全工具类中的用户ID数据类型&#10;- 添加了学习服务的应用程序入口和配置文件&#10;- 创建了课程表和选课相关的数据访问层代码">
+      <change afterPath="$PROJECT_DIR$/learning-service/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/learning-service/src/main/java/study/online/learning/LearningApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/learning-service/src/main/java/study/online/learning/controller/MyLearningController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/learning-service/src/main/java/study/online/learning/mapper/XcChooseCourseMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/learning-service/src/main/java/study/online/learning/mapper/XcCourseTablesMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/learning-service/src/main/java/study/online/learning/model/dto/MyCourseTableItemDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/learning-service/src/main/java/study/online/learning/model/dto/MyCourseTableParams.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/learning-service/src/main/java/study/online/learning/model/dto/XcChooseCourseDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/learning-service/src/main/java/study/online/learning/model/dto/XcCourseTablesDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/learning-service/src/main/java/study/online/learning/model/po/XcChooseCourse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/learning-service/src/main/java/study/online/learning/model/po/XcCourseTables.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/learning-service/src/main/java/study/online/learning/model/po/XcLearnRecord.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/learning-service/src/main/java/study/online/learning/service/IMyCourseTableService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/learning-service/src/main/java/study/online/learning/service/impl/MyCourseTablesServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/learning-service/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/learning-service/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/learning-service/src/main/resources/mapper/XcChooseCourseMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/learning-service/src/main/resources/mapper/XcCourseTablesMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/study-online-api/src/main/java/study/online/api/client/ContentClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/study-online-api/src/main/java/study/online/api/client/fallback/ContentClientFallbackFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/study-online-api/src/main/java/study/online/api/model/po/CoursePublish.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/study/online/AuthApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/AuthApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/config/AuthorizationServerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/config/AuthorizationServerConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/config/DefaultSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/config/DefaultSecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/config/TokenConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/config/TokenConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/provider/CustomAuthenticationProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/security/provider/CustomAuthenticationProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/service/impl/CustomWxAuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/service/impl/CustomWxAuthenticationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/study/online/auth/utils/SecurityUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/study-online-base/src/main/java/study/online/base/utils/SecurityUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/resources/bootstrap.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/controller/CourseBaseInfoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/controller/CourseBaseInfoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-service/src/main/java/study/online/gateway/config/AuthorizationServerConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-service/src/main/java/study/online/gateway/config/DefaultSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/src/main/java/study/online/gateway/config/DefaultSecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-service/src/main/java/study/online/gateway/config/TokenConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/src/main/java/study/online/gateway/config/TokenConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-service/src/main/java/study/online/gateway/filter/GatewayAuthFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/src/main/java/study/online/gateway/filter/AuthFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/controller/CoursePublishController.java" beforeDir="false" afterPath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/controller/CoursePublishController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/controller/CourseTeacherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/controller/CourseTeacherController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/model/po/CoursePublish.java" beforeDir="false" afterPath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/model/po/CoursePublish.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/service/ICoursePublishService.java" beforeDir="false" afterPath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/service/ICoursePublishService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/service/impl/CoursePreviewServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/service/impl/CoursePreviewServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content-service/src/test/java/FreeMarkerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/content-service/src/test/java/FreeMarkerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/study-online-api/src/main/java/study/online/api/client/CaptchaClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/study-online-api/src/main/java/study/online/api/client/CaptchaClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/study-online-api/src/main/java/study/online/api/client/SearchClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/study-online-api/src/main/java/study/online/api/client/SearchClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/study-online-api/src/main/java/study/online/api/client/UploadFileClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/study-online-api/src/main/java/study/online/api/client/FileClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/study-online-api/src/main/java/study/online/api/client/fallback/CaptchaClientFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/study-online-api/src/main/java/study/online/api/client/fallback/CaptchaClientFallbackFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/study-online-api/src/main/java/study/online/api/client/fallback/SearchServiceFallbackFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/study-online-api/src/main/java/study/online/api/client/fallback/SearchclientFallbackFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/study-online-api/src/main/java/study/online/api/config/FeignConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/study-online-api/src/main/java/study/online/api/config/FeignConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/study-online-base/src/main/java/study/online/base/constant/ErrorMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/study-online-base/src/main/java/study/online/base/constant/ErrorMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/study-online-base/src/main/java/study/online/base/utils/SecurityUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/study-online-base/src/main/java/study/online/base/utils/SecurityUtil.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,6 +56,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -86,6 +100,8 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Maven.study-online-base [install].executor": "Run",
+    "Maven.study-online-message-sdk [install].executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
@@ -101,17 +117,17 @@
     "Spring Boot.GatewayApplication.executor": "Run",
     "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "K:/java_workspace/study-online/gateway-service/src/main/java/study/online/gateway",
+    "last_opened_file_path": "K:/java_workspace/study-online/learning-service/src/main/java/study/online/learning/mapper",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "项目",
+    "project.structure.last.edited": "模块",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.3275862",
     "run.configurations.included.in.services": "true",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "settings.editor.selected.configurable": "Mybatis",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -126,12 +142,17 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="K:\java_workspace\study-online\learning-service\src\main\java\study\online\learning\mapper" />
+      <recent name="K:\java_workspace\study-online\learning-service\src\main\java\study\online\learning\model" />
       <recent name="K:\java_workspace\study-online\gateway-service\src\main\java\study\online\gateway" />
       <recent name="K:\java_workspace\study-online\gateway-service\src\main\java\study\online\gateway\config" />
       <recent name="K:\java_workspace\study-online\gateway-service\src\main\java\study\online\gateway\common" />
-      <recent name="K:\java_workspace\study-online\gateway-service\src\main\java\study\online\gateway\filter" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="K:\java_workspace\study-online\learning-service\src\main\resources\mapper" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="study.online.api.model.po" />
       <recent name="study.online.gateway.config" />
     </key>
   </component>
@@ -188,7 +209,7 @@
     </attachedChunks>
   </component>
   <component name="StructureViewState">
-    <option name="selectedTab" value="逻辑" />
+    <option name="selectedTab" value="实体" />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="默认任务">
@@ -204,7 +225,7 @@
       <workItem from="1769239161821" duration="1146000" />
       <workItem from="1769240586548" duration="19705000" />
       <workItem from="1769329361941" duration="4263000" />
-      <workItem from="1769334586043" duration="17893000" />
+      <workItem from="1769334586043" duration="42230000" />
     </task>
     <task id="LOCAL-00001" summary="feat(auth-service/gateway-service): 配置项更新&#10;&#10;- 引入了spring-security/spring-oauth2-authentication-server的相关依赖&#10;- 新增了安全认证的配置类">
       <option name="closed" value="true" />
@@ -270,11 +291,51 @@
       <option name="project" value="LOCAL" />
       <updated>1769322732774</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="feat(auth): 完善认证服务功能并重构网关过滤器&#10;&#10;- 配置微信应用ID和密钥到应用配置中&#10;- 为网关添加认证服务路由规则&#10;- 启用AOP代理以支持自调用方法&#10;- 添加资源所有者密码凭证流程的认证转换器和提供者&#10;- 优化网关认证过滤器实现并移除不必要的依赖&#10;- 从内容服务控制器中移除硬编码的公司ID，改用安全工具类获取&#10;- 添加用户信息过滤器将认证信息传递给下游服务&#10;- 优化安全配置和认证服务器配置&#10;- 移动安全工具类到基础模块并修复数据类型问题&#10;- 更新项目配置文件和依赖管理">
+      <option name="closed" value="true" />
+      <created>1769421920616</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1769421920616</updated>
+    </task>
+    <task id="LOCAL-00010" summary="feat(auth): 完善认证服务功能并重构网关过滤器&#10;&#10;- 配置微信应用ID和密钥到应用配置中&#10;- 为网关添加认证服务路由规则&#10;- 启用AOP代理以支持自调用方法&#10;- 添加资源所有者密码凭证流程的认证转换器和提供者&#10;- 优化网关认证过滤器实现并移除不必要的依赖&#10;- 从内容服务控制器中移除硬编码的公司ID，改用安全工具类获取&#10;- 添加用户信息过滤器将认证信息传递给下游服务&#10;- 优化安全配置和认证服务器配置&#10;- 移动安全工具类到基础模块并修复数据类型问题&#10;- 更新项目配置文件和依赖管理">
+      <option name="closed" value="true" />
+      <created>1769489543601</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1769489543601</updated>
+    </task>
+    <task id="LOCAL-00011" summary="chore(config): 更新 .gitignore 配置&#10;&#10;- 修改 .idea 忽略规则为递归忽略所有子文件和目录">
+      <option name="closed" value="true" />
+      <created>1769489582360</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1769489582360</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="dependencySupport" implementationName="java:org.springframework.security:spring-security-core" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-core" />
+    <option featureType="dependencySupport" implementationName="java:jakarta.validation:jakarta.validation-api" />
+    <option featureType="dependencySupport" implementationName="java:io.projectreactor:reactor-core" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.data:spring-data-commons" />
+    <option featureType="dependencySupport" implementationName="executable:kubectl" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.cloud:spring-cloud-context" />
+    <option featureType="dependencySupport" implementationName="java:org.hibernate.validator:hibernate-validator" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-webmvc" />
+    <option featureType="dependencySupport" implementationName="java:org.projectlombok:lombok" />
+    <option featureType="dependencySupport" implementationName="executable:docker" />
+    <option featureType="dependencySupport" implementationName="java:io.reactivex.rxjava3:rxjava" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-messaging" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.boot:spring-boot" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -296,7 +357,10 @@
     <MESSAGE value="fix(base): 统一异常响应处理并优化安全配置&#10;&#10;- 将RestErrorResponse类从网关服务迁移到基础服务模块&#10;- 更新全局异常处理器返回RestErrorResponse对象而非RestResponse&#10;- 添加对AccessDeniedException访问拒绝异常的处理" />
     <MESSAGE value="feat(auth): 集成JustAuth实现微信认证功能并优化安全配置&#10;&#10;- 添加JustAuth依赖库支持第三方OAuth认证&#10;- 实现WXAuthenticationServiceImpl使用JustAuth进行微信认证&#10;- 创建WxProPerties配置类管理微信认证参数&#10;- 移除自定义微信API调用逻辑和RestTemplate配置&#10;- 优化认证服务实现统一的用户信息处理流程" />
     <MESSAGE value="feat(auth): 集成JustAuth实现微信认证功能并优化安全配置&#10;&#10;- 添加JustAuth依赖库支持第三方OAuth认证&#10;- 实现WXAuthenticationServiceImpl使用JustAuth进行微信认证&#10;- 创建WxProPerties配置类管理微信认证参数&#10;- 移除自定义微信API调用逻辑和RestTemplate配置&#10;- 优化认证服务实现统一的用户信息处理流程&#10;- 添加微信扫码回调接口文档注释&#10;- 重命名PasswordAuthServiceImpl为CustomPasswordAuthService&#10;- 重命名WXAuthenticationServiceImpl为CustomWxAuthenticationService&#10;- 集成用户权限查询功能返回动态权限列表&#10;- 修复XcMenuMapper中用户ID参数类型为Long&#10;- 更新项目配置文件以共享数据库源设置" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(auth): 集成JustAuth实现微信认证功能并优化安全配置&#10;&#10;- 添加JustAuth依赖库支持第三方OAuth认证&#10;- 实现WXAuthenticationServiceImpl使用JustAuth进行微信认证&#10;- 创建WxProPerties配置类管理微信认证参数&#10;- 移除自定义微信API调用逻辑和RestTemplate配置&#10;- 优化认证服务实现统一的用户信息处理流程&#10;- 添加微信扫码回调接口文档注释&#10;- 重命名PasswordAuthServiceImpl为CustomPasswordAuthService&#10;- 重命名WXAuthenticationServiceImpl为CustomWxAuthenticationService&#10;- 集成用户权限查询功能返回动态权限列表&#10;- 修复XcMenuMapper中用户ID参数类型为Long&#10;- 更新项目配置文件以共享数据库源设置" />
+    <MESSAGE value="feat(auth): 完善认证服务功能并重构网关过滤器&#10;&#10;- 配置微信应用ID和密钥到应用配置中&#10;- 为网关添加认证服务路由规则&#10;- 启用AOP代理以支持自调用方法&#10;- 添加资源所有者密码凭证流程的认证转换器和提供者&#10;- 优化网关认证过滤器实现并移除不必要的依赖&#10;- 从内容服务控制器中移除硬编码的公司ID，改用安全工具类获取&#10;- 添加用户信息过滤器将认证信息传递给下游服务&#10;- 优化安全配置和认证服务器配置&#10;- 移动安全工具类到基础模块并修复数据类型问题&#10;- 更新项目配置文件和依赖管理" />
+    <MESSAGE value="chore(config): 更新 .gitignore 配置&#10;&#10;- 修改 .idea 忽略规则为递归忽略所有子文件和目录" />
+    <MESSAGE value="feat(learning): 新增学习服务并重构客户端配置&#10;&#10;- 添加了 learning-service 模块及其相关配置文件&#10;- 创建了选课功能相关的接口和服务实现&#10;- 重构了多个客户端类名以符合命名规范&#10;- 更新了课程发布服务中的文件上传客户端依赖&#10;- 添加了课程发布信息的数据传输对象&#10;- 修改了课程预览和发布的控制器端点路径&#10;- 在基础模块中添加了新的错误消息常量&#10;- 更新了安全工具类中的用户ID数据类型&#10;- 添加了学习服务的应用程序入口和配置文件&#10;- 创建了课程表和选课相关的数据访问层代码" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(learning): 新增学习服务并重构客户端配置&#10;&#10;- 添加了 learning-service 模块及其相关配置文件&#10;- 创建了选课功能相关的接口和服务实现&#10;- 重构了多个客户端类名以符合命名规范&#10;- 更新了课程发布服务中的文件上传客户端依赖&#10;- 添加了课程发布信息的数据传输对象&#10;- 修改了课程预览和发布的控制器端点路径&#10;- 在基础模块中添加了新的错误消息常量&#10;- 更新了安全工具类中的用户ID数据类型&#10;- 添加了学习服务的应用程序入口和配置文件&#10;- 创建了课程表和选课相关的数据访问层代码" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

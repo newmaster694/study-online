@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.multipart.MultipartFile;
-import study.online.api.client.UploadFileClient;
+import study.online.api.client.FileClient;
 import study.online.api.model.dto.UploadFileResultDTO;
 import study.online.base.exception.BaseException;
 import study.online.content.mapper.CourseMarketMapper;
@@ -50,7 +50,7 @@ public class CoursePreviewServiceImpl implements ICoursePublishService {
 	private final CoursePublishPreMapper coursePublishPreMapper;
 	private final CoursePublishMapper coursePublishMapper;
 	private final MqMessageService mqMessageService;
-	private final UploadFileClient uploadFileClient;
+	private final FileClient fileClient;
 
 	@Override
 	public CoursePreviewDTO getCoursePreviewInfo(Long courseId) {
@@ -197,11 +197,16 @@ public class CoursePreviewServiceImpl implements ICoursePublishService {
 			throw new BaseException("将File转换为MultipartFile出错");
 		}
 
-		UploadFileResultDTO uploadfile = uploadFileClient
+		UploadFileResultDTO uploadfile = fileClient
 			.uploadfile(multipartFile, "course/" + courseId + ".html");
 
 		if (uploadfile == null) {
 			BaseException.cast(SAVE_FILE_ERROR);
 		}
+	}
+
+	@Override
+	public CoursePublish getCoursePublish(Long courseId) {
+		return coursePublishMapper.selectById(courseId);
 	}
 }

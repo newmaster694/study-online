@@ -10,7 +10,7 @@ import study.online.api.config.FeignConfig;
 import study.online.api.model.dto.UploadFileResultDTO;
 
 @FeignClient(value = "media-service", configuration = FeignConfig.class)
-public interface UploadFileClient {
+public interface FileClient {
 
 	@PostMapping(value = "/media/upload/coursefile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	UploadFileResultDTO uploadfile(@RequestPart("filedata") MultipartFile file,

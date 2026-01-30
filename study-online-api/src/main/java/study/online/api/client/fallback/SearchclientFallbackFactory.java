@@ -7,7 +7,7 @@ import study.online.api.client.SearchClient;
 
 @Slf4j
 @Component
-public class SearchServiceFallbackFactory implements FallbackFactory<SearchClient> {
+public class SearchclientFallbackFactory implements FallbackFactory<SearchClient> {
 	@Override
 	public SearchClient create(Throwable cause) {
 		return courseIndex -> {

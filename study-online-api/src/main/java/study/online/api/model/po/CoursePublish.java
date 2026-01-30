@@ -1,4 +1,4 @@
-package study.online.content.model.po;
+package study.online.api.model.po;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;

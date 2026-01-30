@@ -38,4 +38,7 @@ public interface ErrorMessage {
 
 	String EMPTY_CAPTCHA = "验证码为空";
 	String ERROR_CAPTCHA = "验证码校验失败";
+
+	String ERROR_COURSE_STATUS = "选课未成功，无法添加到课程表";
+	String UNKNOW_USER_WITH_CHOOSE_COURSE = "请登录后再选课";
 }

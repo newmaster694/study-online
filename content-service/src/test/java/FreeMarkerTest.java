@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.multipart.MultipartFile;
-import study.online.api.client.UploadFileClient;
+import study.online.api.client.FileClient;
 import study.online.content.ContentApplication;
 import study.online.content.model.dto.CoursePreviewDTO;
 import study.online.content.service.ICoursePublishService;
@@ -25,7 +25,7 @@ class FreeMarkerTest {
 	private ICoursePublishService coursePublishService;
 
 	@Resource
-	private UploadFileClient uploadFileClient;
+	private FileClient fileClient;
 
 	@Test
 	void testGenerateHtmlTemplate() throws IOException, TemplateException {
@@ -56,7 +56,7 @@ class FreeMarkerTest {
 		MultipartFile multipartFile = MultipartFileSupportUtil
 			.fileToMultipartFile(new File("C:\\Users\\newmaster\\Desktop\\upload"));
 
-		uploadFileClient.uploadfile(
+		fileClient.uploadfile(
 			multipartFile,
 			"/course/120.html");
 	}

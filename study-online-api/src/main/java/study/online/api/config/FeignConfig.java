@@ -11,7 +11,9 @@ public class FeignConfig {
 
 	@Bean
 	public Encoder multipartFormEncoder() {
-		return new SpringFormEncoder(new SpringEncoder(() -> new HttpMessageConverters(
-					new RestTemplate().getMessageConverters())));
+		return new SpringFormEncoder(
+			new SpringEncoder(() ->
+				new HttpMessageConverters(new RestTemplate().getMessageConverters()))
+		);
 	}
 }

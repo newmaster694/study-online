@@ -5,11 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import study.online.base.exception.ValidationGroup;
+import study.online.base.utils.SecurityUtil;
 import study.online.content.model.dto.SaveCourseTeacherDTO;
 import study.online.content.model.po.CourseTeacher;
 import study.online.content.service.ICourseTeacherService;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @Slf4j
@@ -39,7 +41,7 @@ public class CourseTeacherController {
 	@PostMapping
 	public CourseTeacher add(@RequestBody @Validated(
 		{ValidationGroup.Inster.class, ValidationGroup.Update.class}) SaveCourseTeacherDTO courseTeacherDTO) {
-		Long companyId = 1232141425L;
+		Long companyId = Objects.requireNonNull(SecurityUtil.getUser()).getCompanyId();
 		return courseTeacherService.addTeacherInfo(courseTeacherDTO, companyId);
 	}
 
@@ -51,7 +53,7 @@ public class CourseTeacherController {
 	 */
 	@DeleteMapping("/course/{courseId}/{courseTeacherId}")
 	public void deleteItem(@PathVariable Long courseId, @PathVariable Long courseTeacherId) {
-		Long companyId = 1232141425L;
+		Long companyId = Objects.requireNonNull(SecurityUtil.getUser()).getCompanyId();
 		courseTeacherService.deleteItem(courseId, courseTeacherId, companyId);
 	}
 }

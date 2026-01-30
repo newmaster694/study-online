@@ -5,7 +5,7 @@ import org.springframework.cloud.openfeign.FallbackFactory;
 import study.online.api.client.CaptchaClient;
 
 @Slf4j
-public class CaptchaClientFactory implements FallbackFactory<CaptchaClient> {
+public class CaptchaClientFallbackFactory implements FallbackFactory<CaptchaClient> {
 	@Override
 	public CaptchaClient create(Throwable cause) {
 		return (key, code) -> {
