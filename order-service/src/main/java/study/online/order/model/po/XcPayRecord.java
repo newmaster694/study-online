@@ -3,9 +3,10 @@ package study.online.order.model.po;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.ToString;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -19,8 +20,9 @@ import java.time.LocalDateTime;
  * @author itcast
  */
 @Data
-@Builder
-@ToString
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("xc_pay_record")
 public class XcPayRecord implements Serializable {
 

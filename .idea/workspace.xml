@@ -4,32 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4e7a11de-c3f4-4c66-b7d4-c0219f0d74f3" name="更改" comment="feat(learning): 新增学习服务并重构客户端配置&#10;&#10;- 添加了 learning-service 模块及其相关配置文件&#10;- 创建了选课功能相关的接口和服务实现&#10;- 重构了多个客户端类名以符合命名规范&#10;- 更新了课程发布服务中的文件上传客户端依赖&#10;- 添加了课程发布信息的数据传输对象&#10;- 修改了课程预览和发布的控制器端点路径&#10;- 在基础模块中添加了新的错误消息常量&#10;- 更新了安全工具类中的用户ID数据类型&#10;- 添加了学习服务的应用程序入口和配置文件&#10;- 创建了课程表和选课相关的数据访问层代码">
-      <change afterPath="$PROJECT_DIR$/order-service/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/OrderApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/config/DefaultAlipayConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/config/properties/AliPayProperties.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/controller/PaymentController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/mapper/XcOrdersGoodsMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/mapper/XcOrdersMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/mapper/XcPayRecordMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/model/dto/AddOrderDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/model/dto/PayRecordDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/model/po/XcOrders.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/model/po/XcOrdersGoods.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/model/po/XcPayRecord.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/service/IOrderService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/service/impl/OrderService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/utils/QRCodeUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-service/src/main/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-service/src/main/resources/bootstrap.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-service/src/main/resources/mapper/XcOrdersGoodsMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-service/src/main/resources/mapper/XcOrdersMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order-service/src/main/resources/mapper/XcPayRecordMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/study-online-base/src/main/java/study/online/base/constant/ErrorMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/study-online-base/src/main/java/study/online/base/constant/ErrorMessage.java" afterDir="false" />
+    <list default="true" id="4e7a11de-c3f4-4c66-b7d4-c0219f0d74f3" name="更改" comment="feat(order): 添加订单服务及支付宝支付功能&#10;&#10;- 新增订单服务模块及其配置文件&#10;- 实现订单创建、支付记录管理功能&#10;- 集成支付宝支付接口并实现手机网站支付&#10;- 添加二维码生成工具用于支付码展示&#10;- 配置Nacos注册中心和配置中心&#10;- 定义订单、订单商品、支付记录数据模型&#10;- 实现订单幂等性处理机制&#10;- 添加支付状态验证和异常处理逻辑">
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/model/dto/PayRecordDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/model/dto/PayRecordDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/model/po/XcPayRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/model/po/XcPayRecord.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -215,7 +192,7 @@
       <workItem from="1769239161821" duration="1146000" />
       <workItem from="1769240586548" duration="19705000" />
       <workItem from="1769329361941" duration="4263000" />
-      <workItem from="1769334586043" duration="66869000" />
+      <workItem from="1769334586043" duration="67240000" />
     </task>
     <task id="LOCAL-00001" summary="feat(auth-service/gateway-service): 配置项更新&#10;&#10;- 引入了spring-security/spring-oauth2-authentication-server的相关依赖&#10;- 新增了安全认证的配置类">
       <option name="closed" value="true" />
@@ -313,7 +290,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769745923055</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="feat(order): 添加订单服务及支付宝支付功能&#10;&#10;- 新增订单服务模块及其配置文件&#10;- 实现订单创建、支付记录管理功能&#10;- 集成支付宝支付接口并实现手机网站支付&#10;- 添加二维码生成工具用于支付码展示&#10;- 配置Nacos注册中心和配置中心&#10;- 定义订单、订单商品、支付记录数据模型&#10;- 实现订单幂等性处理机制&#10;- 添加支付状态验证和异常处理逻辑">
+      <option name="closed" value="true" />
+      <created>1769876709597</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1769876709597</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -358,7 +343,8 @@
     <MESSAGE value="feat(auth): 完善认证服务功能并重构网关过滤器&#10;&#10;- 配置微信应用ID和密钥到应用配置中&#10;- 为网关添加认证服务路由规则&#10;- 启用AOP代理以支持自调用方法&#10;- 添加资源所有者密码凭证流程的认证转换器和提供者&#10;- 优化网关认证过滤器实现并移除不必要的依赖&#10;- 从内容服务控制器中移除硬编码的公司ID，改用安全工具类获取&#10;- 添加用户信息过滤器将认证信息传递给下游服务&#10;- 优化安全配置和认证服务器配置&#10;- 移动安全工具类到基础模块并修复数据类型问题&#10;- 更新项目配置文件和依赖管理" />
     <MESSAGE value="chore(config): 更新 .gitignore 配置&#10;&#10;- 修改 .idea 忽略规则为递归忽略所有子文件和目录" />
     <MESSAGE value="feat(learning): 新增学习服务并重构客户端配置&#10;&#10;- 添加了 learning-service 模块及其相关配置文件&#10;- 创建了选课功能相关的接口和服务实现&#10;- 重构了多个客户端类名以符合命名规范&#10;- 更新了课程发布服务中的文件上传客户端依赖&#10;- 添加了课程发布信息的数据传输对象&#10;- 修改了课程预览和发布的控制器端点路径&#10;- 在基础模块中添加了新的错误消息常量&#10;- 更新了安全工具类中的用户ID数据类型&#10;- 添加了学习服务的应用程序入口和配置文件&#10;- 创建了课程表和选课相关的数据访问层代码" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(learning): 新增学习服务并重构客户端配置&#10;&#10;- 添加了 learning-service 模块及其相关配置文件&#10;- 创建了选课功能相关的接口和服务实现&#10;- 重构了多个客户端类名以符合命名规范&#10;- 更新了课程发布服务中的文件上传客户端依赖&#10;- 添加了课程发布信息的数据传输对象&#10;- 修改了课程预览和发布的控制器端点路径&#10;- 在基础模块中添加了新的错误消息常量&#10;- 更新了安全工具类中的用户ID数据类型&#10;- 添加了学习服务的应用程序入口和配置文件&#10;- 创建了课程表和选课相关的数据访问层代码" />
+    <MESSAGE value="feat(order): 添加订单服务及支付宝支付功能&#10;&#10;- 新增订单服务模块及其配置文件&#10;- 实现订单创建、支付记录管理功能&#10;- 集成支付宝支付接口并实现手机网站支付&#10;- 添加二维码生成工具用于支付码展示&#10;- 配置Nacos注册中心和配置中心&#10;- 定义订单、订单商品、支付记录数据模型&#10;- 实现订单幂等性处理机制&#10;- 添加支付状态验证和异常处理逻辑" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(order): 添加订单服务及支付宝支付功能&#10;&#10;- 新增订单服务模块及其配置文件&#10;- 实现订单创建、支付记录管理功能&#10;- 集成支付宝支付接口并实现手机网站支付&#10;- 添加二维码生成工具用于支付码展示&#10;- 配置Nacos注册中心和配置中心&#10;- 定义订单、订单商品、支付记录数据模型&#10;- 实现订单幂等性处理机制&#10;- 添加支付状态验证和异常处理逻辑" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
