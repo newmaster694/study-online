@@ -20,6 +20,7 @@
 		<module>auth-service</module>
 		<module>captcha-service</module>
 		<module>learning-service</module>
+		<module>order-service</module>
 	</modules>
 
 	<parent>
@@ -56,6 +57,8 @@
 		<kaptcha.version>2.3.3</kaptcha.version>
 		<lettuce-core.version>6.2.2.RELEASE</lettuce-core.version>
 		<justauth.version>1.16.6</justauth.version>
+		<ijpay-alipay.version>2.9.12.1-17</ijpay-alipay.version>
+		<zxing.version>3.3.3</zxing.version>
 	</properties>
 
 	<dependencyManagement>
@@ -211,6 +214,25 @@
 				<groupId>me.zhyd.oauth</groupId>
 				<artifactId>JustAuth</artifactId>
 				<version>${justauth.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.github.javen205</groupId>
+				<artifactId>IJPay-AliPay</artifactId>
+				<version>${ijpay-alipay.version}</version>
+			</dependency>
+
+			<!-- 二维码生成&识别组件 -->
+			<dependency>
+				<groupId>com.google.zxing</groupId>
+				<artifactId>core</artifactId>
+				<version>${zxing.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.google.zxing</groupId>
+				<artifactId>javase</artifactId>
+				<version>${zxing.version}</version>
 			</dependency>
 
 		</dependencies>

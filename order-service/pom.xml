@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.study.online</groupId>
+		<artifactId>study-online</artifactId>
+		<version>1.0-RC</version>
+	</parent>
+
+	<artifactId>order-service</artifactId>
+
+	<properties>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.study.online</groupId>
+			<artifactId>study-online-base</artifactId>
+			<version>1.0-RC</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.study.online</groupId>
+			<artifactId>study-online-api</artifactId>
+			<version>1.0-RC</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.study.online</groupId>
+			<artifactId>study-online-message-sdk</artifactId>
+			<version>1.0-RC</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.javen205</groupId>
+			<artifactId>IJPay-AliPay</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>javase</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
+	</dependencies>
+
+</project>

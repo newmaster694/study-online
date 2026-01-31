@@ -41,4 +41,10 @@ public interface ErrorMessage {
 
 	String ERROR_COURSE_STATUS = "选课未成功，无法添加到课程表";
 	String UNKNOW_USER_WITH_CHOOSE_COURSE = "请登录后再选课";
+
+	String EMPTY_ORDER = "订单不存在";
+	String ERROR_ORDER_STATUS = "订单已支付";
+
+	String ERROR_GENERATE_QRCODE = "生成二维码错误";
+	String USELESS_QRCODE = "请重新点击支付获取二维码";
 }

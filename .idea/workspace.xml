@@ -5,45 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4e7a11de-c3f4-4c66-b7d4-c0219f0d74f3" name="更改" comment="feat(learning): 新增学习服务并重构客户端配置&#10;&#10;- 添加了 learning-service 模块及其相关配置文件&#10;- 创建了选课功能相关的接口和服务实现&#10;- 重构了多个客户端类名以符合命名规范&#10;- 更新了课程发布服务中的文件上传客户端依赖&#10;- 添加了课程发布信息的数据传输对象&#10;- 修改了课程预览和发布的控制器端点路径&#10;- 在基础模块中添加了新的错误消息常量&#10;- 更新了安全工具类中的用户ID数据类型&#10;- 添加了学习服务的应用程序入口和配置文件&#10;- 创建了课程表和选课相关的数据访问层代码">
-      <change afterPath="$PROJECT_DIR$/learning-service/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learning-service/src/main/java/study/online/learning/LearningApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learning-service/src/main/java/study/online/learning/controller/MyLearningController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learning-service/src/main/java/study/online/learning/mapper/XcChooseCourseMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learning-service/src/main/java/study/online/learning/mapper/XcCourseTablesMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learning-service/src/main/java/study/online/learning/model/dto/MyCourseTableItemDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learning-service/src/main/java/study/online/learning/model/dto/MyCourseTableParams.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learning-service/src/main/java/study/online/learning/model/dto/XcChooseCourseDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learning-service/src/main/java/study/online/learning/model/dto/XcCourseTablesDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learning-service/src/main/java/study/online/learning/model/po/XcChooseCourse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learning-service/src/main/java/study/online/learning/model/po/XcCourseTables.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learning-service/src/main/java/study/online/learning/model/po/XcLearnRecord.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learning-service/src/main/java/study/online/learning/service/IMyCourseTableService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learning-service/src/main/java/study/online/learning/service/impl/MyCourseTablesServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learning-service/src/main/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learning-service/src/main/resources/bootstrap.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learning-service/src/main/resources/mapper/XcChooseCourseMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/learning-service/src/main/resources/mapper/XcCourseTablesMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/study-online-api/src/main/java/study/online/api/client/ContentClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/study-online-api/src/main/java/study/online/api/client/fallback/ContentClientFallbackFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/study-online-api/src/main/java/study/online/api/model/po/CoursePublish.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/OrderApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/config/DefaultAlipayConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/config/properties/AliPayProperties.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/controller/PaymentController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/mapper/XcOrdersGoodsMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/mapper/XcOrdersMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/mapper/XcPayRecordMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/model/dto/AddOrderDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/model/dto/PayRecordDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/model/po/XcOrders.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/model/po/XcOrdersGoods.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/model/po/XcPayRecord.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/service/IOrderService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/service/impl/OrderService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/utils/QRCodeUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/resources/mapper/XcOrdersGoodsMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/resources/mapper/XcOrdersMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-service/src/main/resources/mapper/XcPayRecordMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/controller/CoursePublishController.java" beforeDir="false" afterPath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/controller/CoursePublishController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/controller/CourseTeacherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/controller/CourseTeacherController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/model/po/CoursePublish.java" beforeDir="false" afterPath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/model/po/CoursePublish.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/service/ICoursePublishService.java" beforeDir="false" afterPath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/service/ICoursePublishService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/service/impl/CoursePreviewServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/content-service/src/main/java/study/online/content/service/impl/CoursePreviewServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/content-service/src/test/java/FreeMarkerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/content-service/src/test/java/FreeMarkerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/study-online-api/src/main/java/study/online/api/client/CaptchaClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/study-online-api/src/main/java/study/online/api/client/CaptchaClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/study-online-api/src/main/java/study/online/api/client/SearchClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/study-online-api/src/main/java/study/online/api/client/SearchClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/study-online-api/src/main/java/study/online/api/client/UploadFileClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/study-online-api/src/main/java/study/online/api/client/FileClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/study-online-api/src/main/java/study/online/api/client/fallback/CaptchaClientFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/study-online-api/src/main/java/study/online/api/client/fallback/CaptchaClientFallbackFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/study-online-api/src/main/java/study/online/api/client/fallback/SearchServiceFallbackFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/study-online-api/src/main/java/study/online/api/client/fallback/SearchclientFallbackFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/study-online-api/src/main/java/study/online/api/config/FeignConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/study-online-api/src/main/java/study/online/api/config/FeignConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/study-online-base/src/main/java/study/online/base/constant/ErrorMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/study-online-base/src/main/java/study/online/base/constant/ErrorMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/study-online-base/src/main/java/study/online/base/utils/SecurityUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/study-online-base/src/main/java/study/online/base/utils/SecurityUtil.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +103,7 @@
     "Spring Boot.GatewayApplication.executor": "Run",
     "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "K:/java_workspace/study-online/learning-service/src/main/java/study/online/learning/mapper",
+    "last_opened_file_path": "K:/java_workspace/study-online/order-service/src/main/java/study/online/order/mapper",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -134,6 +120,9 @@
     "DatabaseDriversLRU": [
       "mysql",
       "mongo"
+    ],
+    "com.intellij.ide.scratch.LRUPopupBuilder$1/SQL 方言": [
+      "MySQL"
     ]
   }
 }]]></component>
@@ -142,13 +131,14 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="K:\java_workspace\study-online\order-service\src\main\java\study\online\order\mapper" />
+      <recent name="K:\java_workspace\study-online\order-service\src\main\java\study\online\order\model\po" />
+      <recent name="K:\java_workspace\study-online\payment-service\src\main\java\study\online\payment\utils" />
       <recent name="K:\java_workspace\study-online\learning-service\src\main\java\study\online\learning\mapper" />
       <recent name="K:\java_workspace\study-online\learning-service\src\main\java\study\online\learning\model" />
-      <recent name="K:\java_workspace\study-online\gateway-service\src\main\java\study\online\gateway" />
-      <recent name="K:\java_workspace\study-online\gateway-service\src\main\java\study\online\gateway\config" />
-      <recent name="K:\java_workspace\study-online\gateway-service\src\main\java\study\online\gateway\common" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="K:\java_workspace\study-online\order-service\src\main\resources\mapper" />
       <recent name="K:\java_workspace\study-online\learning-service\src\main\resources\mapper" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -225,7 +215,7 @@
       <workItem from="1769239161821" duration="1146000" />
       <workItem from="1769240586548" duration="19705000" />
       <workItem from="1769329361941" duration="4263000" />
-      <workItem from="1769334586043" duration="42230000" />
+      <workItem from="1769334586043" duration="66869000" />
     </task>
     <task id="LOCAL-00001" summary="feat(auth-service/gateway-service): 配置项更新&#10;&#10;- 引入了spring-security/spring-oauth2-authentication-server的相关依赖&#10;- 新增了安全认证的配置类">
       <option name="closed" value="true" />
@@ -315,7 +305,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769489582360</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="feat(learning): 新增学习服务并重构客户端配置&#10;&#10;- 添加了 learning-service 模块及其相关配置文件&#10;- 创建了选课功能相关的接口和服务实现&#10;- 重构了多个客户端类名以符合命名规范&#10;- 更新了课程发布服务中的文件上传客户端依赖&#10;- 添加了课程发布信息的数据传输对象&#10;- 修改了课程预览和发布的控制器端点路径&#10;- 在基础模块中添加了新的错误消息常量&#10;- 更新了安全工具类中的用户ID数据类型&#10;- 添加了学习服务的应用程序入口和配置文件&#10;- 创建了课程表和选课相关的数据访问层代码">
+      <option name="closed" value="true" />
+      <created>1769745923055</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1769745923055</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

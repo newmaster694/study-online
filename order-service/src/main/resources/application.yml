@@ -1,0 +1,10 @@
+server:
+    port: 8088
+    servlet:
+        context-path: '/order'
+logging:
+    level:
+      study.online.order:
+          controller: info
+          service: info
+          mapper: debug
