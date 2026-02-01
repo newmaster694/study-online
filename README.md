@@ -22,19 +22,34 @@
 - **服务治理**：使用 Spring Cloud 和 Spring Cloud Alibaba 实现服务注册发现、配置中心等功能。
 
 ### 技术栈
-#### 后端技术
-- **框架**：Spring Boot 3.2.0 + Spring Cloud 2023.0.0 + Spring Cloud Alibaba 2023.0.1.0
-- **ORM 框架**：MyBatis-Plus 3.5.5
-- **数据库**：MySQL 8.3.0
-- **搜索引擎**：Elasticsearch 8.17.5
-- **其他工具**：
-  - Fastjson2 2.0.53
-  - Druid 1.2.19
-  - Hutool 5.8.25
-  - OkHttp 4.12.0
-  - Redis 6.2+
-  - RabbitMQ（需启用 `rabbitmq_delayed_message_exchange` 插件）
-  - Nacos 2.2.3+
+| 技术名                                      | 版本        | 备注                                                         |
+| ------------------------------------------- | ----------- | ------------------------------------------------------------ |
+| spring boot                                 | 3.2.0       | 简化配置开发                                                 |
+| spring cloud                                | 2023.0.0    | 微服务框架                                                   |
+| spring cloud alibaba                        | 2023.0.1.0  | 微服务框架                                                   |
+| mybatis-plus                                | 3.5.5       | ORM框架                                                      |
+| MySQL                                       | 8.3.0       | 数据库                                                       |
+| Elasticsearch                               | 8.17.5      | 收索引擎                                                     |
+| Fastjson2                                   | 2.0.53      | JSON序列化与反序列化框架                                     |
+| Druid                                       | 1.2.19      | 数据库连接池                                                 |
+| Hutool                                      | 5.8.25      | 集成工具包                                                   |
+| OkHttp                                      | 4.12.0      | 远程调用(RPC)工具包，主要是应用OpenFeign框架使用             |
+| Redis                                       | 6.2         | 分布式缓存数据库                                             |
+| RabbitMQ                                    |             | 消息队列框架，需要安装并启用`rabbitmq_delayed_message_exchange`插件 |
+| Nacos                                       | 2.2.3+      | 服务治理与配置文件管理框架                                   |
+| XXL-JOB                                     | 3.0.0       | 分布式计划任务处理工具                                       |
+| spring-security                             |             | 安全管理框架                                                 |
+| spring-security-oauth2-authorization-server |             | OAuth2服务器权限下发框架                                     |
+| kaptcha                                     | 2.3.3       | 图片验证码生成工具                                           |
+| JustAuth                                    | 1.16.6      | 简化Oauth2登录工具                                           |
+| IJPay                                       | 2.9.12.1-17 | 简化第三方支付集成工具                                       |
+| commons-lang3                               | 3.17.0      | 集成工具包                                                   |
+| minio                                       |             | 分布式对象存储服务器                                         |
+| lombok                                      | 1.18.42     | 简化实体类模板代码生成工具                                   |
+| spring-boot-starter-test                    |             | 测试框架                                                     |
+|                                             |             |                                                              |
+
+
 
 #### 开发环境要求
 - **JDK**：Java 21

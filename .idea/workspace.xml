@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4e7a11de-c3f4-4c66-b7d4-c0219f0d74f3" name="更改" comment="feat(order): 添加订单服务及支付宝支付功能&#10;&#10;- 新增订单服务模块及其配置文件&#10;- 实现订单创建、支付记录管理功能&#10;- 集成支付宝支付接口并实现手机网站支付&#10;- 添加二维码生成工具用于支付码展示&#10;- 配置Nacos注册中心和配置中心&#10;- 定义订单、订单商品、支付记录数据模型&#10;- 实现订单幂等性处理机制&#10;- 添加支付状态验证和异常处理逻辑">
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/model/dto/PayRecordDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/model/dto/PayRecordDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/model/po/XcPayRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/src/main/java/study/online/order/model/po/XcPayRecord.java" afterDir="false" />
+    <list default="true" id="4e7a11de-c3f4-4c66-b7d4-c0219f0d74f3" name="更改" comment="fix(order-service): 修复了关于XcPayRecord与PayRecordDTO实体类之间关于@Builder建造者模式下继承关系间两个同名builder方法的问题&#10;&#10;- 清理了IDEA Git提交消息存储配置中的默认模板设置&#10;- 将README.md中的后端技术栈表格化展示，增加了XXL-JOB、spring-security等技术组件&#10;- 更新了workspace.xml中任务记录和提交消息历史&#10;- 在VcsManagerConfiguration中添加了检查新待办事项的选项配置">
+      <change beforePath="$PROJECT_DIR$/.idea/GitCommitMessageStorage.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/GitCommitMessageStorage.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,48 +62,48 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Maven.study-online-base [install].executor": "Run",
-    "Maven.study-online-message-sdk [install].executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.AuthApplication.executor": "Run",
-    "Spring Boot.ContentApplication.executor": "Run",
-    "Spring Boot.GatewayApplication.executor": "Run",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "K:/java_workspace/study-online/order-service/src/main/java/study/online/order/mapper",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "模块",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.3275862",
-    "run.configurations.included.in.services": "true",
-    "settings.editor.selected.configurable": "Mybatis",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Maven.study-online-base [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.study-online-message-sdk [install].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.AuthApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ContentApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.GatewayApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;K:/java_workspace/study-online/order-service/src/main/java/study/online/order/mapper&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;模块&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.3275862&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;Mybatis&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql",
-      "mongo"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;,
+      &quot;mongo&quot;
     ],
-    "com.intellij.ide.scratch.LRUPopupBuilder$1/SQL 方言": [
-      "MySQL"
+    &quot;com.intellij.ide.scratch.LRUPopupBuilder$1/SQL 方言&quot;: [
+      &quot;MySQL&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -161,11 +162,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Spring Boot.AuthApplication" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -192,7 +188,7 @@
       <workItem from="1769239161821" duration="1146000" />
       <workItem from="1769240586548" duration="19705000" />
       <workItem from="1769329361941" duration="4263000" />
-      <workItem from="1769334586043" duration="67240000" />
+      <workItem from="1769334586043" duration="70407000" />
     </task>
     <task id="LOCAL-00001" summary="feat(auth-service/gateway-service): 配置项更新&#10;&#10;- 引入了spring-security/spring-oauth2-authentication-server的相关依赖&#10;- 新增了安全认证的配置类">
       <option name="closed" value="true" />
@@ -298,7 +294,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769876709597</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="fix(order-service): 修复了关于XcPayRecord与PayRecordDTO实体类之间关于@Builder建造者模式下继承关系间两个同名builder方法的问题">
+      <option name="closed" value="true" />
+      <created>1769877272405</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1769877272405</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -332,6 +336,7 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="feat(auth-service/gateway-service): 配置项更新&#10;&#10;- 引入了spring-security/spring-oauth2-authentication-server的相关依赖&#10;- 新增了安全认证的配置类" />
     <MESSAGE value="feat(auth): 完善认证服务配置并优化异常处理&#10;&#10;- 在AuthorizationServerConfig中引入PasswordEncoder实现客户端密钥加密&#10;- 添加SecurityUtil工具类用于获取当前用户身份信息&#10;- 实现UserServiceImpl提供用户认证详情查询功能&#10;- 优化BaseExceptionAdvice中异常日志输出格式&#10;- 移除网关服务中自定义异常处理器，统一使用基础服务异常处理&#10;- 更新README文档中的服务架构说明与联系方式&#10;- 升级lombok版本至1.18.42" />
     <MESSAGE value="docs(README): 更新服务启动说明&#10;&#10;- 修改了服务启动方式的描述，将具体应用列表改为统一说明&#10;- 添加了启动前的依赖服务提示信息&#10;- 增加了 Tip 标记来强调注意事项&#10;- 补充了需要预先启动的基础设施服务列表" />
@@ -344,7 +349,8 @@
     <MESSAGE value="chore(config): 更新 .gitignore 配置&#10;&#10;- 修改 .idea 忽略规则为递归忽略所有子文件和目录" />
     <MESSAGE value="feat(learning): 新增学习服务并重构客户端配置&#10;&#10;- 添加了 learning-service 模块及其相关配置文件&#10;- 创建了选课功能相关的接口和服务实现&#10;- 重构了多个客户端类名以符合命名规范&#10;- 更新了课程发布服务中的文件上传客户端依赖&#10;- 添加了课程发布信息的数据传输对象&#10;- 修改了课程预览和发布的控制器端点路径&#10;- 在基础模块中添加了新的错误消息常量&#10;- 更新了安全工具类中的用户ID数据类型&#10;- 添加了学习服务的应用程序入口和配置文件&#10;- 创建了课程表和选课相关的数据访问层代码" />
     <MESSAGE value="feat(order): 添加订单服务及支付宝支付功能&#10;&#10;- 新增订单服务模块及其配置文件&#10;- 实现订单创建、支付记录管理功能&#10;- 集成支付宝支付接口并实现手机网站支付&#10;- 添加二维码生成工具用于支付码展示&#10;- 配置Nacos注册中心和配置中心&#10;- 定义订单、订单商品、支付记录数据模型&#10;- 实现订单幂等性处理机制&#10;- 添加支付状态验证和异常处理逻辑" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(order): 添加订单服务及支付宝支付功能&#10;&#10;- 新增订单服务模块及其配置文件&#10;- 实现订单创建、支付记录管理功能&#10;- 集成支付宝支付接口并实现手机网站支付&#10;- 添加二维码生成工具用于支付码展示&#10;- 配置Nacos注册中心和配置中心&#10;- 定义订单、订单商品、支付记录数据模型&#10;- 实现订单幂等性处理机制&#10;- 添加支付状态验证和异常处理逻辑" />
+    <MESSAGE value="fix(order-service): 修复了关于XcPayRecord与PayRecordDTO实体类之间关于@Builder建造者模式下继承关系间两个同名builder方法的问题" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(order-service): 修复了关于XcPayRecord与PayRecordDTO实体类之间关于@Builder建造者模式下继承关系间两个同名builder方法的问题" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
