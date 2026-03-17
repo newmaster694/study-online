@@ -4,14 +4,7 @@ server:
         context-path: "/auth"
 logging:
     level:
-        study.online.auth.controller: info
-        study.online.ucenter.mapper: debug
-spring:
-    security:
-        oauth2:
-            resourceserver:
-                jwt:
-                    issuer-uri: 'http://localhost:8085/'
+        study.online.auth: debug
 weixin:
     appid: 'client_id'
     secret: 'secret'
